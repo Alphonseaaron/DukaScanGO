@@ -2,27 +2,26 @@ part of 'products_bloc.dart';
 
 @immutable
 class ProductsState {
-
-  final int idCategory;
-  final String? category;
+  final List<Product> products;
   final List<XFile>? images;
-  final String searchProduct;
+  final String? searchProduct;
 
-  ProductsState({
-    this.idCategory = 0, 
-    this.category,
+  const ProductsState({
+    this.products = const [],
     this.images,
-    this.searchProduct = ''
+    this.searchProduct,
   });
 
-  ProductsState copyWith({ int? idCategory, String? category, List<XFile>? images, String? searchProduct })
-    => ProductsState(
-      idCategory: idCategory ?? this.idCategory,
-      category: category ?? this.category,
-      images: images ?? this.images,
-      searchProduct: searchProduct ?? this.searchProduct
-    );
-
+  ProductsState copyWith({
+    List<Product>? products,
+    List<XFile>? images,
+    String? searchProduct,
+  }) =>
+      ProductsState(
+        products: products ?? this.products,
+        images: images ?? this.images,
+        searchProduct: searchProduct ?? this.searchProduct,
+      );
 }
 
 

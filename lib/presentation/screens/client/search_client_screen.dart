@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/data/env/environment.dart';
 import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/products_top_home_response.dart';
-import 'package:restaurant/domain/services/services.dart';
+import 'package:restaurant/domain/models/product.dart';
 import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
 import 'package:restaurant/presentation/screens/client/details_product_screen.dart';
@@ -83,13 +82,18 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
               ),
               const SizedBox(height: 20.0),
               BlocBuilder<ProductsBloc, ProductsState>(
-                builder: (_, state) 
-                  => Expanded(
-                  child: ( state.searchProduct.length != 0 ) 
-                    ? listProducts()
-                    : _HistorySearch()
-                  
-                ),
+                builder: (_, state) {
+                  if (state.searchProduct == null || state.searchProduct!.isEmpty) {
+                    return _HistorySearch();
+                  }
+                  if (state.products.isEmpty) {
+                    return ListTile(
+                      title: TextCustom(
+                          text: 'Without results for ${state.searchProduct}'),
+                    );
+                  }
+                  return _ListProductSearch(listProduct: state.products);
+                },
               )
             ],
           ),
@@ -99,84 +103,59 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
     );
   }
 
-  Widget listProducts(){
-
-    return StreamBuilder<List<Productsdb>>(
-      stream: productServices.searchProducts,
-      builder: (context, snapshot) {
-
-        if( snapshot.data == null ) return _HistorySearch();
-        
-        if( !snapshot.hasData ) return Center(child: CircularProgressIndicator());
-
-        if( snapshot.data!.length == 0 ) {
-          return ListTile(
-            title: TextCustom(text: 'Without results for ${_searchController.text}'),
-          );
-        }
-
-        final listProduct = snapshot.data!;
-
-        return _ListProductSearch(listProduct: listProduct);
-
-      }
-    );
-
-  }
-
 }
 
 class _ListProductSearch extends StatelessWidget {
-
-  final List<Productsdb> listProduct;
+  final List<Product> listProduct;
 
   const _ListProductSearch({required this.listProduct});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: listProduct.length,
-      itemBuilder: (context, i) 
-        => Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: InkWell(
-            onTap: () => Navigator.push(context, routeFrave(page: DetailsProductScreen(product: listProduct[i]))),
-            child: Container(
-              height: 90,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: BorderRadius.circular(20.0)
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 90,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        scale: 8,
-                        image: NetworkImage('${Environment.endpointBase}${listProduct[i].picture}')
+        itemCount: listProduct.length,
+        itemBuilder: (context, i) => Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    routeFrave(
+                        page: DetailsProductScreen(
+                            product: listProduct[i]))),
+                child: Container(
+                  height: 90,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 90,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                scale: 8,
+                                image: NetworkImage(listProduct[i].images[0]))),
+                      ),
+                      const SizedBox(width: 5.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextCustom(text: listProduct[i].name),
+                            const SizedBox(height: 5.0),
+                            TextCustom(
+                                text: '\$ ${listProduct[i].price}',
+                                color: Colors.grey),
+                          ],
+                        ),
                       )
-                    ),
+                    ],
                   ),
-                  const SizedBox(width: 5.0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextCustom(text: listProduct[i].nameProduct),
-                        const SizedBox(height: 5.0),
-                        TextCustom(text: '\$ ${listProduct[i].price }', color: Colors.grey),
-                      ],
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        )      
-    );
+            ));
   }
 }
 

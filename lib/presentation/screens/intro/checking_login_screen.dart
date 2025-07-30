@@ -59,7 +59,7 @@ class _CheckingLoginScreenState extends State<CheckingLoginScreen> with TickerPr
 
           Navigator.pushAndRemoveUntil(context, routeFrave(page: LoginScreen()), (route) => false);    
          
-        } else if ( state.rolId != '' ){
+        } else if ( state.rolId != null && state.rolId != '' ){
 
           userBloc.add( OnGetUserEvent(state.user!) );
 

@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pop(context);
           errorMessageSnack(context, state.error);
 
-        } else if ( state.rolId != '' ){
+        } else if ( state.rolId != null && state.rolId != '' ){
 
           userBloc.add( OnGetUserEvent(state.user!) );
           Navigator.pop(context);
@@ -78,95 +78,125 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Form(
-            key: _keyForm,
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return SafeArea(
+              child: Form(
+                key: _keyForm,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: constraints.maxWidth * 0.05,
+                      vertical: constraints.maxHeight * 0.02),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () => Navigator.pushReplacement(context, routeFrave(page: IntroScreen())),
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[50],
-                            shape: BoxShape.circle
-                          ),
-                          child: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black, size: 20),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.pushReplacement(
+                                  context, routeFrave(page: IntroScreen())),
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[50],
+                                    shape: BoxShape.circle),
+                                child: const Icon(
+                                    Icons.arrow_back_ios_new_outlined,
+                                    color: Colors.black,
+                                    size: 20),
+                              ),
+                            ),
+                            Row(
+                              children: const [
+                                TextCustom(
+                                    text: 'Frave ',
+                                    color: ColorsFrave.primaryColor,
+                                    fontWeight: FontWeight.w500),
+                                TextCustom(
+                                    text: 'Food',
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                      Row(
-                        children: const [
-                          TextCustom(text: 'Frave ', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500 ),
-                          TextCustom(text: 'Food', color: Colors.black87, fontWeight: FontWeight.w500 ),
-                        ],
+                      SizedBox(height: constraints.maxHeight * 0.02),
+                      Image.asset('Assets/Logo/logo-black.png',
+                          height: constraints.maxHeight * 0.2),
+                      SizedBox(height: constraints.maxHeight * 0.03),
+                      Container(
+                        alignment: Alignment.center,
+                        child: const TextCustom(
+                            text: 'Welcome back!',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff14222E)),
+                      ),
+                      const SizedBox(height: 5.0),
+                      Align(
+                        alignment: Alignment.center,
+                        child: const TextCustom(
+                            text:
+                                'Use your credentials below and login to your account.',
+                            textAlign: TextAlign.center,
+                            color: Colors.grey,
+                            maxLine: 2,
+                            fontSize: 16),
+                      ),
+                      SizedBox(height: constraints.maxHeight * 0.05),
+                      const TextCustom(text: 'Email Address'),
+                      const SizedBox(height: 5.0),
+                      FormFieldFrave(
+                        controller: _emailController,
+                        hintText: 'email@frave.com',
+                        keyboardType: TextInputType.emailAddress,
+                        validator: validatedEmail,
+                      ),
+                      const SizedBox(height: 20.0),
+                      const TextCustom(text: 'Password'),
+                      const SizedBox(height: 5.0),
+                      FormFieldFrave(
+                        controller: _passwordController,
+                        hintText: '********',
+                        isPassword: true,
+                        validator: passwordValidator,
+                      ),
+                      const SizedBox(height: 10.0),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                              onTap: () => Navigator.push(context,
+                                  routeFrave(page: ForgotPasswordScreen())),
+                              child: const TextCustom(
+                                  text: 'Forgot Password?',
+                                  fontSize: 17,
+                                  color: ColorsFrave.primaryColor))),
+                      SizedBox(height: constraints.maxHeight * 0.04),
+                      BtnFrave(
+                        text: 'Login',
+                        fontSize: 21,
+                        height: 50,
+                        fontWeight: FontWeight.w500,
+                        onPressed: () {
+                          if (_keyForm.currentState!.validate()) {
+                            authBloc.add(LoginEvent(
+                                _emailController.text, _passwordController.text));
+                          }
+                        },
                       )
                     ],
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                Image.asset('Assets/Logo/logo-black.png', height: 150 ),
-                const SizedBox(height: 30.0),
-                Container(
-                  alignment: Alignment.center,
-                  child: const TextCustom(text: 'Welcome back!', fontSize: 35, fontWeight: FontWeight.bold, color: Color(0xff14222E) ),
-                ),
-                const SizedBox(height: 5.0),
-                Align(
-                  alignment: Alignment.center,
-                  child: const TextCustom(text: 'Use your credentials below and login to your account.', textAlign: TextAlign.center, color: Colors.grey, maxLine: 2, fontSize: 16),
-                ),
-                const SizedBox(height: 50.0),
-                const TextCustom(text: 'Email Address'),
-                const SizedBox(height: 5.0),
-                FormFieldFrave(
-                  controller: _emailController,
-                  hintText: 'email@frave.com',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: validatedEmail,
-                ),
-                const SizedBox(height: 20.0),
-                const TextCustom(text: 'Password'),
-                const SizedBox(height: 5.0),
-                FormFieldFrave(
-                  controller: _passwordController,
-                  hintText: '********',
-                  isPassword: true,
-                  validator: passwordValidator,
-                ),
-                const SizedBox(height: 10.0),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () => Navigator.push(context, routeFrave(page: ForgotPasswordScreen())),
-                    child: TextCustom(text: 'Forgot Password?', fontSize: 17, color: ColorsFrave.primaryColor )
-                  )
-                ),
-                const SizedBox(height: 40.0),
-                BtnFrave(
-                  text: 'Login',
-                  fontSize: 21,
-                  height: 50,
-                  fontWeight: FontWeight.w500,
-                  onPressed: () {
-                    if( _keyForm.currentState!.validate() ){
-    
-                      authBloc.add( LoginEvent(_emailController.text, _passwordController.text));
-    
-                    }
-                  },
-                )
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

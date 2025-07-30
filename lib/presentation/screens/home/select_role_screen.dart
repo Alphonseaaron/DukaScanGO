@@ -13,53 +13,76 @@ class SelectRoleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final authBloc = BlocProvider.of<AuthBloc>(context).state;
+    final authState = BlocProvider.of<AuthBloc>(context).state;
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                  horizontal: constraints.maxWidth * 0.05,
+                  vertical: constraints.maxHeight * 0.02),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  TextCustom(text: 'Frave ', fontSize: 25, color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500 ),
-                  TextCustom(text: 'Food', fontSize: 25, color: ColorsFrave.secundaryColor, fontWeight: FontWeight.w500 ),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      TextCustom(
+                          text: 'Frave ',
+                          fontSize: 25,
+                          color: ColorsFrave.primaryColor,
+                          fontWeight: FontWeight.w500),
+                      TextCustom(
+                          text: 'Food',
+                          fontSize: 25,
+                          color: ColorsFrave.secundaryColor,
+                          fontWeight: FontWeight.w500),
+                    ],
+                  ),
+                  SizedBox(height: constraints.maxHeight * 0.02),
+                  const TextCustom(
+                      text: 'How do you want to continue?',
+                      color: ColorsFrave.secundaryColor,
+                      fontSize: 25),
+                  SizedBox(height: constraints.maxHeight * 0.03),
+                  if (authState.rolId == '1')
+                    _BtnRol(
+                      svg: 'Assets/svg/restaurante.svg',
+                      text: 'Restaurant',
+                      color1: ColorsFrave.primaryColor.withOpacity(.2),
+                      color2: Colors.greenAccent.withOpacity(.1),
+                      onPressed: () => Navigator.pushAndRemoveUntil(context,
+                          routeFrave(page: AdminHomeScreen()), (route) => false),
+                    ),
+                  if (authState.rolId == '1' || authState.rolId == '3')
+                    _BtnRol(
+                      svg: 'Assets/svg/bussiness-man.svg',
+                      text: 'Client',
+                      color1: const Color(0xffFE6488).withOpacity(.2),
+                      color2: Colors.amber.withOpacity(.1),
+                      onPressed: () => Navigator.pushReplacement(
+                          context, routeFrave(page: ClientHomeScreen())),
+                    ),
+                  if (authState.rolId == '1' || authState.rolId == '3')
+                    _BtnRol(
+                      svg: 'Assets/svg/delivery-bike.svg',
+                      text: 'Delivery',
+                      color1: const Color(0xff8956FF).withOpacity(.2),
+                      color2: Colors.purpleAccent.withOpacity(.1),
+                      onPressed: () => Navigator.pushAndRemoveUntil(
+                          context,
+                          routeFrave(page: DeliveryHomeScreen()),
+                          (route) => false),
+                    ),
                 ],
               ),
-              const SizedBox(height: 20.0),
-              const TextCustom(text: 'How do you want to continue?', color: ColorsFrave.secundaryColor, fontSize: 25,),
-              const SizedBox(height: 30.0),
-              ( authBloc.user!.rolId == 1) 
-                ? _BtnRol(
-                svg: 'Assets/svg/restaurante.svg',
-                text: 'Restaurant',
-                color1: ColorsFrave.primaryColor.withOpacity(.2),
-                color2: Colors.greenAccent.withOpacity(.1),
-                onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: AdminHomeScreen()), (route) => false),
-              ) : const SizedBox(),
-              (authBloc.user!.rolId == 1 || authBloc.user!.rolId == 3 )
-                ? _BtnRol(
-                svg: 'Assets/svg/bussiness-man.svg',
-                text: 'Client',
-                color1: Color(0xffFE6488).withOpacity(.2),
-                color2: Colors.amber.withOpacity(.1),
-                onPressed: () => Navigator.pushReplacement(context, routeFrave(page: ClientHomeScreen())),
-              ) : const SizedBox() ,
-              (authBloc.user!.rolId == 1 || authBloc.user!.rolId == 3 ) 
-                ? _BtnRol(
-                svg: 'Assets/svg/delivery-bike.svg',
-                text: 'Delivery',
-                color1: Color(0xff8956FF).withOpacity(.2),
-                color2: Colors.purpleAccent.withOpacity(.1),
-                onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: DeliveryHomeScreen()), (route) => false),
-              ) : const SizedBox()
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

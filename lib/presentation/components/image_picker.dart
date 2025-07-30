@@ -29,7 +29,7 @@ class ImagePickerFrave extends StatelessWidget {
             Navigator.pop(context);
             final XFile? imagePath = await _picker.pickImage(source: ImageSource.gallery);
             if( imagePath != null ){
-              userBloc.add( OnChangeImageProfileEvent(imagePath.path));
+              userBloc.add( OnChangeImageProfileEvent(imagePath));
             }
           },
           onPressedTake: () async {
@@ -37,7 +37,7 @@ class ImagePickerFrave extends StatelessWidget {
             Navigator.pop(context);
             final XFile? photoPath = await _picker.pickImage(source: ImageSource.camera);
             if( photoPath != null ){
-              userBloc.add( OnChangeImageProfileEvent(photoPath.path));
+              userBloc.add( OnChangeImageProfileEvent(photoPath));
             }
 
           }

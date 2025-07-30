@@ -1,115 +1,43 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/data/local_secure/secure_storage.dart';
-import 'package:restaurant/domain/models/product_cart.dart';
-import 'package:restaurant/domain/models/response/order_details_response.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/domain/models/response/orders_client_response.dart';
-import 'package:restaurant/domain/models/response/response_default.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:restaurant/domain/models/order.dart';
 
 class OrdersServices {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-
-  Future<ResponseDefault> addNewOrders(int uidAddress, double total, String typePayment, List<ProductCart> products) async {
-
-    final token = await secureStorage.readToken();
-
-    Map<String, dynamic> data = {
-      "uidAddress"  : uidAddress,
-      "typePayment": typePayment,
-      "total"       : total,
-      "products"    : products 
-    };
-
-    final resp = await http.post(Uri.parse('${Environment.endpointApi}/add-new-orders'),
-      headers: {'Content-type' : 'application/json', 'xx-token' : token!},
-      body: json.encode(data)
-    );
-
-    return ResponseDefault.fromJson(jsonDecode(resp.body));
+  Future<void> addOrder(Order order) async {
+    await _firestore.collection('orders').add(order.toMap());
   }
 
-
-  Future<List<OrdersResponse>> getOrdersByStatus( String status ) async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.get(Uri.parse('${Environment.endpointApi}/get-orders-by-status/$status'),
-      headers: {'Accept' : 'application/json', 'xx-token' : token!},
-    );
-    return OrdersByStatusResponse.fromJson(jsonDecode(resp.body)).ordersResponse;
+  Future<List<Order>> getOrdersByStatus(String status) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('orders')
+        .where('status', isEqualTo: status)
+        .get();
+    return snapshot.docs
+        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
   }
 
-
-  Future<List<DetailsOrder>> gerOrderDetailsById(String idOrder) async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.get(Uri.parse('${Environment.endpointApi}/get-details-order-by-id/$idOrder'),
-      headers: {'Accept' : 'application/json', 'xx-token' : token!},
-    );
-    return OrderDetailsResponse.fromJson( jsonDecode(resp.body)).detailsOrder;
+  Future<Order?> getOrderById(String id) async {
+    final DocumentSnapshot doc =
+        await _firestore.collection('orders').doc(id).get();
+    if (doc.exists) {
+      return Order.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+    }
+    return null;
   }
 
-
-  Future<ResponseDefault> updateStatusOrderToDispatched(String idOrder, String idDelivery) async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.put(Uri.parse('${Environment.endpointApi}/update-status-order-dispatched'),
-      headers: { 'Accept' : 'application/json', 'xx-token' : token! },
-      body: {
-        'idDelivery' : idDelivery,
-        'idOrder' : idOrder
-      }
-    );
-
-    return ResponseDefault.fromJson(jsonDecode(resp.body));
+  Future<void> updateOrderStatus(String id, String status) async {
+    await _firestore.collection('orders').doc(id).update({'status': status});
   }
 
-
-  Future<ResponseDefault> updateOrderStatusOnWay( String idOrder, String latitude, String longitude ) async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.put(Uri.parse('${Environment.endpointApi}/update-status-order-on-way/$idOrder'),
-      headers: { 'Accept' : 'application/json', 'xx-token' : token! },
-      body: {
-        'latitude' : latitude,
-        'longitude' : longitude
-      }
-    );
-
-    return ResponseDefault.fromJson(jsonDecode(resp.body));
+  Future<List<Order>> getOrdersByClient(String uid) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('orders')
+        .where('clientId', isEqualTo: uid)
+        .get();
+    return snapshot.docs
+        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
   }
-  
-
-  Future<ResponseDefault> updateOrderStatusDelivered(String idOrder) async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.put(Uri.parse('${Environment.endpointApi}/update-status-order-delivered/$idOrder'),
-      headers: { 'Accept' : 'application/json', 'xx-token' : token! },
-    );
-    return ResponseDefault.fromJson( jsonDecode( resp.body ));
-  }
-  
-
-  Future<List<OrdersClient>> getListOrdersForClient() async {
-
-    final token = await secureStorage.readToken();
-
-    final resp = await http.get(Uri.parse('${Environment.endpointApi}/get-list-orders-for-client'),
-      headers: {'Accept' : 'application/json', 'xx-token' : token!}
-    );
-    
-    return OrdersClientResponse.fromJson( jsonDecode(resp.body)).ordersClient;
-  }
-
-
-
 }
-
-final ordersServices = OrdersServices();
