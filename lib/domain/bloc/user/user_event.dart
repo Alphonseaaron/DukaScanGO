@@ -1,10 +1,13 @@
 part of 'user_bloc.dart';
 
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:image_picker/image_picker.dart';
+
 @immutable
 abstract class UserEvent {}
 
 class OnGetUserEvent extends UserEvent {
-  final User user;
+  final firebase_auth.User user;
 
   OnGetUserEvent(this.user);
 }
@@ -21,7 +24,7 @@ class OnClearPicturePathEvent extends UserEvent {}
 
 
 class OnChangeImageProfileEvent extends UserEvent {
-  final String image;
+  final XFile image;
 
   OnChangeImageProfileEvent(this.image);
 }

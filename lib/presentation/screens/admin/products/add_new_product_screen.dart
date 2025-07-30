@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:restaurant/domain/bloc/blocs.dart';
 import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/helpers/helpers.dart';
+import 'package:restaurant/domain/models/product.dart';
 import 'package:restaurant/presentation/screens/admin/admin_home_screen.dart';
 import 'package:restaurant/presentation/themes/colors_frave.dart';
 
@@ -80,14 +81,18 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
           actions: [
             TextButton(
               onPressed: () {
+                final product = Product(
+                  name: _nameController.text,
+                  description: _descriptionController.text,
+                  price: double.parse(_priceController.text),
+                  images: [],
+                  category: 'default', // TODO: Add category selection
+                );
                 productBloc.add(OnAddNewProductEvent(
-                  _nameController.text, 
-                  _descriptionController.text, 
-                  _priceController.text, 
-                  productBloc.state.images!, 
-                  productBloc.state.idCategory.toString()
+                  product,
+                  productBloc.state.images!,
                 ));
-              }, 
+              },
               child: const TextCustom(text: ' Save ', color: ColorsFrave.primaryColor )
             )
           ],
@@ -170,51 +175,10 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Category'),
               const SizedBox(height: 5.0),
-              Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8.0)
-                ),
-                child: Container(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(color: Colors.grey, blurRadius: 7, spreadRadius: -5.0)
-                    ]
-                  ),
-                  child: InkWell(
-                    onTap: () => modalSelectionCategory(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blue, width: 3.5),
-                                borderRadius: BorderRadius.circular(6.0)
-                              ),
-                            ),
-                            const SizedBox(width: 8.0),
-                            BlocBuilder<ProductsBloc, ProductsState>(
-                              builder: (context, state) 
-                                => state.category == null || state.category == '' ? TextCustom(text: 'Select Category') : TextCustom(text: state.category!),
-                            )
-                          ],
-                        ),
-                        const Icon(Icons.navigate_next_rounded)
-                      ],
-                    ),
-                  ),
-                ),
-              )
+              FormFieldFrave(
+                hintText: 'Category',
+                // TODO: Implement category selection
+              ),
             ],
           ),
         ),

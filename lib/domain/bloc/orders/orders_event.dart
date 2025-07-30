@@ -3,35 +3,27 @@ part of 'orders_bloc.dart';
 @immutable
 abstract class OrdersEvent {}
 
-class OnAddNewOrdersEvent extends OrdersEvent {
+class OnAddNewOrderEvent extends OrdersEvent {
+  final Order order;
 
-  final int uidAddress;
-  final double total;
-  final String typePayment;
-  final List<ProductCart> products;
-
-  OnAddNewOrdersEvent(this.uidAddress, this.total, this.typePayment, this.products);
-
-} 
-
-class OnUpdateStatusOrderToDispatchedEvent extends OrdersEvent {
-  final String idOrder;
-  final String idDelivery;
-  final String notificationTokenDelivery;
-
-  OnUpdateStatusOrderToDispatchedEvent(this.idOrder, this.idDelivery, this.notificationTokenDelivery);
+  OnAddNewOrderEvent(this.order);
 }
 
-class OnUpdateStatusOrderOnWayEvent extends OrdersEvent {
-  final String idOrder;
-  final LatLng locationDelivery;
+class OnUpdateStatusOrderEvent extends OrdersEvent {
+  final String id;
+  final String status;
 
-  OnUpdateStatusOrderOnWayEvent(this.idOrder, this.locationDelivery);
+  OnUpdateStatusOrderEvent(this.id, this.status);
 }
 
-class OnUpdateStatusOrderDeliveredEvent extends OrdersEvent {
-  final String idOrder;
+class OnGetOrdersByStatusEvent extends OrdersEvent {
+  final String status;
 
-  OnUpdateStatusOrderDeliveredEvent(this.idOrder);
+  OnGetOrdersByStatusEvent(this.status);
 }
 
+class OnGetOrdersByClientEvent extends OrdersEvent {
+  final String uid;
+
+  OnGetOrdersByClientEvent(this.uid);
+}

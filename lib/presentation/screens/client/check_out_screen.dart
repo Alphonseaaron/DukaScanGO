@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/domain/bloc/blocs.dart';
+import 'package:restaurant/domain/models/order.dart';
 import 'package:restaurant/domain/models/type_payment.dart';
 import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/helpers/helpers.dart';
@@ -79,14 +80,21 @@ class CheckOutScreen extends StatelessWidget {
                       builder: (context, state) 
                         => InkWell(
                           onTap: (){
-                            orderBloc.add(
-                              OnAddNewOrdersEvent(
-                                userBloc.state.uidAddress,
-                                cartBloc.state.total,
-                                paymentBloc.state.typePaymentMethod,
-                                cartBloc.product
-                              )
+                            final order = Order(
+                              clientId: userBloc.state.user!.uid,
+                              address: userBloc.state.addressName!,
+                              total: cartBloc.state.total,
+                              paymentType: paymentBloc.state.typePaymentMethod,
+                              status: 'PENDING',
+                              date: DateTime.now(),
+                              details: cartBloc.product.map((p) => OrderDetail(
+                                productId: p.id,
+                                productName: p.name,
+                                price: p.price,
+                                quantity: p.quantity,
+                              )).toList(),
                             );
+                            orderBloc.add(OnAddNewOrderEvent(order));
 
                             // if( state.typePaymentMethod == 'CREDIT CARD' ){
 

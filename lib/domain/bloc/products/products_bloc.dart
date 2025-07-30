@@ -2,138 +2,83 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:restaurant/domain/services/category_services.dart';
+import 'package:restaurant/domain/models/product.dart';
 import 'package:restaurant/domain/services/products_services.dart';
 
 part 'products_event.dart';
 part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
+  final ProductsServices _productsServices = ProductsServices();
 
-  ProductsBloc() : super(ProductsState()){
-
-    on<OnAddNewCategoryEvent>( _onAddNewCategory );
-    on<OnSelectCategoryEvent>( _onSelectCategory );
-    on<OnUnSelectCategoryEvent>( _onUnSelectCategory );
-    on<OnSelectMultipleImagesEvent>( _onSelectMultipleImages );
-    on<OnUnSelectMultipleImagesEvent>( _onUnSelectMultipleImages );
-    on<OnAddNewProductEvent>( _onAddNewProduct );
-    on<OnUpdateStatusProductEvent>( _onUpdateStatusProduct );
-    on<OnDeleteProductEvent>( _onDeleteProduct );
-    on<OnSearchProductEvent>( _onSearchProductEvent );
+  ProductsBloc() : super(const ProductsState()) {
+    on<OnAddNewProductEvent>(_onAddNewProduct);
+    on<OnUpdateProductEvent>(_onUpdateProduct);
+    on<OnDeleteProductEvent>(_onDeleteProduct);
+    on<OnLoadProductsEvent>(_onLoadProducts);
+    on<OnSelectMultipleImagesEvent>(_onSelectMultipleImages);
+    on<OnUnSelectMultipleImagesEvent>(_onUnSelectMultipleImages);
   }
 
-
-  Future<void> _onAddNewCategory( OnAddNewCategoryEvent event, Emitter<ProductsState> emit ) async {
-
+  Future<void> _onLoadProducts(
+      OnLoadProductsEvent event, Emitter<ProductsState> emit) async {
     try {
-
-      emit( LoadingProductsState() );
-
-      await Future.delayed(Duration(seconds: 1));
-
-      final data = await categoryServices.addNewCategory(event.nameCategory, event.descriptionCategory);
-
-      if( data.resp ) emit( SuccessProductsState() );
-      else emit( FailureProductsState(data.msg) );
-      
+      emit(LoadingProductsState());
+      final products = await _productsServices.getProducts();
+      emit(state.copyWith(products: products));
     } catch (e) {
-      emit( FailureProductsState(e.toString()) );
+      emit(FailureProductsState(e.toString()));
     }
-
   }
 
-  Future<void> _onSelectCategory( OnSelectCategoryEvent event, Emitter<ProductsState> emit ) async {
-
-    emit( state.copyWith(
-      idCategory: event.idCategory,
-      category: event.category
-    ));
-  }
-
-  Future<void> _onUnSelectCategory( OnUnSelectCategoryEvent event, Emitter<ProductsState> emit ) async {
-    
-    emit( state.copyWith(
-      idCategory: 0,
-      category: ''
-    ));
-  }
-
-  Future<void> _onSelectMultipleImages( OnSelectMultipleImagesEvent event, Emitter<ProductsState> emit ) async {
-
-    emit( state.copyWith( images: event.images ));
-
-  }
-
-  Future<void> _onUnSelectMultipleImages( OnUnSelectMultipleImagesEvent event, Emitter<ProductsState> emit) async {
-
-    emit( state.copyWith(images: []) );
-
-  }
-
-  Future<void> _onAddNewProduct( OnAddNewProductEvent event, Emitter<ProductsState> emit ) async {
-
+  Future<void> _onAddNewProduct(
+      OnAddNewProductEvent event, Emitter<ProductsState> emit) async {
     try {
-
-      emit( LoadingProductsState() );
-
-      final data = await productServices.addNewProduct(event.name, event.description, event.price, event.images, event.category);
-      
-      Future.delayed(Duration(seconds: 2));
-
-      if( data.resp ) emit( SuccessProductsState() );
-      else emit( FailureProductsState(data.msg) );
-
-      
+      emit(LoadingProductsState());
+      final imageUrls = await _productsServices.uploadImages(event.images);
+      final productWithImages = event.product.copyWith(images: imageUrls);
+      await _productsServices.addProduct(productWithImages, event.images);
+      final products = await _productsServices.getProducts();
+      emit(SuccessProductsState());
+      emit(state.copyWith(products: products));
     } catch (e) {
-      emit( FailureProductsState(e.toString()) );
+      emit(FailureProductsState(e.toString()));
     }
-
   }
 
-  Future<void> _onUpdateStatusProduct( OnUpdateStatusProductEvent event, Emitter<ProductsState> emit ) async {
-
+  Future<void> _onUpdateProduct(
+      OnUpdateProductEvent event, Emitter<ProductsState> emit) async {
     try {
-
-      emit( LoadingProductsState() );
-
-      final resp = await productServices.updateStatusProduct( event.idProduct, event.status );
-
-      await Future.delayed(Duration(milliseconds: 1000));
-
-      if( resp.resp ) emit( SuccessProductsState() );
-      else emit( FailureProductsState( resp.msg ) );
-      
+      emit(LoadingProductsState());
+      await _productsServices.updateProduct(event.product);
+      final products = await _productsServices.getProducts();
+      emit(SuccessProductsState());
+      emit(state.copyWith(products: products));
     } catch (e) {
-      emit( FailureProductsState(e.toString()) );
+      emit(FailureProductsState(e.toString()));
     }
-
   }
 
-  Future<void> _onDeleteProduct( OnDeleteProductEvent event, Emitter<ProductsState> emit) async {
-
+  Future<void> _onDeleteProduct(
+      OnDeleteProductEvent event, Emitter<ProductsState> emit) async {
     try {
-
-      emit( LoadingProductsState() );
-
-      final resp = await productServices.deleteProduct( event.idProduct );
-
-      await Future.delayed(Duration(seconds: 1));
-
-      if( resp.resp ) emit( SuccessProductsState() );
-      else emit( FailureProductsState(resp.msg) );
-      
+      emit(LoadingProductsState());
+      await _productsServices.deleteProduct(event.id);
+      final products = await _productsServices.getProducts();
+      emit(SuccessProductsState());
+      emit(state.copyWith(products: products));
     } catch (e) {
-      emit( FailureProductsState(e.toString()) );
+      emit(FailureProductsState(e.toString()));
     }
-
   }
 
-  Future<void> _onSearchProductEvent( OnSearchProductEvent event, Emitter<ProductsState> emit) async {
-
-    emit( state.copyWith( searchProduct: event.searchProduct ) );
-
+  Future<void> _onSelectMultipleImages(
+      OnSelectMultipleImagesEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(images: event.images));
   }
 
-
+  Future<void> _onUnSelectMultipleImages(
+      OnUnSelectMultipleImagesEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(images: []));
+  }
 }
