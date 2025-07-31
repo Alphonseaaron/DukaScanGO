@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:convert';
 import 'package:restaurant/domain/bloc/blocs.dart';
 import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/components/manual_market_map.dart';
+import 'package:restaurant/presentation/themes/theme_maps.dart';
 
 class MapLocationAddressScreen extends StatefulWidget {
 
@@ -67,6 +69,7 @@ class _CreateMap extends StatelessWidget {
                 mapLocation.add( OnGetAddressLocationEvent( mapLocation.state.locationCentral! ) );
               }
             },
+            style: jsonEncode(themeMapsFrave),
            )
           : Center(
               child: const TextCustom(text: 'Locating...'),

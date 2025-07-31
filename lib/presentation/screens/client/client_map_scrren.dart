@@ -5,8 +5,10 @@ import 'package:restaurant/data/env/environment.dart';
 import 'package:restaurant/domain/bloc/blocs.dart';
 import 'package:restaurant/domain/models/response/orders_client_response.dart';
 import 'package:restaurant/presentation/components/components.dart';
+import 'dart:convert';
 import 'package:restaurant/presentation/helpers/helpers.dart';
 import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:restaurant/presentation/themes/theme_maps.dart';
 
 class ClientMapScreen extends StatefulWidget {
 
@@ -82,6 +84,7 @@ class _MapClient extends StatelessWidget {
         myLocationButtonEnabled: false,
         onMapCreated: mapClientBloc.initMapClient,
         markers: state.markerClient.values.toSet(),
+        style: jsonEncode(themeMapsFrave),
       ),
     );
       

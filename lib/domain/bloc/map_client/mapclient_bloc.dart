@@ -30,7 +30,6 @@ class MapclientBloc extends Bloc<MapclientEvent, MapclientState> {
 
       this._mapController = controller;
       
-      _mapController.setMapStyle( jsonEncode( themeMapsFrave ));
 
       add( OnReadyMapClientEvent() );
 
