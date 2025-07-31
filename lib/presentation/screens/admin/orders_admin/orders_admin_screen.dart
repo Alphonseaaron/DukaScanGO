@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/domain/models/pay_type.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/domain/services/orders_services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/admin/orders_admin/order_details_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/models/pay_type.dart';
+import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
+import 'package:dukascango/domain/services/orders_services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/admin/orders_admin/order_details_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class OrdersAdminScreen extends StatelessWidget {
 
@@ -27,16 +27,16 @@ class OrdersAdminScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.arrow_back_ios_new_outlined, color: ColorsFrave.primaryColor, size: 17),
-                TextCustom(text: 'Back', color: ColorsFrave.primaryColor, fontSize: 17)
+                Icon(Icons.arrow_back_ios_new_outlined, color: ColorsDukascango.primaryColor, size: 17),
+                TextCustom(text: 'Back', color: ColorsDukascango.primaryColor, fontSize: 17)
               ],
             ),
           ),
           bottom: TabBar(
             indicatorWeight: 2,
-            labelColor: ColorsFrave.primaryColor,
+            labelColor: ColorsDukascango.primaryColor,
             unselectedLabelColor: Colors.grey,
-            indicator: FraveIndicatorTabBar(),
+            indicator: DukascangoIndicatorTabBar(),
             isScrollable: true,
             tabs: List<Widget>.generate(payType.length, (i) 
               => Tab(
@@ -53,11 +53,11 @@ class OrdersAdminScreen extends StatelessWidget {
                   => ( !snapshot.hasData )
                       ? Column(
                           children: const [
-                            ShimmerFrave(),
+                            ShimmerDukascango(),
                             SizedBox(height: 10),
-                            ShimmerFrave(),
+                            ShimmerDukascango(),
                             SizedBox(height: 10),
-                            ShimmerFrave(),
+                            ShimmerDukascango(),
                           ],
                         )
                       :  _ListOrders(listOrders: snapshot.data!)
@@ -106,7 +106,7 @@ class _CardOrders extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width,
       child: InkWell(
-        onTap: () => Navigator.push(context, routeFrave(page: OrderDetailsScreen(order: orderResponse))),
+        onTap: () => Navigator.push(context, routeDukascango(page: OrderDetailsScreen(order: orderResponse))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(
@@ -118,7 +118,7 @@ class _CardOrders extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TextCustom(text: 'Date', fontSize: 16, color: ColorsFrave.secundaryColor),
+                  const TextCustom(text: 'Date', fontSize: 16, color: ColorsDukascango.secundaryColor),
                   TextCustom(text: DateCustom.getDateOrder(orderResponse.currentDate.toString()), fontSize: 16),
                 ],
               ),
@@ -126,12 +126,12 @@ class _CardOrders extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TextCustom(text: 'Client', fontSize:16, color: ColorsFrave.secundaryColor),
+                  const TextCustom(text: 'Client', fontSize:16, color: ColorsDukascango.secundaryColor),
                   TextCustom(text: orderResponse.cliente, fontSize: 16),
                 ],
               ),
               const SizedBox(height: 10.0),
-              const TextCustom(text: 'Address shipping', fontSize: 16, color: ColorsFrave.secundaryColor),
+              const TextCustom(text: 'Address shipping', fontSize: 16, color: ColorsDukascango.secundaryColor),
               const SizedBox(height: 5.0),
               Align(
                 alignment: Alignment.centerRight,

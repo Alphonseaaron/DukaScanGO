@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FormFieldFrave extends StatelessWidget {
+class FormFieldDukascango extends StatelessWidget {
   
   final TextEditingController? controller;
   final String? hintText;
@@ -11,7 +11,7 @@ class FormFieldFrave extends StatelessWidget {
   final bool readOnly;
   final FormFieldValidator<String>? validator;
 
-  const FormFieldFrave({ 
+  const FormFieldDukascango({
     this.controller, 
     this.hintText, 
     this.isPassword = false,

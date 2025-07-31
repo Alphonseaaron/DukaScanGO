@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerFrave extends StatelessWidget {
+class ShimmerDukascango extends StatelessWidget {
 
-  const ShimmerFrave({Key? key}):super(key: key);
+  const ShimmerDukascango({Key? key}):super(key: key);
 
   @override
   Widget build(BuildContext context) {

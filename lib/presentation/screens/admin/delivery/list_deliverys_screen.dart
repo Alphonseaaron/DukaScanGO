@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/get_all_delivery_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/admin/delivery/add_new_delivery_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/response/get_all_delivery_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/admin/delivery/add_new_delivery_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class ListDeliverysScreen extends StatefulWidget {
 
@@ -52,16 +52,16 @@ class _ListDeliverysScreenState extends State<ListDeliverysScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 17),
-                TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor,)
+                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 17),
+                TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor,)
               ],
             ),
           ),
           elevation: 0,
           actions: [
             TextButton(
-              onPressed: () => Navigator.push(context, routeFrave(page: AddNewDeliveryScreen())), 
-              child: const TextCustom(text: 'Add', color: ColorsFrave.primaryColor, fontSize: 17)
+              onPressed: () => Navigator.push(context, routeDukascango(page: AddNewDeliveryScreen())),
+              child: const TextCustom(text: 'Add', color: ColorsDukascango.primaryColor, fontSize: 17)
             )
           ],
         ),
@@ -71,11 +71,11 @@ class _ListDeliverysScreenState extends State<ListDeliverysScreen> {
             => ( !snapshot.hasData )
               ? Column(
                   children: const [
-                    ShimmerFrave(),
+                    ShimmerDukascango(),
                     SizedBox(height: 10.0),
-                    ShimmerFrave(),
+                    ShimmerDukascango(),
                     SizedBox(height: 10.0),
-                    ShimmerFrave(),
+                    ShimmerDukascango(),
                   ],
                 )
               : _ListDelivery(listDelivery: snapshot.data! )
@@ -154,7 +154,7 @@ class _ListDelivery extends StatelessWidget {
         children: [
           SvgPicture.asset('Assets/no-data.svg', height: 290),
           const SizedBox(height: 20.0),
-          const TextCustom(text: 'Without Delivery men', color: ColorsFrave.primaryColor, fontSize: 20)
+          const TextCustom(text: 'Without Delivery men', color: ColorsDukascango.primaryColor, fontSize: 20)
         ],
       ),
     );

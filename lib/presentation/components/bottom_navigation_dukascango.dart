@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/client/cart_client_screen.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/client/profile_client_screen.dart';
-import 'package:restaurant/presentation/screens/client/search_client_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/client/profile_client_screen.dart';
+import 'package:dukascango/presentation/screens/client/search_client_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
-class BottomNavigationFrave extends StatelessWidget {
+class BottomNavigationDukascango extends StatelessWidget {
 
   final int index;
 
-  BottomNavigationFrave(this.index);
+  BottomNavigationDukascango(this.index);
 
   @override
   Widget build(BuildContext context){
@@ -32,28 +32,28 @@ class BottomNavigationFrave extends StatelessWidget {
             index: index, 
             iconData: Icons.home_outlined, 
             text: 'Home',
-            onPressed: () => Navigator.pushReplacement(context, routeFrave(page: ClientHomeScreen())),
+            onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: ClientHomeScreen())),
             ),
           _ItemButton(
             i: 1, 
             index: index, 
             iconData: Icons.search, 
             text: 'Search',
-            onPressed: () => Navigator.pushReplacement(context, routeFrave(page: SearchClientScreen())),
+            onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: SearchClientScreen())),
             ),
           _ItemButton(
             i: 2, 
             index: index, 
             iconData: Icons.local_mall_outlined, 
             text: 'Cart',
-            onPressed: () => Navigator.pushReplacement(context, routeFrave(page: CartClientScreen())),
+            onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: CartClientScreen())),
           ),
           _ItemButton(
             i: 3, 
             index: index, 
             iconData: Icons.person_outline_outlined, 
             text: 'Profile',
-            onPressed: () => Navigator.pushReplacement(context, routeFrave(page: ProfileClientScreen())),
+            onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: ProfileClientScreen())),
             ),
         ],
       )
@@ -78,7 +78,7 @@ class _ItemButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 7.0),
         decoration: BoxDecoration(
-          color: ( i == index ) ? ColorsFrave.primaryColor.withOpacity(.9) : Colors.transparent,
+          color: ( i == index ) ? ColorsDukascango.primaryColor.withOpacity(.9) : Colors.transparent,
           borderRadius: BorderRadius.circular(15.0)
         ),
         child: ( i == index ) 

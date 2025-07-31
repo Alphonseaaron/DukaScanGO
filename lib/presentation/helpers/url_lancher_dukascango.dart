@@ -1,6 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 
-class UrlLauncherFrave {
+class UrlLauncherDukascango {
 
 
   Future<void> openMapLaunch(String latitude, String longitude) async {
@@ -29,4 +29,4 @@ class UrlLauncherFrave {
 
 }
 
-final urlLauncherFrave = UrlLauncherFrave();
+final urlLauncherDukascango = UrlLauncherDukascango();

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/admin/admin_home_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddNewDeliveryScreen extends StatefulWidget {
 
@@ -69,7 +69,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
 
           Navigator.pop(context);
           modalSuccess(context, 'Delivery Successfully Registered', 
-            () => Navigator.pushAndRemoveUntil(context, routeFrave(page: AdminHomeScreen()), (route) => false));
+            () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: AdminHomeScreen()), (route) => false));
           userBloc.add( OnClearPicturePathEvent());
         }
         if( state is FailureUserState ){
@@ -85,7 +85,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
             centerTitle: true,
             leadingWidth: 80,
             leading: TextButton(
-              child: const TextCustom(text: 'Cancel', color: ColorsFrave.primaryColor, fontSize: 17 ),
+              child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17 ),
               onPressed: () => Navigator.pop(context),
             ),
             elevation: 0,
@@ -104,7 +104,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
                     
                   }
                 }, 
-                child: const TextCustom(text: ' Save ', color: ColorsFrave.primaryColor )
+                child: const TextCustom(text: ' Save ', color: ColorsDukascango.primaryColor )
               )
             ],
           ),
@@ -122,7 +122,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Name'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 hintText: 'name',
                 controller: _nameController,
                 validator: RequiredValidator(errorText: 'Name is required'),
@@ -130,7 +130,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Lastname'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _lastnameController,
                 hintText: 'lastname',
                 validator: RequiredValidator(errorText: 'Lastname is required'),
@@ -138,7 +138,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Phone'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _phoneController,
                 hintText: '---.---.---',
                 keyboardType: TextInputType.number,
@@ -147,16 +147,16 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Email'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _emailController,
-                hintText: 'email@frave.com',
+                hintText: 'email@dukascango.com',
                 keyboardType: TextInputType.emailAddress,
                 validator: validatedEmail
               ),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Password'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _passwordController,
                 hintText: '********',
                 isPassword: true,
@@ -213,7 +213,7 @@ class _PictureRegistre extends StatelessWidget {
                    ? Column(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: const [
-                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsFrave.primaryColor ),
+                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsDukascango.primaryColor ),
                         SizedBox(height: 10.0),
                         TextCustom(text: 'Picture', color: Colors.black45 )
                      ],

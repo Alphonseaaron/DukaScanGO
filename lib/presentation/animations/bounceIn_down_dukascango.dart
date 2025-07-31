@@ -1,20 +1,20 @@
 part of 'animations.dart';
 
 
-class BounceInDownFrave extends StatefulWidget {
+class BounceInDownDukascango extends StatefulWidget {
 
   final Widget child;
 
-  const BounceInDownFrave({
+  const BounceInDownDukascango({
     Key? key, 
     required this.child,
   }) : super(key: key);
 
   @override
-  _BounceInDownFraveState createState() => _BounceInDownFraveState();
+  _BounceInDownDukascangoState createState() => _BounceInDownDukascangoState();
 }
 
-class _BounceInDownFraveState extends State<BounceInDownFrave> with TickerProviderStateMixin{
+class _BounceInDownDukascangoState extends State<BounceInDownDukascango> with TickerProviderStateMixin{
 
   AnimationController? _controller;
   late Animation<double> _animation;

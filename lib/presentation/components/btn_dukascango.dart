@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/presentation/components/components.dart';
+import 'package:dukascango/presentation/components/components.dart';
 
-class BtnFrave extends StatelessWidget {
+class BtnDukascango extends StatelessWidget {
 
   final String text;
   final Color color;
@@ -13,7 +13,7 @@ class BtnFrave extends StatelessWidget {
   final double fontSize;
   final VoidCallback? onPressed;
 
-  const BtnFrave({
+  const BtnDukascango({
     required this.text, 
     this.color  = const Color(0xff0C6CF2), 
     this.height = 50, 
