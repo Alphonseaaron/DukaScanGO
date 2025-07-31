@@ -40,7 +40,6 @@ class MapdeliveryBloc extends Bloc<MapdeliveryEvent, MapdeliveryState> {
 
       this._mapController = controller;
       
-      _mapController.setMapStyle( jsonEncode( themeMapsFrave ));
 
       add( OnMapReadyEvent() );
 

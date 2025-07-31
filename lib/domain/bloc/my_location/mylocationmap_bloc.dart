@@ -48,8 +48,6 @@ class MylocationmapBloc extends Bloc<MylocationmapEvent, MylocationmapState> {
     if( !state.mapReady ){
 
       this._mapController = controller;
-      // Change Style from Map
-      _mapController.setMapStyle( jsonEncode( themeMapsFrave ));
 
       add( OnMapReadyMyLocationEvent() );
 

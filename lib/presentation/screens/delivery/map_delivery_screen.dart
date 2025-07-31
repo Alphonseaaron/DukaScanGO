@@ -7,10 +7,12 @@ import 'package:restaurant/data/env/environment.dart';
 import 'package:restaurant/domain/bloc/blocs.dart';
 import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
 import 'package:restaurant/presentation/components/components.dart';
+import 'dart:convert';
 import 'package:restaurant/presentation/helpers/helpers.dart';
 import 'package:restaurant/presentation/screens/delivery/delivery_home_screen.dart';
 import 'package:restaurant/presentation/screens/delivery/order_delivered_screen.dart';
 import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:restaurant/presentation/themes/theme_maps.dart';
 
 class MapDeliveryScreen extends StatefulWidget {
 
@@ -246,6 +248,7 @@ class _MapDelivery extends StatelessWidget {
               onMapCreated: mapDelivery.initMapDeliveryFrave,
               markers: mapDelivery.state.markers.values.toSet(),
               polylines: mapDelivery.state.polyline!.values.toSet(),
+              style: jsonEncode(themeMapsFrave),
             )
           : Center(
               child: const TextCustom(text: 'Locating...'),
