@@ -10,6 +10,10 @@ import 'package:restaurant/presentation/themes/colors_frave.dart';
 
 class CartClientScreen extends StatelessWidget {
 
+  final bool isSelfScan;
+
+  const CartClientScreen({Key? key, this.isSelfScan = false}) : super(key: key);
+
   @override
   Widget build(BuildContext context){
 
@@ -186,7 +190,7 @@ class CartClientScreen extends StatelessWidget {
                         color: (state.quantityCart != 0) ? ColorsFrave.primaryColor : ColorsFrave.secundaryColor,
                         onPressed: (){
                           if ( state.quantityCart != 0 ){
-                            Navigator.push(context, routeFrave(page: CheckOutScreen()));
+                            Navigator.push(context, routeFrave(page: CheckOutScreen(isSelfScan: isSelfScan)));
                           }
                         },
                       )

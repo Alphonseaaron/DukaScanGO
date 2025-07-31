@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => DeliveryBloc()),
         BlocProvider(create: (context) => MapdeliveryBloc()),
         BlocProvider(create: (context) => MapclientBloc()),
+        BlocProvider(create: (context) => SelfScanBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
