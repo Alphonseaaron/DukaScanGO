@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/order.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/order.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               context,
               'DISPATCHED',
               () => Navigator.pushReplacement(
-                  context, routeFrave(page: OrdersAdminScreen())));
+                  context, routeDukascango(page: OrdersAdminScreen())));
         } else if (state is FailureOrdersState) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -61,9 +61,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Icon(Icons.arrow_back_ios_new_rounded,
-                    size: 17, color: ColorsFrave.primaryColor),
+                    size: 17, color: ColorsDukascango.primaryColor),
                 TextCustom(
-                    text: 'Back', color: ColorsFrave.primaryColor, fontSize: 17)
+                    text: 'Back', color: ColorsDukascango.primaryColor, fontSize: 17)
               ],
             ),
           ),
@@ -86,7 +86,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       const TextCustom(
                           text: 'Total',
-                          color: ColorsFrave.secundaryColor,
+                          color: ColorsDukascango.secundaryColor,
                           fontSize: 22,
                           fontWeight: FontWeight.w500),
                       TextCustom(
@@ -101,7 +101,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       const TextCustom(
                           text: 'Cliente:',
-                          color: ColorsFrave.secundaryColor,
+                          color: ColorsDukascango.secundaryColor,
                           fontSize: 16),
                       TextCustom(text: '${widget.order.clientId}'),
                     ],
@@ -112,7 +112,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       const TextCustom(
                           text: 'Date:',
-                          color: ColorsFrave.secundaryColor,
+                          color: ColorsDukascango.secundaryColor,
                           fontSize: 16),
                       TextCustom(
                           text: DateCustom.getDateOrder(
@@ -123,7 +123,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   const SizedBox(height: 10.0),
                   const TextCustom(
                       text: 'Address shipping:',
-                      color: ColorsFrave.secundaryColor,
+                      color: ColorsDukascango.secundaryColor,
                       fontSize: 16),
                   const SizedBox(height: 5.0),
                   TextCustom(
@@ -136,7 +136,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             const TextCustom(
                                 text: 'Delivery',
                                 fontSize: 17,
-                                color: ColorsFrave.secundaryColor),
+                                color: ColorsDukascango.secundaryColor),
                             Row(
                               children: [
                                 Container(
@@ -166,7 +166,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        BtnFrave(
+                        BtnDukascango(
                           text: 'SELECT DELIVERY',
                           fontWeight: FontWeight.w500,
                           onPressed: () =>

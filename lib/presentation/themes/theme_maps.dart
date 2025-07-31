@@ -1,7 +1,7 @@
-library restaurant.thememapsfrave;
+library dukascango.thememapsdukascango;
 
 
-const themeMapsFrave = [
+const themeMapsDukascango = [
     {
         "featureType": "all",
         "elementType": "labels.text.fill",

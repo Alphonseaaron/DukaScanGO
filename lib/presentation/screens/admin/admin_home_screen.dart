@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/admin/category/categories_admin_screen.dart';
-import 'package:restaurant/presentation/screens/admin/delivery/list_deliverys_screen.dart';
-import 'package:restaurant/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
-import 'package:restaurant/presentation/screens/admin/products/list_products_screen.dart';
-import 'package:restaurant/presentation/screens/home/select_role_screen.dart';
-import 'package:restaurant/presentation/screens/intro/checking_login_screen.dart';
-import 'package:restaurant/presentation/screens/profile/change_password_screen.dart';
-import 'package:restaurant/presentation/screens/profile/edit_Prodile_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/admin/category/categories_admin_screen.dart';
+import 'package:dukascango/presentation/screens/admin/delivery/list_deliverys_screen.dart';
+import 'package:dukascango/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
+import 'package:dukascango/presentation/screens/admin/products/list_products_screen.dart';
+import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
+import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
+import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AdminHomeScreen extends StatelessWidget {
 
@@ -27,7 +27,7 @@ class AdminHomeScreen extends StatelessWidget {
         } else if (state is SuccessUserState) {
 
           Navigator.pop(context);
-          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeFrave(page: AdminHomeScreen())));
+          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeDukascango(page: AdminHomeScreen())));
           Navigator.pop(context);
 
         } else if (state is FailureUserState) {
@@ -42,7 +42,7 @@ class AdminHomeScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
-              Align(alignment: Alignment.center, child: ImagePickerFrave()),
+              Align(alignment: Alignment.center, child: ImagePickerDukascango()),
               const SizedBox(height: 10.0),
               Center(
                 child: BlocBuilder<UserBloc, UserState>(
@@ -52,7 +52,7 @@ class AdminHomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         maxLine: 1,
                         textAlign: TextAlign.center,
-                        color: ColorsFrave.secundaryColor
+                        color: ColorsDukascango.secundaryColor
                       )
                 )
               ),
@@ -60,7 +60,7 @@ class AdminHomeScreen extends StatelessWidget {
               Center(
                   child: BlocBuilder<UserBloc, UserState>(
                     builder: (_, state) 
-                      => TextCustom( text: (state.user != null ) ? state.user!.email : '', fontSize: 20, color: ColorsFrave.secundaryColor)
+                      => TextCustom( text: (state.user != null ) ? state.user!.email : '', fontSize: 20, color: ColorsDukascango.secundaryColor)
                   )
               ),
               const SizedBox(height: 15.0),
@@ -71,20 +71,20 @@ class AdminHomeScreen extends StatelessWidget {
                 icon: Icons.person,
                 colorIcon: 0xff01C58C,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: EditProfileScreen())),
+                    context, routeDukascango(page: EditProfileScreen())),
               ),
               ItemAccount(
                 text: 'Change Password',
                 icon: Icons.lock_rounded,
                 colorIcon: 0xff1B83F5,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: ChangePasswordScreen())),
+                    context, routeDukascango(page: ChangePasswordScreen())),
               ),
               ItemAccount(
                 text: 'Change Role',
                 icon: Icons.swap_horiz_rounded,
                 colorIcon: 0xffE62755,
-                onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: SelectRoleScreen()), (route) => false),
+                onPressed: () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: SelectRoleScreen()), (route) => false),
               ),
               ItemAccount(
                 text: 'Dark mode',
@@ -92,35 +92,35 @@ class AdminHomeScreen extends StatelessWidget {
                 colorIcon: 0xff051E2F,
               ),
               const SizedBox(height: 15.0),
-              const TextCustom(text: 'Restaurant', color: Colors.grey),
+              const TextCustom(text: 'Dukascango', color: Colors.grey),
               const SizedBox(height: 10.0),
               ItemAccount(
                 text: 'Categories',
                 icon: Icons.category_rounded,
                 colorIcon: 0xff5E65CD,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: CategoriesAdminScreen())),
+                    context, routeDukascango(page: CategoriesAdminScreen())),
               ),
               ItemAccount(
                 text: 'Products',
                 icon: Icons.add,
                 colorIcon: 0xff355773,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: ListProductsScreen())),
+                    context, routeDukascango(page: ListProductsScreen())),
               ),
               ItemAccount(
                 text: 'Delivery',
                 icon: Icons.delivery_dining_rounded,
                 colorIcon: 0xff469CD7,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: ListDeliverysScreen())),
+                    context, routeDukascango(page: ListDeliverysScreen())),
               ),
               ItemAccount(
                 text: 'Orders',
                 icon: Icons.checklist_rounded,
                 colorIcon: 0xffFFA136,
                 onPressed: () => Navigator.push(
-                    context, routeFrave(page: OrdersAdminScreen())),
+                    context, routeDukascango(page: OrdersAdminScreen())),
               ),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Personal', color: Colors.grey),
@@ -154,7 +154,7 @@ class AdminHomeScreen extends StatelessWidget {
                   authBloc.add(LogOutEvent());
                   Navigator.pushAndRemoveUntil(
                     context,
-                    routeFrave(page: CheckingLoginScreen()), (route) => false);
+                    routeDukascango(page: CheckingLoginScreen()), (route) => false);
                 },
               ),
             ],

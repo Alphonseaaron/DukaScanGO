@@ -3,9 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/services/push_notification.dart';
-import 'package:restaurant/presentation/screens/intro/checking_login_screen.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/services/push_notification.dart';
+import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
  
 PushNotification pushNotification = PushNotification();
 
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Food - Fraved',
+        title: 'DukaScanGO',
         home: CheckingLoginScreen(),
       ),
     );

@@ -4,11 +4,11 @@
 
   ### <img src="https://avatars.githubusercontent.com/u/76232843?s=400&u=52234351df87372dea43a90243320f9e6a78e70c&v=4" height="100px"/> 
 
-  ***FRAVE DEVELOPER***
+  ***DUKASCAN DEVELOPER***
 </div>
 
 <div align="center">
-  Frave Food - Delivery App
+  DukaScanGO - Delivery App
 </div>
 
 
@@ -21,7 +21,7 @@
             </a>
         </th>
         <th style="text-align:center">
-            <a href="https://www.instagram.com/frave_developer">
+            <a href="https://www.instagram.com/dukascan_developer">
                 <img src="https://github.com/aritraroy/social-icons/blob/master/instagram-icon.png?raw=true" width="40">
             </a>
         </th>
@@ -35,12 +35,12 @@
 <br>
 
 ### Video Youtube
-[Flutter - Frave Food](https://youtu.be/KmJEB5Dfam0)
+[Flutter - DukaScanGO](https://youtu.be/KmJEB5Dfam0)
 
 
 ### Donate
-<a href="https://www.buymeacoffee.com/frave"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="170"></a>
-<a href="https://www.paypal.me/Fpereza"><img src="https://cdn.svgporn.com/logos/paypal.svg" width="50"></a>
+<a href="https://www.buymeacoffee.com/dukascan"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="170"></a>
+<a href="https://www.paypal.me/DukaScan"><img src="https://cdn.svgporn.com/logos/paypal.svg" width="50"></a>
 <a>[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I1C3R4S)</a>
 ---
 ## Requirements
@@ -82,14 +82,14 @@
 - Push notifications
 
 # Backend [NodeJs]
-- [Backend - Javascript](https://github.com/Frave07/Backend-Delivery-App-Flutter)
+- [Backend - Javascript](https://github.com/DukaScan/Backend-Delivery-App-Flutter)
 
 
 ---
 
 ## Screenshot
 
-<img src="https://github.com/Frave07/Flutter-Delivery-App/blob/main/screenshot/Delivery-Food-Brinning.png" />
+<img src="https://github.com/DukaScan/Flutter-Delivery-App/blob/main/screenshot/Delivery-Food-Brinning.png" />
 
 ---
 
@@ -100,7 +100,7 @@
 
   > Version 1.1, December 2016
 
-  > Copyright (C) [2023] [frave developer]
+  > Copyright (C) [2023] [dukascan developer]
 
   Everyone is permitted to copy and distribute verbatim or modified
   copies of this license document.
