@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/domain/models/product.dart';
-import 'package:restaurant/presentation/screens/admin/admin_home_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/domain/models/product.dart';
+import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
+import 'package:dukascango/presentation/screens/admin/products/admin_scan_barcode_screen.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddNewProductScreen extends StatefulWidget {
-
   @override
   _AddNewProductScreenState createState() => _AddNewProductScreenState();
 }
 
 class _AddNewProductScreenState extends State<AddNewProductScreen> {
-
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _priceController;
+  late TextEditingController _barcodeController;
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -30,36 +30,36 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
     _priceController = TextEditingController();
+    _barcodeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _nameController.clear();
     _nameController.dispose();
-    _descriptionController.clear();
     _descriptionController.dispose();
-    _priceController.clear();
     _priceController.dispose();
+    _barcodeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     final productBloc = BlocProvider.of<ProductsBloc>(context);
 
     return BlocListener<ProductsBloc, ProductsState>(
       listener: (context, state) {
-        if(state is LoadingProductsState ){
+        if (state is LoadingProductsState) {
           modalLoading(context);
         }
-        if(state is SuccessProductsState ){
+        if (state is SuccessProductsState) {
           Navigator.pop(context);
-          modalSuccess(context, 'Product added Successfully', () => Navigator.pushReplacement(context, routeFrave(page: AdminHomeScreen())));
+          modalSuccess(context, 'Product added Successfully',
+              () => Navigator.pushReplacement(context, routeFrave(page: AdminHomeScreen())));
         }
-        if(state is FailureProductsState ){
+        if (state is FailureProductsState) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: TextCustom(text: state.error, color: Colors.white), backgroundColor: Colors.red));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: TextCustom(text: state.error, color: Colors.white), backgroundColor: Colors.red));
         }
       },
       child: Scaffold(
@@ -70,8 +70,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
           centerTitle: true,
           leadingWidth: 80,
           leading: TextButton(
-            child: const TextCustom(text: 'Cancel', color: ColorsFrave.primaryColor, fontSize: 17),
-            onPressed: (){
+            child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17),
+            onPressed: () {
               Navigator.pop(context);
               productBloc.add(OnUnSelectCategoryEvent());
               productBloc.add(OnUnSelectMultipleImagesEvent());
@@ -80,21 +80,23 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
           elevation: 0,
           actions: [
             TextButton(
-              onPressed: () {
-                final product = Product(
-                  name: _nameController.text,
-                  description: _descriptionController.text,
-                  price: double.parse(_priceController.text),
-                  images: [],
-                  category: 'default', // TODO: Add category selection
-                );
-                productBloc.add(OnAddNewProductEvent(
-                  product,
-                  productBloc.state.images!,
-                ));
-              },
-              child: const TextCustom(text: ' Save ', color: ColorsFrave.primaryColor )
-            )
+                onPressed: () {
+                  if (_keyForm.currentState!.validate()) {
+                    final product = Product(
+                      name: _nameController.text,
+                      description: _descriptionController.text,
+                      price: double.parse(_priceController.text),
+                      barcode: _barcodeController.text,
+                      images: [],
+                      category: 'default', // TODO: Add category selection
+                    );
+                    productBloc.add(OnAddNewProductEvent(
+                      product,
+                      productBloc.state.images!,
+                    ));
+                  }
+                },
+                child: const TextCustom(text: ' Save ', color: ColorsDukascango.primaryColor))
           ],
         ),
         body: Form(
@@ -129,47 +131,50 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 validator: RequiredValidator(errorText: 'Price is required'),
               ),
               const SizedBox(height: 20.0),
+              const TextCustom(text: 'Barcode'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _barcodeController,
+                hintText: 'Barcode',
+                validator: RequiredValidator(errorText: 'Barcode is required'),
+              ),
+              const SizedBox(height: 10.0),
+              BtnDukascango(
+                text: 'Scan Barcode',
+                onPressed: () async {
+                  final barcode = await Navigator.push<String>(context, routeFrave(page: AdminScanBarcodeScreen()));
+                  if (barcode != null) {
+                    _barcodeController.text = barcode;
+                  }
+                },
+              ),
+              const SizedBox(height: 20.0),
               const TextCustom(text: 'Pictures'),
               const SizedBox(height: 10.0),
               InkWell(
                 onTap: () async {
-    
                   final ImagePicker _picker = ImagePicker();
-    
                   final List<XFile>? images = await _picker.pickMultiImage();
-    
-                  if(images != null)  productBloc.add(OnSelectMultipleImagesEvent(images));
-    
+                  if (images != null) productBloc.add(OnSelectMultipleImagesEvent(images));
                 },
                 child: Container(
                   height: 150,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8.0)
-                  ),
+                  decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(8.0)),
                   child: BlocBuilder<ProductsBloc, ProductsState>(
-                    builder: (context, state) 
-                      => state.images != null
-                        ? ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: state.images?.length,
-                            itemBuilder: (_, i) 
-                              => Container(
+                      builder: (context, state) => state.images != null
+                          ? ListView.builder(
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.images?.length,
+                              itemBuilder: (_, i) => Container(
                                 height: 100,
                                 width: 120,
                                 margin: const EdgeInsets.only(right: 10.0),
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(File(state.images![i].path)),
-                                    fit: BoxFit.cover
-                                  )
-                                ),
-                              )
-                          )
-                        : const Icon(Icons.wallpaper_rounded, size: 80, color: Colors.grey)
-                  ),
+                                    image: DecorationImage(image: FileImage(File(state.images![i].path)), fit: BoxFit.cover)),
+                              ))
+                          : const Icon(Icons.wallpaper_rounded, size: 80, color: Colors.grey)),
                 ),
               ),
               const SizedBox(height: 20.0),

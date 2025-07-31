@@ -6,6 +6,7 @@ class Product {
   final List<String> images;
   final String category;
   final String? status;
+  final String? barcode;
 
   Product({
     this.id,
@@ -15,6 +16,7 @@ class Product {
     required this.images,
     required this.category,
     this.status,
+    this.barcode,
   });
 
   Product copyWith({
@@ -25,6 +27,7 @@ class Product {
     List<String>? images,
     String? category,
     String? status,
+    String? barcode,
   }) {
     return Product(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class Product {
       images: images ?? this.images,
       category: category ?? this.category,
       status: status ?? this.status,
+      barcode: barcode ?? this.barcode,
     );
   }
 
@@ -45,6 +49,7 @@ class Product {
       'images': images,
       'category': category,
       'status': status,
+      'barcode': barcode,
     };
   }
 
@@ -57,6 +62,7 @@ class Product {
       images: List<String>.from(map['images']),
       category: map['category'],
       status: map['status'],
+      barcode: map['barcode'],
     );
   }
 }

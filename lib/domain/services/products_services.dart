@@ -44,6 +44,19 @@ class ProductsServices {
     await _firestore.collection('products').doc(id).delete();
   }
 
+  Future<Product?> getProductByBarcode(String barcode) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('products')
+        .where('barcode', isEqualTo: barcode)
+        .limit(1)
+        .get();
+    if (snapshot.docs.isNotEmpty) {
+      final doc = snapshot.docs.first;
+      return Product.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+    }
+    return null;
+  }
+
   Future<List<String>> uploadImages(List<XFile> images) async {
     final List<String> imageUrls = [];
     for (final image in images) {

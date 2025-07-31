@@ -7,9 +7,14 @@ import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/helpers/helpers.dart';
 import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
 import 'package:restaurant/presentation/screens/client/select_addreess_screen.dart';
+import 'package:dukascango/presentation/screens/client/self_scan/exit_receipt_screen.dart';
 import 'package:restaurant/presentation/themes/colors_frave.dart';
 
 class CheckOutScreen extends StatelessWidget {
+
+  final bool isSelfScan;
+
+  const CheckOutScreen({Key? key, this.isSelfScan = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +31,15 @@ class CheckOutScreen extends StatelessWidget {
         }
         if(state is SuccessOrdersState) {
           Navigator.pop(context);
-          modalSuccess(context, 'order received', () {
-            cartBloc.add(OnClearCartEvent());
-            paymentBloc.add(OnClearTypePaymentMethodEvent());
-            Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
-          });
+          if (isSelfScan) {
+            Navigator.pushAndRemoveUntil(context, routeFrave(page: ExitReceiptScreen()), (route) => false);
+          } else {
+            modalSuccess(context, 'order received', () {
+              cartBloc.add(OnClearCartEvent());
+              paymentBloc.add(OnClearTypePaymentMethodEvent());
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
+            });
+          }
         }
         if(state is FailureOrdersState) {
           Navigator.pop(context);
@@ -66,8 +75,10 @@ class CheckOutScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _CheckoutAddress(),
-                const SizedBox(height: 20.0),
+                if (!isSelfScan) ...[
+                  _CheckoutAddress(),
+                  const SizedBox(height: 20.0),
+                ],
                 _CheckoutPaymentMethods(),
                 const SizedBox(height: 20.0),
                 _DetailsTotal(),

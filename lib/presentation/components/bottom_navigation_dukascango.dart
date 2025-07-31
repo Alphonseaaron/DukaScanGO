@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/client/self_scan/store_checkin_screen.dart';
 import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/profile_client_screen.dart';
@@ -44,12 +45,19 @@ class BottomNavigationDukascango extends StatelessWidget {
           _ItemButton(
             i: 2, 
             index: index, 
+            iconData: Icons.qr_code_scanner,
+            text: 'Scan & Go',
+            onPressed: () => Navigator.push(context, routeDukascango(page: StoreCheckinScreen())),
+            ),
+          _ItemButton(
+            i: 3,
+            index: index,
             iconData: Icons.local_mall_outlined, 
             text: 'Cart',
             onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: CartClientScreen())),
           ),
           _ItemButton(
-            i: 3, 
+            i: 4,
             index: index, 
             iconData: Icons.person_outline_outlined, 
             text: 'Profile',
