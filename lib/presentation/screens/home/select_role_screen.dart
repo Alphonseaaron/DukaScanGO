@@ -32,12 +32,12 @@ class SelectRoleScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       TextCustom(
-                          text: 'Frave ',
+                          text: 'Duka ',
                           fontSize: 25,
                           color: ColorsFrave.primaryColor,
                           fontWeight: FontWeight.w500),
                       TextCustom(
-                          text: 'Food',
+                          text: 'ScanGO',
                           fontSize: 25,
                           color: ColorsFrave.secundaryColor,
                           fontWeight: FontWeight.w500),
