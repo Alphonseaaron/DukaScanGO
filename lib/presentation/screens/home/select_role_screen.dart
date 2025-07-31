@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/admin/admin_home_screen.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/delivery_home_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class SelectRoleScreen extends StatelessWidget {
 

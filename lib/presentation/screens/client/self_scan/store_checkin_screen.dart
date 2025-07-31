@@ -4,7 +4,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/self_scan/product_scan_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
-import 'package:dukascango/presentation/components/custom_camera_scanner.dart';
+import 'package:dukascango/presentation/components/unified_scanner.dart';
 
 class StoreCheckinScreen extends StatelessWidget {
   @override
@@ -25,8 +25,9 @@ class StoreCheckinScreen extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            CustomCameraScanner(
-              onBarcodeDetected: (storeId) {
+            UnifiedScanner(
+              scanAreaShape: ScanAreaShape.Square,
+              onScan: (storeId) {
                 selfScanBloc.add(OnStoreScannedEvent(storeId));
               },
             ),

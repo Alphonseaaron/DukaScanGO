@@ -6,7 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:meta/meta.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:restaurant/presentation/themes/theme_maps.dart';
+import 'package:dukascango/presentation/themes/theme_maps.dart';
 
 part 'mylocationmap_event.dart';
 part 'mylocationmap_state.dart';

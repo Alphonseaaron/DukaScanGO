@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
-import 'package:restaurant/domain/models/map_box/driving_response.dart';
+import 'package:dukascango/domain/models/map_box/driving_response.dart';
 
 class MapBoxServices {
 

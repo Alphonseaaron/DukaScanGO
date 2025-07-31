@@ -5,7 +5,7 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/animation_route.dart';
 import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
-import 'package:dukascango/presentation/components/custom_camera_scanner.dart';
+import 'package:dukascango/presentation/components/unified_scanner.dart';
 
 class ProductScanScreen extends StatefulWidget {
   @override
@@ -49,8 +49,9 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
         ),
         body: Stack(
           children: [
-            CustomCameraScanner(
-              onBarcodeDetected: (barcode) {
+            UnifiedScanner(
+              scanAreaShape: ScanAreaShape.Rectangle,
+              onScan: (barcode) {
                 selfScanBloc.add(OnProductScannedEvent(barcode));
               },
             ),

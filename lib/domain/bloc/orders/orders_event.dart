@@ -27,3 +27,9 @@ class OnGetOrdersByClientEvent extends OrdersEvent {
 
   OnGetOrdersByClientEvent(this.uid);
 }
+
+class OnSelectDeliveryMethodEvent extends OrdersEvent {
+  final DeliveryMethod deliveryMethod;
+
+  OnSelectDeliveryMethodEvent(this.deliveryMethod);
+}

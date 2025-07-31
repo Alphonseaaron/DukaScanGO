@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/presentation/components/components.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/presentation/components/components.dart';
 
 void modalDelete(BuildContext context, String name, String image, VoidCallback onPressed){
 

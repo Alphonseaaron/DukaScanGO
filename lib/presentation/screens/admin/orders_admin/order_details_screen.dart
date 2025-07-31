@@ -7,6 +7,7 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
+import 'package:dukascango/presentation/screens/admin/orders_admin/admin_scan_receipt_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 
@@ -21,14 +22,8 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
-  void initState() {
-    super.initState();
-    // TODO: Implement get order by id
-    // BlocProvider.of<OrdersBloc>(context).add(OnGetOrderByIdEvent(widget.order.id!));
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ordersBloc = BlocProvider.of<OrdersBloc>(context);
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
         if (state is LoadingOrderState) {
@@ -37,7 +32,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Navigator.pop(context);
           modalSuccess(
               context,
-              'DISPATCHED',
+              'SUCCESS',
               () => Navigator.pushReplacement(
                   context, routeDukascango(page: OrdersAdminScreen())));
         } else if (state is FailureOrdersState) {
@@ -121,6 +116,21 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ],
                   ),
                   const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const TextCustom(
+                        text: 'Delivery Method:',
+                        color: ColorsDukascango.secundaryColor,
+                        fontSize: 16
+                      ),
+                      TextCustom(
+                        text: widget.order.deliveryMethod == DeliveryMethod.ClickAndCollect ? 'Click & Collect' : 'Delivery',
+                        fontSize: 16
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
                   const TextCustom(
                       text: 'Address shipping:',
                       color: ColorsDukascango.secundaryColor,
@@ -159,8 +169,45 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ],
               ),
             )),
-            (widget.order.status == 'PAID OUT')
-                ? Container(
+            if (widget.order.deliveryMethod == DeliveryMethod.ClickAndCollect && widget.order.status == 'PENDING_PICKUP')
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    BtnDukascango(
+                      text: 'Scan Receipt',
+                      fontWeight: FontWeight.w500,
+                      onPressed: () async {
+                        final receiptId = await Navigator.push<String>(context, routeDukascango(page: AdminScanReceiptScreen()));
+                        if (receiptId != null && receiptId == widget.order.id) {
+                          ordersBloc.add(OnUpdateStatusOrderEvent(widget.order.id!, 'PICKED_UP'));
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    BtnDukascango(
+                      text: 'Send Reminder',
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                      onPressed: () {
+                        // TODO: Implement send reminder
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    BtnDukascango(
+                      text: 'Initiate Delivery',
+                      color: Colors.orange,
+                      fontWeight: FontWeight.w500,
+                      onPressed: () {
+                        ordersBloc.add(OnUpdateStatusOrderEvent(widget.order.id!, 'DISPATCHED'));
+                      },
+                    ),
+                  ],
+                ),
+              )
+            else if (widget.order.status == 'PAID OUT')
+                Container(
                     padding: const EdgeInsets.all(10.0),
                     width: MediaQuery.of(context).size.width,
                     child: Column(
@@ -175,7 +222,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ],
                     ),
                   )
-                : const SizedBox()
+                else
+                  const SizedBox()
           ],
         ),
       ),
@@ -230,4 +278,3 @@ class _ListProductsDetails extends StatelessWidget {
     );
   }
 }
-

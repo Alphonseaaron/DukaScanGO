@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:dukascango/domain/bloc/orders/orders_bloc.dart';
+
 class Order {
   final String? id;
   final String clientId;
@@ -10,6 +12,7 @@ class Order {
   final String status;
   final DateTime date;
   final List<OrderDetail> details;
+  final DeliveryMethod deliveryMethod;
 
   Order({
     this.id,
@@ -21,6 +24,7 @@ class Order {
     required this.status,
     required this.date,
     required this.details,
+    required this.deliveryMethod,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,6 +37,7 @@ class Order {
       'status': status,
       'date': date,
       'details': details.map((e) => e.toMap()).toList(),
+      'deliveryMethod': deliveryMethod.index,
     };
   }
 
@@ -48,6 +53,7 @@ class Order {
       date: (map['date'] as Timestamp).toDate(),
       details: List<OrderDetail>.from(
           map['details']?.map((x) => OrderDetail.fromMap(x))),
+      deliveryMethod: DeliveryMethod.values[map['deliveryMethod']],
     );
   }
 }

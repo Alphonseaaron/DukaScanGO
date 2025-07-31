@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:restaurant/domain/models/user.dart' as UserModel;
-import 'package:restaurant/domain/services/user_services.dart';
+import 'package:dukascango/domain/models/user.dart' as UserModel;
+import 'package:dukascango/domain/services/user_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'user_event.dart';

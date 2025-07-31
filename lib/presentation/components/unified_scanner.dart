@@ -1,63 +1,68 @@
-import 'package:camera/camera.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
-class CustomCameraScanner extends StatefulWidget {
-  final Function(String) onBarcodeDetected;
+enum ScanAreaShape { Square, Rectangle }
 
-  const CustomCameraScanner({Key? key, required this.onBarcodeDetected}) : super(key: key);
+class UnifiedScanner extends StatefulWidget {
+  final ScanAreaShape scanAreaShape;
+  final Function(String) onScan;
+
+  const UnifiedScanner({
+    Key? key,
+    required this.scanAreaShape,
+    required this.onScan,
+  }) : super(key: key);
 
   @override
-  _CustomCameraScannerState createState() => _CustomCameraScannerState();
+  _UnifiedScannerState createState() => _UnifiedScannerState();
 }
 
-class _CustomCameraScannerState extends State<CustomCameraScanner> with SingleTickerProviderStateMixin {
-  late CameraController _cameraController;
-  late List<CameraDescription> _cameras;
+class _UnifiedScannerState extends State<UnifiedScanner> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  bool _isDetecting = false;
+  Timer? _scanTimer;
 
   @override
   void initState() {
     super.initState();
-    _initializeCamera();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
-  }
 
-  Future<void> _initializeCamera() async {
-    _cameras = await availableCameras();
-    _cameraController = CameraController(_cameras[0], ResolutionPreset.high);
-    await _cameraController.initialize();
-    if (!mounted) return;
-    setState(() {});
-    _cameraController.startImageStream((image) {
-      if (_isDetecting) return;
-      _isDetecting = true;
-      // Mock barcode detection
-      Future.delayed(const Duration(seconds: 2), () {
-        widget.onBarcodeDetected('mock_barcode');
-        _isDetecting = false;
-      });
+    // Simulate a scan after a delay
+    _scanTimer = Timer(const Duration(seconds: 3), () {
+      widget.onScan('mock_scan_result');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Scan successful!'),
+          backgroundColor: Colors.green,
+        ),
+      );
     });
   }
 
   @override
   void dispose() {
-    _cameraController.dispose();
     _animationController.dispose();
+    _scanTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_cameraController.value.isInitialized) {
-      return const Center(child: CircularProgressIndicator());
-    }
     return Stack(
       children: [
-        CameraPreview(_cameraController),
+        // Mock camera feed
+        Container(
+          color: Colors.black,
+          child: Center(
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Image.asset('Assets/Logo/logo-white.png', fit: BoxFit.cover, height: double.infinity, width: double.infinity),
+            ),
+          ),
+        ),
         _buildScannerOverlay(),
         _buildScanningAnimation(),
       ],
@@ -67,7 +72,7 @@ class _CustomCameraScannerState extends State<CustomCameraScanner> with SingleTi
   Widget _buildScannerOverlay() {
     return CustomPaint(
       size: Size.infinite,
-      painter: _ScannerOverlayPainter(),
+      painter: _ScannerOverlayPainter(scanAreaShape: widget.scanAreaShape),
     );
   }
 
@@ -77,7 +82,10 @@ class _CustomCameraScannerState extends State<CustomCameraScanner> with SingleTi
       builder: (context, child) {
         return Positioned.fill(
           child: CustomPaint(
-            painter: _ScannerAnimationPainter(_animationController.value),
+            painter: _ScannerAnimationPainter(
+              position: _animationController.value,
+              scanAreaShape: widget.scanAreaShape,
+            ),
           ),
         );
       },
@@ -86,12 +94,15 @@ class _CustomCameraScannerState extends State<CustomCameraScanner> with SingleTi
 }
 
 class _ScannerOverlayPainter extends CustomPainter {
+  final ScanAreaShape scanAreaShape;
+  _ScannerOverlayPainter({required this.scanAreaShape});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = Colors.black.withOpacity(0.5);
     final background = Path()..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
     final scanWindowWidth = size.width * 0.8;
-    final scanWindowHeight = size.width * 0.8;
+    final scanWindowHeight = scanAreaShape == ScanAreaShape.Square ? scanWindowWidth : scanWindowWidth / 2;
     final scanWindowRect = Rect.fromCenter(
       center: size.center(Offset.zero),
       width: scanWindowWidth,
@@ -103,12 +114,13 @@ class _ScannerOverlayPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _ScannerOverlayPainter oldDelegate) => false;
 }
 
 class _ScannerAnimationPainter extends CustomPainter {
   final double position;
-  _ScannerAnimationPainter(this.position);
+  final ScanAreaShape scanAreaShape;
+  _ScannerAnimationPainter({required this.position, required this.scanAreaShape});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -116,7 +128,7 @@ class _ScannerAnimationPainter extends CustomPainter {
       ..color = Colors.red
       ..strokeWidth = 2;
     final scanWindowWidth = size.width * 0.8;
-    final scanWindowHeight = size.width * 0.8;
+    final scanWindowHeight = scanAreaShape == ScanAreaShape.Square ? scanWindowWidth : scanWindowWidth / 2;
     final scanWindowRect = Rect.fromCenter(
       center: size.center(Offset.zero),
       width: scanWindowWidth,

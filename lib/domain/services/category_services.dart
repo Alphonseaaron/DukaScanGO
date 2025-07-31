@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/data/local_secure/secure_storage.dart';
-import 'package:restaurant/domain/models/response/category_all_response.dart';
-import 'package:restaurant/domain/models/response/response_default.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/data/local_secure/secure_storage.dart';
+import 'package:dukascango/domain/models/response/category_all_response.dart';
+import 'package:dukascango/domain/models/response/response_default.dart';
 
 class CategoryServices {
 

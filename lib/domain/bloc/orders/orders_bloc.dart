@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:restaurant/domain/models/order.dart';
-import 'package:restaurant/domain/models/product_cart.dart';
-import 'package:restaurant/domain/services/orders_services.dart';
+import 'package:dukascango/domain/models/order.dart';
+import 'package:dukascango/domain/models/product_cart.dart';
+import 'package:dukascango/domain/services/orders_services.dart';
 
 part 'orders_event.dart';
 part 'orders_state.dart';
@@ -16,6 +16,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     on<OnUpdateStatusOrderEvent>(_onUpdateStatusOrder);
     on<OnGetOrdersByStatusEvent>(_onGetOrdersByStatus);
     on<OnGetOrdersByClientEvent>(_onGetOrdersByClient);
+    on<OnSelectDeliveryMethodEvent>(_onSelectDeliveryMethod);
+  }
+
+  Future<void> _onSelectDeliveryMethod(
+      OnSelectDeliveryMethodEvent event, Emitter<OrdersState> emit) async {
+    emit(state.copyWith(deliveryMethod: event.deliveryMethod));
   }
 
   Future<void> _onAddNewOrder(

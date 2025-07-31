@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/order.dart';
-import 'package:restaurant/domain/models/type_payment.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/client/select_addreess_screen.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/order.dart';
+import 'package:dukascango/domain/models/type_payment.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/client/select_addreess_screen.dart';
 import 'package:dukascango/presentation/screens/client/self_scan/exit_receipt_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class CheckOutScreen extends StatelessWidget {
 
@@ -76,7 +76,16 @@ class CheckOutScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (!isSelfScan) ...[
-                  _CheckoutAddress(),
+                  _DeliveryMethodSelection(),
+                  const SizedBox(height: 20.0),
+                  BlocBuilder<OrdersBloc, OrdersState>(
+                    builder: (context, state) {
+                      if (state.deliveryMethod == DeliveryMethod.Delivery) {
+                        return _CheckoutAddress();
+                      }
+                      return _StorePickupInfo();
+                    },
+                  ),
                   const SizedBox(height: 20.0),
                 ],
                 _CheckoutPaymentMethods(),
@@ -93,10 +102,10 @@ class CheckOutScreen extends StatelessWidget {
                           onTap: (){
                             final order = Order(
                               clientId: userBloc.state.user!.uid,
-                              address: userBloc.state.addressName!,
+                              address: orderBloc.state.deliveryMethod == DeliveryMethod.Delivery ? userBloc.state.addressName! : 'DukaScanGO Store - Nairobi',
                               total: cartBloc.state.total,
                               paymentType: paymentBloc.state.typePaymentMethod,
-                              status: 'PENDING',
+                              status: orderBloc.state.deliveryMethod == DeliveryMethod.Delivery ? 'PENDING' : 'PENDING_PICKUP',
                               date: DateTime.now(),
                               details: cartBloc.product.map((p) => OrderDetail(
                                 productId: p.id,
@@ -104,12 +113,13 @@ class CheckOutScreen extends StatelessWidget {
                                 price: p.price,
                                 quantity: p.quantity,
                               )).toList(),
+                              deliveryMethod: orderBloc.state.deliveryMethod,
                             );
                             orderBloc.add(OnAddNewOrderEvent(order));
 
                             // if( state.typePaymentMethod == 'CREDIT CARD' ){
 
-                            //   modalPaymentWithNewCard(ctx: context, amount: cartBloc.state.total.toString());
+                            //   modalPaymentWithNewCard(ctx: acontext, amount: cartBloc.state.total.toString());
 
                             // }
                             
@@ -138,6 +148,60 @@ class CheckOutScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _DeliveryMethodSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final ordersBloc = BlocProvider.of<OrdersBloc>(context);
+    return BlocBuilder<OrdersBloc, OrdersState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () => ordersBloc.add(OnSelectDeliveryMethodEvent(DeliveryMethod.Delivery)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: state.deliveryMethod == DeliveryMethod.Delivery ? ColorsDukascango.primaryColor : Colors.grey,
+              ),
+              child: const TextCustom(text: 'Delivery', color: Colors.white),
+            ),
+            ElevatedButton(
+              onPressed: () => ordersBloc.add(OnSelectDeliveryMethodEvent(DeliveryMethod.ClickAndCollect)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: state.deliveryMethod == DeliveryMethod.ClickAndCollect ? ColorsDukascango.primaryColor : Colors.grey,
+              ),
+              child: const TextCustom(text: 'Click & Collect', color: Colors.white),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _StorePickupInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15.0),
+      height: 95,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          TextCustom(text: 'Pickup Location', fontWeight: FontWeight.w500),
+          Divider(),
+          SizedBox(height: 5.0),
+          TextCustom(text: 'DukaScanGO Store - Nairobi', fontSize: 17, maxLine: 1),
+        ],
       ),
     );
   }

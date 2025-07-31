@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/domain/models/response/orders_client_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/screens/client/client_details_order_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/models/response/orders_client_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/screens/client/client_details_order_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/screens/client/delivery_approval_screen.dart';
 
 class ClientOrdersScreen extends StatelessWidget {
 
@@ -65,7 +66,13 @@ class _ListOrdersClient extends StatelessWidget {
           itemCount: listOrders.length,
           itemBuilder: (context, i) 
             => GestureDetector(
-              onTap: () => Navigator.push(context, routeFrave(page: ClientDetailsOrderScreen(orderClient: listOrders[i]))),
+              onTap: () {
+                if (listOrders[i].status == 'DELIVERY_INITIATED') {
+                  Navigator.push(context, routeFrave(page: DeliveryApprovalScreen(orderClient: listOrders[i])));
+                } else {
+                  Navigator.push(context, routeFrave(page: ClientDetailsOrderScreen(orderClient: listOrders[i])));
+                }
+              },
               child: Container(
                   margin: const EdgeInsets.only(bottom: 20.0),
                   padding: const EdgeInsets.all(15.0),

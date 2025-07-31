@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/login/login_screen.dart';
-import 'package:restaurant/presentation/screens/login/register_client_screen.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/login/login_screen.dart';
+import 'package:dukascango/presentation/screens/login/register_client_screen.dart';
 
 class IntroScreen extends StatelessWidget {
 

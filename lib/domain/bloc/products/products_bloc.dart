@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:restaurant/domain/models/product.dart';
-import 'package:restaurant/domain/services/products_services.dart';
+import 'package:dukascango/domain/models/product.dart';
+import 'package:dukascango/domain/services/products_services.dart';
 
 part 'products_event.dart';
 part 'products_state.dart';

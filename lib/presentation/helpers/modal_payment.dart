@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/presentation/components/components.dart';
+import 'package:dukascango/presentation/components/components.dart';
 
 void modalPaymentWithNewCard({ required BuildContext ctx, required String amount }){
 
