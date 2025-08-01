@@ -8,8 +8,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 part 'user_event.dart';
 part 'user_state.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserServices _userServices = UserServices();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   UserBloc() : super(const UserState()) {
     on<OnGetUserEvent>(_onGetUser);
@@ -61,6 +64,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         name: event.name,
         lastname: event.lastname,
         phone: event.phone,
+        country: event.country,
+        countryCode: event.countryCode,
+        dialingCode: event.dialingCode,
+        flag: event.flag,
+        currency: event.currency,
+        geo: event.geo,
       );
       await _userServices.updateUser(updatedUser);
       final user = await _userServices.getUserById(state.user!.uid);
@@ -86,7 +95,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       OnRegisterClientEvent event, Emitter<UserState> emit) async {
     try {
       emit(LoadingUserState());
-      // TODO: Implement client registration with Firebase Auth and Firestore
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      final user = UserModel.User(
+        uid: userCredential.user!.uid,
+        name: event.name,
+        lastname: event.lastname,
+        email: event.email,
+        phone: event.phone,
+        rolId: '2', // Assuming '2' is for clients
+        country: event.country,
+        countryCode: event.countryCode,
+        dialingCode: event.dialingCode,
+        flag: event.flag,
+        currency: event.currency,
+        geo: event.geo,
+      );
+      await _userServices.addUser(user);
       emit(SuccessUserState());
     } catch (e) {
       emit(FailureUserState(e.toString()));
@@ -97,7 +124,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       OnRegisterDeliveryEvent event, Emitter<UserState> emit) async {
     try {
       emit(LoadingUserState());
-      // TODO: Implement delivery registration with Firebase Auth and Firestore
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      final user = UserModel.User(
+        uid: userCredential.user!.uid,
+        name: event.name,
+        lastname: event.lastname,
+        email: event.email,
+        phone: event.phone,
+        rolId: '3', // Assuming '3' is for delivery
+        country: event.country,
+        countryCode: event.countryCode,
+        dialingCode: event.dialingCode,
+        flag: event.flag,
+        currency: event.currency,
+        geo: event.geo,
+      );
+      await _userServices.addUser(user);
       emit(SuccessUserState());
     } catch (e) {
       emit(FailureUserState(e.toString()));

@@ -7,22 +7,23 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
+import 'package:dukascango/presentation/components/phone_number_field.dart';
+import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddNewDeliveryScreen extends StatefulWidget {
-
   @override
   _AddNewDeliveryScreenState createState() => _AddNewDeliveryScreenState();
 }
 
-
 class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
-
   late TextEditingController _nameController;
   late TextEditingController _lastnameController;
-  late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+
+  String _fullPhoneNumber = '';
+  Map<String, dynamic> _countryData = {};
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -31,7 +32,6 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
     super.initState();
     _nameController = TextEditingController();
     _lastnameController = TextEditingController();
-    _phoneController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -41,38 +41,37 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
     clearTextEditingController();
     _nameController.dispose();
     _lastnameController.dispose();
-    _phoneController.dispose();
     _emailController.dispose();
-    _passwordController.dispose();    
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void clearTextEditingController(){
+  void clearTextEditingController() {
     _nameController.clear();
     _lastnameController.clear();
-    _phoneController.clear();
     _emailController.clear();
     _passwordController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final userBloc = BlocProvider.of<UserBloc>(context);
 
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if( state is LoadingUserState ){
+        if (state is LoadingUserState) {
           modalLoading(context);
         }
-        if(state is SuccessUserState ){
-
+        if (state is SuccessUserState) {
           Navigator.pop(context);
-          modalSuccess(context, 'Delivery Successfully Registered', 
-            () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: AdminHomeScreen()), (route) => false));
-          userBloc.add( OnClearPicturePathEvent());
+          modalSuccess(
+              context,
+              'Delivery Successfully Registered',
+              () => Navigator.pushAndRemoveUntil(context,
+                  routeDukascango(page: AdminHomeScreen()), (route) => false));
+          userBloc.add(OnClearPicturePathEvent());
         }
-        if( state is FailureUserState ){
+        if (state is FailureUserState) {
           Navigator.pop(context);
           errorMessageSnack(context, state.error);
         }
@@ -80,45 +79,51 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: const TextCustom(text: 'Add New Delivery'),
-            centerTitle: true,
-            leadingWidth: 80,
-            leading: TextButton(
-              child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17 ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            elevation: 0,
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if( _keyForm.currentState!.validate() ){
-                    userBloc.add( OnRegisterDeliveryEvent(
-                      _nameController.text, 
-                      _lastnameController.text, 
-                      _phoneController.text, 
-                      _emailController.text, 
-                      _passwordController.text, 
-                      userBloc.state.pictureProfilePath 
-                    ));
-                    
-                  }
-                }, 
-                child: const TextCustom(text: ' Save ', color: ColorsDukascango.primaryColor )
-              )
-            ],
+          backgroundColor: Colors.white,
+          title: const TextCustom(text: 'Add New Delivery'),
+          centerTitle: true,
+          leadingWidth: 80,
+          leading: TextButton(
+            child: const TextCustom(
+                text: 'Cancel',
+                color: ColorsDukascango.primaryColor,
+                fontSize: 17),
+            onPressed: () => Navigator.pop(context),
           ),
+          elevation: 0,
+          actions: [
+            TextButton(
+                onPressed: () {
+                  if (_keyForm.currentState!.validate()) {
+                    userBloc.add(OnRegisterDeliveryEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    ));
+                  }
+                },
+                child: const TextCustom(
+                    text: ' Save ', color: ColorsDukascango.primaryColor))
+          ],
+        ),
         body: Form(
           key: _keyForm,
           child: ListView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
               const SizedBox(height: 20.0),
-              Align(
-                alignment: Alignment.center,
-                child: _PictureRegistre()
-              ),
+              Align(alignment: Alignment.center, child: _PictureRegistre()),
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Name'),
               const SizedBox(height: 5.0),
@@ -133,26 +138,26 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
               FormFieldDukascango(
                 controller: _lastnameController,
                 hintText: 'lastname',
-                validator: RequiredValidator(errorText: 'Lastname is required'),
+                validator:
+                    RequiredValidator(errorText: 'Lastname is required'),
               ),
               const SizedBox(height: 20.0),
-              const TextCustom(text: 'Phone'),
-              const SizedBox(height: 5.0),
-              FormFieldDukascango(
-                controller: _phoneController,
-                hintText: '---.---.---',
-                keyboardType: TextInputType.number,
-                validator: RequiredValidator(errorText: 'Lastname is required'),
+              PhoneNumberField(
+                onChanged: (fullPhoneNumber, countryData) {
+                  setState(() {
+                    _fullPhoneNumber = fullPhoneNumber;
+                    _countryData = countryData;
+                  });
+                },
               ),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Email'),
               const SizedBox(height: 5.0),
               FormFieldDukascango(
-                controller: _emailController,
-                hintText: 'email@dukascango.com',
-                keyboardType: TextInputType.emailAddress,
-                validator: validatedEmail
-              ),
+                  controller: _emailController,
+                  hintText: 'email@dukascango.com',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: validatedEmail),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Password'),
               const SizedBox(height: 5.0),
