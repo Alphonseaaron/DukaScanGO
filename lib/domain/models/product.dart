@@ -7,6 +7,11 @@ class Product {
   final String category;
   final String? status;
   final String? barcode;
+  final double? costPrice;
+  final int? stockQuantity;
+  final String? supplier;
+  final double? taxRate;
+  final int? lowStockThreshold;
 
   Product({
     this.id,
@@ -17,6 +22,11 @@ class Product {
     required this.category,
     this.status,
     this.barcode,
+    this.costPrice,
+    this.stockQuantity,
+    this.supplier,
+    this.taxRate,
+    this.lowStockThreshold,
   });
 
   Product copyWith({
@@ -28,6 +38,11 @@ class Product {
     String? category,
     String? status,
     String? barcode,
+    double? costPrice,
+    int? stockQuantity,
+    String? supplier,
+    double? taxRate,
+    int? lowStockThreshold,
   }) {
     return Product(
       id: id ?? this.id,
@@ -38,6 +53,11 @@ class Product {
       category: category ?? this.category,
       status: status ?? this.status,
       barcode: barcode ?? this.barcode,
+      costPrice: costPrice ?? this.costPrice,
+      stockQuantity: stockQuantity ?? this.stockQuantity,
+      supplier: supplier ?? this.supplier,
+      taxRate: taxRate ?? this.taxRate,
+      lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,
     );
   }
 
@@ -50,6 +70,11 @@ class Product {
       'category': category,
       'status': status,
       'barcode': barcode,
+      'costPrice': costPrice,
+      'stockQuantity': stockQuantity,
+      'supplier': supplier,
+      'taxRate': taxRate,
+      'lowStockThreshold': lowStockThreshold,
     };
   }
 
@@ -63,6 +88,11 @@ class Product {
       category: map['category'],
       status: map['status'],
       barcode: map['barcode'],
+      costPrice: map['costPrice'],
+      stockQuantity: map['stockQuantity'],
+      supplier: map['supplier'],
+      taxRate: map['taxRate'],
+      lowStockThreshold: map['lowStockThreshold'],
     );
   }
 }

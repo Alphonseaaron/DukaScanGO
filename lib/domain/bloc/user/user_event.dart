@@ -1,8 +1,5 @@
 part of 'user_bloc.dart';
 
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:image_picker/image_picker.dart';
-
 @immutable
 abstract class UserEvent {}
 
@@ -12,6 +9,14 @@ class OnGetUserEvent extends UserEvent {
   OnGetUserEvent(this.user);
 }
 
+class OnGetAllUsersEvent extends UserEvent {}
+
+class OnUpdateUserRoleEvent extends UserEvent {
+  final User user;
+  final String role;
+
+  OnUpdateUserRoleEvent(this.user, this.role);
+}
 
 class OnSelectPictureEvent extends UserEvent {
   final String pictureProfilePath;
@@ -19,16 +24,13 @@ class OnSelectPictureEvent extends UserEvent {
   OnSelectPictureEvent(this.pictureProfilePath);
 }
 
-
 class OnClearPicturePathEvent extends UserEvent {}
-
 
 class OnChangeImageProfileEvent extends UserEvent {
   final XFile image;
 
   OnChangeImageProfileEvent(this.image);
 }
-
 
 class OnEditUserEvent extends UserEvent {
   final String name;
@@ -41,9 +43,9 @@ class OnEditUserEvent extends UserEvent {
   final Map<String, dynamic> currency;
   final Map<String, dynamic> geo;
 
-  OnEditUserEvent(this.name, this.lastname, this.phone, this.country, this.countryCode, this.dialingCode, this.flag, this.currency, this.geo);
+  OnEditUserEvent(this.name, this.lastname, this.phone, this.country,
+      this.countryCode, this.dialingCode, this.flag, this.currency, this.geo);
 }
-
 
 class OnChangePasswordEvent extends UserEvent {
   final String currentPassword;
@@ -51,7 +53,6 @@ class OnChangePasswordEvent extends UserEvent {
 
   OnChangePasswordEvent(this.currentPassword, this.newPassword);
 }
-
 
 class OnRegisterDeliveryEvent extends UserEvent {
   final String name;
@@ -111,13 +112,11 @@ class OnRegisterClientEvent extends UserEvent {
       this.geo);
 }
 
-
 class OnDeleteStreetAddressEvent extends UserEvent {
   final int uid;
 
   OnDeleteStreetAddressEvent(this.uid);
 }
-
 
 class OnAddNewAddressEvent extends UserEvent {
   final String street;
@@ -127,14 +126,12 @@ class OnAddNewAddressEvent extends UserEvent {
   OnAddNewAddressEvent(this.street, this.reference, this.location);
 }
 
-
 class OnSelectAddressButtonEvent extends UserEvent {
   final int uidAddress;
   final String addressName;
 
   OnSelectAddressButtonEvent(this.uidAddress, this.addressName);
 }
-
 
 class OnUpdateDeliveryToClientEvent extends UserEvent {
   final String idPerson;

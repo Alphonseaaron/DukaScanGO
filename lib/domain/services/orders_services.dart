@@ -40,4 +40,37 @@ class OrdersServices {
         .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
+
+  Future<double> getSalesTotal() async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('orders')
+        .where('status', isEqualTo: 'completed')
+        .get();
+    double total = 0;
+    for (var doc in snapshot.docs) {
+      total += doc['total'];
+    }
+    return total;
+  }
+
+  Future<List<Order>> getOrdersByPaymentType(String paymentType) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('orders')
+        .where('paymentType', isEqualTo: paymentType)
+        .get();
+    return snapshot.docs
+        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+  }
+
+  Future<List<Order>> getOrdersByDateRange(DateTime start, DateTime end) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('orders')
+        .where('date', isGreaterThanOrEqualTo: start)
+        .where('date', isLessThanOrEqualTo: end)
+        .get();
+    return snapshot.docs
+        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+  }
 }

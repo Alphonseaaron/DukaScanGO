@@ -21,6 +21,11 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   late TextEditingController _descriptionController;
   late TextEditingController _priceController;
   late TextEditingController _barcodeController;
+  late TextEditingController _costPriceController;
+  late TextEditingController _stockQuantityController;
+  late TextEditingController _supplierController;
+  late TextEditingController _taxRateController;
+  late TextEditingController _lowStockThresholdController;
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -31,6 +36,11 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
     _descriptionController = TextEditingController();
     _priceController = TextEditingController();
     _barcodeController = TextEditingController();
+    _costPriceController = TextEditingController();
+    _stockQuantityController = TextEditingController();
+    _supplierController = TextEditingController();
+    _taxRateController = TextEditingController();
+    _lowStockThresholdController = TextEditingController();
   }
 
   @override
@@ -39,6 +49,11 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
     _descriptionController.dispose();
     _priceController.dispose();
     _barcodeController.dispose();
+    _costPriceController.dispose();
+    _stockQuantityController.dispose();
+    _supplierController.dispose();
+    _taxRateController.dispose();
+    _lowStockThresholdController.dispose();
     super.dispose();
   }
 
@@ -87,6 +102,11 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                       description: _descriptionController.text,
                       price: double.parse(_priceController.text),
                       barcode: _barcodeController.text,
+                      costPrice: _costPriceController.text.isNotEmpty ? double.parse(_costPriceController.text) : null,
+                      stockQuantity: _stockQuantityController.text.isNotEmpty ? int.parse(_stockQuantityController.text) : null,
+                      supplier: _supplierController.text,
+                      taxRate: _taxRateController.text.isNotEmpty ? double.parse(_taxRateController.text) : null,
+                      lowStockThreshold: _lowStockThresholdController.text.isNotEmpty ? int.parse(_lowStockThresholdController.text) : null,
                       images: [],
                       category: 'default', // TODO: Add category selection
                     );
@@ -137,6 +157,45 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 controller: _barcodeController,
                 hintText: 'Barcode',
                 validator: RequiredValidator(errorText: 'Barcode is required'),
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Cost Price'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _costPriceController,
+                hintText: '\$ 0.00',
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Stock Quantity'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _stockQuantityController,
+                hintText: '0',
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Supplier'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _supplierController,
+                hintText: 'Supplier',
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Tax Rate'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _taxRateController,
+                hintText: '0.00',
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Low Stock Threshold'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _lowStockThresholdController,
+                hintText: '0',
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 10.0),
               BtnDukascango(

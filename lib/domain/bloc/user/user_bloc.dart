@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:restaurant/domain/models/user.dart' as UserModel;
-import 'package:restaurant/domain/services/user_services.dart';
+import 'package:dukascango/domain/models/user.dart';
+import 'package:dukascango/domain/services/user_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:image_picker/image_picker.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserServices _userServices = UserServices();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final firebase_auth.FirebaseAuth _firebaseAuth = firebase_auth.FirebaseAuth.instance;
 
   UserBloc() : super(const UserState()) {
     on<OnGetUserEvent>(_onGetUser);
@@ -23,6 +23,32 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<OnChangePasswordEvent>(_onChangePassword);
     on<OnRegisterClientEvent>(_onRegisterClient);
     on<OnRegisterDeliveryEvent>(_onRegisterDelivery);
+    on<OnGetAllUsersEvent>(_onGetAllUsers);
+    on<OnUpdateUserRoleEvent>(_onUpdateUserRole);
+  }
+
+  Future<void> _onGetAllUsers(
+      OnGetAllUsersEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(LoadingUserState());
+      final users = await _userServices.getAllUsers();
+      emit(state.copyWith(users: users));
+    } catch (e) {
+      emit(FailureUserState(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateUserRole(
+      OnUpdateUserRoleEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(LoadingUserState());
+      await _userServices.updateUser(event.user.copyWith(rolId: event.role));
+      final users = await _userServices.getAllUsers();
+      emit(SuccessUserState());
+      emit(state.copyWith(users: users));
+    } catch (e) {
+      emit(FailureUserState(e.toString()));
+    }
   }
 
   Future<void> _onGetUser(OnGetUserEvent event, Emitter<UserState> emit) async {
@@ -99,7 +125,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         email: event.email,
         password: event.password,
       );
-      final user = UserModel.User(
+      final user = User(
         uid: userCredential.user!.uid,
         name: event.name,
         lastname: event.lastname,
@@ -128,7 +154,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         email: event.email,
         password: event.password,
       );
-      final user = UserModel.User(
+      final user = User(
         uid: userCredential.user!.uid,
         name: event.name,
         lastname: event.lastname,

@@ -57,12 +57,14 @@ class OrderDetail {
   final String productName;
   final double price;
   final int quantity;
+  final String? picture;
 
   OrderDetail({
     required this.productId,
     required this.productName,
     required this.price,
     required this.quantity,
+    this.picture,
   });
 
   Map<String, dynamic> toMap() {
@@ -71,6 +73,7 @@ class OrderDetail {
       'productName': productName,
       'price': price,
       'quantity': quantity,
+      'picture': picture,
     };
   }
 
@@ -80,6 +83,7 @@ class OrderDetail {
       productName: map['productName'],
       price: map['price'],
       quantity: map['quantity'],
+      picture: map['picture'],
     );
   }
 }

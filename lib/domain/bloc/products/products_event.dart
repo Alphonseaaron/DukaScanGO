@@ -31,3 +31,11 @@ class OnSelectMultipleImagesEvent extends ProductsEvent {
 }
 
 class OnUnSelectMultipleImagesEvent extends ProductsEvent {}
+
+class OnAdjustStockEvent extends ProductsEvent {
+  final Product product;
+  final int newStock;
+  final String reason;
+
+  OnAdjustStockEvent(this.product, this.newStock, this.reason);
+}

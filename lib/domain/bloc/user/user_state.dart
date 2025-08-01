@@ -2,32 +2,25 @@ part of 'user_bloc.dart';
 
 @immutable
 class UserState {
+  final User? user;
+  final List<User> users;
   final String? pictureProfilePath;
-  final int? uidAddress;
-  final String? addressName;
-  final UserModel.User? user;
+  final bool? isUpdated;
 
-  const UserState({
-    this.uidAddress,
-    this.addressName,
-    this.pictureProfilePath,
-    this.user,
-  });
+  const UserState(
+      {this.user, this.users = const [], this.pictureProfilePath, this.isUpdated});
 
-  UserState copyWith({
-    int? uidAddress,
-    String? addressName,
-    String? pictureProfilePath,
-    UserModel.User? user,
-  }) =>
+  UserState copyWith(
+          {User? user,
+          List<User>? users,
+          String? pictureProfilePath,
+          bool? isUpdated}) =>
       UserState(
-        uidAddress: uidAddress ?? this.uidAddress,
-        addressName: addressName ?? this.addressName,
-        pictureProfilePath: pictureProfilePath ?? this.pictureProfilePath,
-        user: user ?? this.user,
-      );
+          user: user ?? this.user,
+          users: users ?? this.users,
+          pictureProfilePath: pictureProfilePath ?? this.pictureProfilePath,
+          isUpdated: isUpdated ?? this.isUpdated);
 }
-
 
 class LoadingUserState extends UserState {}
 

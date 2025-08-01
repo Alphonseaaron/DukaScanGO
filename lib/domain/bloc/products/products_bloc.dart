@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:restaurant/domain/models/product.dart';
-import 'package:restaurant/domain/services/products_services.dart';
+import 'package:dukascango/domain/models/product.dart';
+import 'package:dukascango/domain/services/products_services.dart';
 
 part 'products_event.dart';
 part 'products_state.dart';
@@ -18,6 +18,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<OnLoadProductsEvent>(_onLoadProducts);
     on<OnSelectMultipleImagesEvent>(_onSelectMultipleImages);
     on<OnUnSelectMultipleImagesEvent>(_onUnSelectMultipleImages);
+    on<OnAdjustStockEvent>(_onAdjustStock);
   }
 
   Future<void> _onLoadProducts(
@@ -35,9 +36,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       OnAddNewProductEvent event, Emitter<ProductsState> emit) async {
     try {
       emit(LoadingProductsState());
-      final imageUrls = await _productsServices.uploadImages(event.images);
-      final productWithImages = event.product.copyWith(images: imageUrls);
-      await _productsServices.addProduct(productWithImages, event.images);
+      await _productsServices.addProduct(event.product, event.images);
       final products = await _productsServices.getProducts();
       emit(SuccessProductsState());
       emit(state.copyWith(products: products));
@@ -80,5 +79,19 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   Future<void> _onUnSelectMultipleImages(
       OnUnSelectMultipleImagesEvent event, Emitter<ProductsState> emit) async {
     emit(state.copyWith(images: []));
+  }
+
+  Future<void> _onAdjustStock(
+      OnAdjustStockEvent event, Emitter<ProductsState> emit) async {
+    try {
+      emit(LoadingProductsState());
+      // TODO: Get real user ID from AuthBloc
+      await _productsServices.adjustStock(event.product, event.newStock, event.reason, 'admin_user_id');
+      final products = await _productsServices.getProducts();
+      emit(SuccessProductsState());
+      emit(state.copyWith(products: products));
+    } catch (e) {
+      emit(FailureProductsState(e.toString()));
+    }
   }
 }

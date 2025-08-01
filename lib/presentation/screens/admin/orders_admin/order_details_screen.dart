@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/order.dart';
+import 'package:dukascango/domain/models/pay_type.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
@@ -20,15 +20,18 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  late String _currentStatus;
+
   @override
   void initState() {
     super.initState();
-    // TODO: Implement get order by id
-    // BlocProvider.of<OrdersBloc>(context).add(OnGetOrderByIdEvent(widget.order.id!));
+    _currentStatus = widget.order.status;
   }
 
   @override
   Widget build(BuildContext context) {
+    final ordersBloc = BlocProvider.of<OrdersBloc>(context);
+
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
         if (state is LoadingOrderState) {
@@ -37,7 +40,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Navigator.pop(context);
           modalSuccess(
               context,
-              'DISPATCHED',
+              'Status updated successfully',
               () => Navigator.pushReplacement(
                   context, routeDukascango(page: OrdersAdminScreen())));
         } else if (state is FailureOrdersState) {
@@ -90,7 +93,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           fontSize: 22,
                           fontWeight: FontWeight.w500),
                       TextCustom(
-                          text: '\$ ${widget.order.total}0',
+                          text: '\$ ${widget.order.total.toStringAsFixed(2)}',
                           fontSize: 22,
                           fontWeight: FontWeight.w500),
                     ],
@@ -100,10 +103,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const TextCustom(
-                          text: 'Cliente:',
+                          text: 'Client:',
                           color: ColorsDukascango.secundaryColor,
                           fontSize: 16),
-                      TextCustom(text: '${widget.order.clientId}'),
+                      TextCustom(text: widget.order.clientId),
                     ],
                   ),
                   const SizedBox(height: 10.0),
@@ -128,54 +131,37 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   const SizedBox(height: 5.0),
                   TextCustom(
                       text: widget.order.address, maxLine: 2, fontSize: 16),
-                  const SizedBox(height: 5.0),
-                  (widget.order.status == 'DISPATCHED')
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const TextCustom(
-                                text: 'Delivery',
-                                fontSize: 17,
-                                color: ColorsDukascango.secundaryColor),
-                            Row(
-                              children: [
-                                Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              ''))), // TODO: Add delivery image
-                                ),
-                                const SizedBox(width: 10.0),
-                                TextCustom(
-                                    text: widget.order.deliveryId!,
-                                    fontSize: 17)
-                              ],
-                            )
-                          ],
-                        )
-                      : const SizedBox()
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const TextCustom(
+                          text: 'Status:',
+                          color: ColorsDukascango.secundaryColor,
+                          fontSize: 16),
+                      DropdownButton<String>(
+                        value: _currentStatus,
+                        items: payType
+                            .map((label) => DropdownMenuItem(
+                                  child: Text(label),
+                                  value: label,
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              _currentStatus = value;
+                            });
+                            ordersBloc.add(OnUpdateStatusOrderEvent(
+                                widget.order.id!, value));
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             )),
-            (widget.order.status == 'PAID OUT')
-                ? Container(
-                    padding: const EdgeInsets.all(10.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        BtnDukascango(
-                          text: 'SELECT DELIVERY',
-                          fontWeight: FontWeight.w500,
-                          onPressed: () =>
-                              modalSelectDelivery(context, widget.order.id!),
-                        )
-                      ],
-                    ),
-                  )
-                : const SizedBox()
           ],
         ),
       ),
@@ -201,9 +187,12 @@ class _ListProductsDetails extends StatelessWidget {
             Container(
               height: 45,
               width: 45,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(''))), // TODO: Add product image
+              // TODO: Add product image from details
+              child:
+                  (listProductDetails[i].picture != null && listProductDetails[i].picture!.isNotEmpty)
+                      ? Image.network(
+                          '${Environment.urlApiServer}/${listProductDetails[i].picture}')
+                      : const Icon(Icons.image_not_supported),
             ),
             const SizedBox(width: 15.0),
             Column(
@@ -230,4 +219,3 @@ class _ListProductsDetails extends StatelessWidget {
     );
   }
 }
-
