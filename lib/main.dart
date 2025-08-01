@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/bloc/financial_reporting/financial_reporting_bloc.dart';
+import 'package:dukascango/domain/bloc/invitation/invitation_bloc.dart';
 import 'package:dukascango/domain/services/push_notification.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
  
@@ -58,6 +60,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => MapdeliveryBloc()),
         BlocProvider(create: (context) => MapclientBloc()),
         BlocProvider(create: (context) => SelfScanBloc()),
+        BlocProvider(create: (context) => DashboardBloc()),
+        BlocProvider(create: (context) => InventoryBloc()),
+        BlocProvider(create: (context) => FinancialReportingBloc()),
+        BlocProvider(create: (context) => InvitationBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

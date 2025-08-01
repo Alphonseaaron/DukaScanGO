@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:restaurant/domain/models/user.dart';
+import 'package:dukascango/domain/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserServices {
@@ -37,5 +37,23 @@ class UserServices {
 
   Future<void> updateUserProfileImage(String uid, String imageUrl) async {
     await _firestore.collection('users').doc(uid).update({'image': imageUrl});
+  }
+
+  Future<List<User>> getAllUsers() async {
+    final QuerySnapshot snapshot = await _firestore.collection('users').get();
+    return snapshot.docs.map((doc) => User.fromMap(doc.data() as Map<String, dynamic>)).toList();
+  }
+
+  Future<User?> getUserByEmail(String email) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+    if (snapshot.docs.isNotEmpty) {
+      final doc = snapshot.docs.first;
+      return User.fromMap(doc.data() as Map<String, dynamic>);
+    }
+    return null;
   }
 }

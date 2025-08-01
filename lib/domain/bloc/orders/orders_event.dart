@@ -3,10 +3,10 @@ part of 'orders_bloc.dart';
 @immutable
 abstract class OrdersEvent {}
 
-class OnAddNewOrderEvent extends OrdersEvent {
-  final Order order;
+class OnGetOrdersByStatusEvent extends OrdersEvent {
+  final String status;
 
-  OnAddNewOrderEvent(this.order);
+  OnGetOrdersByStatusEvent(this.status);
 }
 
 class OnUpdateStatusOrderEvent extends OrdersEvent {
@@ -16,14 +16,20 @@ class OnUpdateStatusOrderEvent extends OrdersEvent {
   OnUpdateStatusOrderEvent(this.id, this.status);
 }
 
-class OnGetOrdersByStatusEvent extends OrdersEvent {
-  final String status;
+class OnAddNewOrderEvent extends OrdersEvent {
+  final Order order;
 
-  OnGetOrdersByStatusEvent(this.status);
+  OnAddNewOrderEvent(this.order);
 }
 
 class OnGetOrdersByClientEvent extends OrdersEvent {
   final String uid;
 
   OnGetOrdersByClientEvent(this.uid);
+}
+
+class OnGetOrdersByPaymentTypeEvent extends OrdersEvent {
+  final String paymentType;
+
+  OnGetOrdersByPaymentTypeEvent(this.paymentType);
 }

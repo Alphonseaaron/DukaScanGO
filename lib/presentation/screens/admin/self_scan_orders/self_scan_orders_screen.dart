@@ -1,93 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/order.dart';
-import 'package:dukascango/domain/models/pay_type.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
-import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/orders_admin/order_details_screen.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
-class OrdersAdminScreen extends StatefulWidget {
+class SelfScanOrdersScreen extends StatefulWidget {
   @override
-  _OrdersAdminScreenState createState() => _OrdersAdminScreenState();
+  _SelfScanOrdersScreenState createState() => _SelfScanOrdersScreenState();
 }
 
-class _OrdersAdminScreenState extends State<OrdersAdminScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _SelfScanOrdersScreenState extends State<SelfScanOrdersScreen> {
+  late TextEditingController _searchController;
+  List<Order> _filteredOrders = [];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: payType.length, vsync: this);
+    _searchController = TextEditingController();
     BlocProvider.of<OrdersBloc>(context)
-        .add(OnGetOrdersByStatusEvent(payType[0]));
-    _tabController.addListener(() {
-      BlocProvider.of<OrdersBloc>(context)
-          .add(OnGetOrdersByStatusEvent(payType[_tabController.index]));
-    });
+        .add(OnGetOrdersByPaymentTypeEvent('SELF-SCAN'));
+    _searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged() {
+    final orders = (BlocProvider.of<OrdersBloc>(context).state).orders;
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredOrders = orders
+          .where((order) =>
+              order.id!.toLowerCase().contains(query) ||
+              order.clientId.toLowerCase().contains(query))
+          .toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const TextCustom(text: 'List Orders', fontSize: 20),
-          centerTitle: true,
-          leadingWidth: 80,
-          leading: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.arrow_back_ios_new_outlined,
-                    color: ColorsDukascango.primaryColor, size: 17),
-                TextCustom(
-                    text: 'Back',
-                    color: ColorsDukascango.primaryColor,
-                    fontSize: 17)
-              ],
+      appBar: AppBar(
+        title: const TextCustom(text: 'Self-Scan Orders'),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: const InputDecoration(
+                labelText: 'Search by Order ID or Customer ID',
+                suffixIcon: Icon(Icons.search),
+              ),
             ),
           ),
-          bottom: TabBar(
-              controller: _tabController,
-              indicatorWeight: 2,
-              labelColor: ColorsDukascango.primaryColor,
-              unselectedLabelColor: Colors.grey,
-              indicator: DukascangoIndicatorTabBar(),
-              isScrollable: true,
-              tabs: List<Widget>.generate(
-                  payType.length,
-                  (i) => Tab(
-                      child: Text(payType[i],
-                          style: GoogleFonts.getFont('Roboto',
-                              fontSize: 17))))),
-        ),
-        body: BlocBuilder<OrdersBloc, OrdersState>(
-          builder: (context, state) {
-            if (state is LoadingOrderState) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is FailureOrdersState) {
-              return Center(child: TextCustom(text: state.error));
-            }
-            if (state.orders.isNotEmpty) {
-              return _ListOrders(listOrders: state.orders);
-            }
-            return const Center(child: Text('No orders found.'));
-          },
-        ));
+          Expanded(
+            child: BlocBuilder<OrdersBloc, OrdersState>(
+              builder: (context, state) {
+                if (state is LoadingOrderState) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is FailureOrdersState) {
+                  return Center(child: TextCustom(text: state.error));
+                }
+                if (_searchController.text.isEmpty) {
+                  _filteredOrders = state.orders;
+                }
+                if (_filteredOrders.isNotEmpty) {
+                  return _ListOrders(listOrders: _filteredOrders);
+                }
+                return const Center(child: Text('No orders found.'));
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -157,16 +155,18 @@ class _CardOrders extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10.0),
-              const TextCustom(
-                  text: 'Address shipping',
-                  fontSize: 16,
-                  color: ColorsDukascango.secundaryColor),
-              const SizedBox(height: 5.0),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: TextCustom(text: order.address,
-                      fontSize: 16, maxLine: 2)),
-              const SizedBox(height: 5.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const TextCustom(
+                      text: 'Total',
+                      fontSize: 16,
+                      color: ColorsDukascango.secundaryColor),
+                  TextCustom(
+                      text: '\$${order.total.toStringAsFixed(2)}',
+                      fontSize: 16),
+                ],
+              ),
             ],
           ),
         ),

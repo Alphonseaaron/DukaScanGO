@@ -4,9 +4,15 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/category/categories_admin_screen.dart';
+import 'package:dukascango/presentation/screens/admin/dashboard/dashboard_screen.dart';
 import 'package:dukascango/presentation/screens/admin/delivery/list_deliverys_screen.dart';
 import 'package:dukascango/presentation/screens/admin/orders_admin/orders_admin_screen.dart';
 import 'package:dukascango/presentation/screens/admin/products/list_products_screen.dart';
+import 'package:dukascango/presentation/screens/admin/self_scan_orders/self_scan_orders_screen.dart';
+import 'package:dukascango/presentation/screens/admin/inventory/bulk_upload_screen.dart';
+import 'package:dukascango/presentation/screens/admin/inventory/restocking_requests_screen.dart';
+import 'package:dukascango/presentation/screens/admin/financial_reporting/financial_reporting_screen.dart';
+import 'package:dukascango/presentation/screens/admin/staff/staff_management_screen.dart';
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
@@ -95,6 +101,13 @@ class AdminHomeScreen extends StatelessWidget {
               const TextCustom(text: 'Dukascango', color: Colors.grey),
               const SizedBox(height: 10.0),
               ItemAccount(
+                text: 'Dashboard',
+                icon: Icons.dashboard_rounded,
+                colorIcon: 0xff0C6CF2,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: DashboardScreen())),
+              ),
+              ItemAccount(
                 text: 'Categories',
                 icon: Icons.category_rounded,
                 colorIcon: 0xff5E65CD,
@@ -109,6 +122,34 @@ class AdminHomeScreen extends StatelessWidget {
                     context, routeDukascango(page: ListProductsScreen())),
               ),
               ItemAccount(
+                text: 'Bulk Upload',
+                icon: Icons.upload_file_rounded,
+                colorIcon: 0xff8E44AD,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: BulkUploadScreen())),
+              ),
+              ItemAccount(
+                text: 'Restocking Requests',
+                icon: Icons.inventory_rounded,
+                colorIcon: 0xffF1C40F,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: RestockingRequestsScreen())),
+              ),
+              ItemAccount(
+                text: 'Financial Reporting',
+                icon: Icons.assessment_rounded,
+                colorIcon: 0xff1ABC9C,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: FinancialReportingScreen())),
+              ),
+              ItemAccount(
+                text: 'Staff Management',
+                icon: Icons.people_alt_rounded,
+                colorIcon: 0xff3498DB,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: StaffManagementScreen())),
+              ),
+              ItemAccount(
                 text: 'Delivery',
                 icon: Icons.delivery_dining_rounded,
                 colorIcon: 0xff469CD7,
@@ -121,6 +162,13 @@ class AdminHomeScreen extends StatelessWidget {
                 colorIcon: 0xffFFA136,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: OrdersAdminScreen())),
+              ),
+              ItemAccount(
+                text: 'Self-Scan Orders',
+                icon: Icons.qr_code_scanner_rounded,
+                colorIcon: 0xff2BDD99,
+                onPressed: () => Navigator.push(
+                    context, routeDukascango(page: SelfScanOrdersScreen())),
               ),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Personal', color: Colors.grey),

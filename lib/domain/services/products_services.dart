@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:restaurant/domain/models/product.dart';
+import 'package:dukascango/domain/models/product.dart';
+import 'package:dukascango/domain/models/stock_adjustment.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductsServices {
@@ -9,7 +10,7 @@ class ProductsServices {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<void> addProduct(Product product, List<XFile> images) async {
-    final List<String> imageUrls = await _uploadImages(images);
+    final List<String> imageUrls = await uploadImages(images);
     final productWithImages = product.copyWith(images: imageUrls);
     await _firestore
         .collection('products')
@@ -69,5 +70,64 @@ class ProductsServices {
       imageUrls.add(downloadUrl);
     }
     return imageUrls;
+  }
+
+  Future<List<Product>> getLowStockItems() async {
+    final QuerySnapshot snapshot = await _firestore.collection('products').get();
+    final products = snapshot.docs
+        .map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return products.where((p) => p.stockQuantity != null && p.lowStockThreshold != null && p.stockQuantity! <= p.lowStockThreshold!).toList();
+  }
+
+  Future<Map<String, dynamic>> bulkUpdateProducts(List<Product> products) async {
+    int successCount = 0;
+    int failureCount = 0;
+    List<String> errors = [];
+
+    for (int i = 0; i < products.length; i++) {
+      final product = products[i];
+      try {
+        if (product.barcode == null || product.barcode!.isEmpty) {
+          throw Exception('Barcode is required for row ${i + 2}');
+        }
+        final existingProduct = await getProductByBarcode(product.barcode!);
+        if (existingProduct != null) {
+          await updateProduct(product.copyWith(id: existingProduct.id));
+        } else {
+          await addProduct(product, []);
+        }
+        successCount++;
+      } catch (e) {
+        failureCount++;
+        errors.add('Row ${i + 2}: ${e.toString()}');
+      }
+    }
+    return {
+      'successCount': successCount,
+      'failureCount': failureCount,
+      'errors': errors,
+    };
+  }
+
+  Future<void> adjustStock(Product product, int newStock, String reason, String userId) async {
+    final writeBatch = _firestore.batch();
+
+    final productRef = _firestore.collection('products').doc(product.id);
+    writeBatch.update(productRef, {'stockQuantity': newStock});
+
+    final adjustmentRef = _firestore.collection('stock_adjustments').doc();
+    final adjustment = StockAdjustment(
+      productId: product.id!,
+      oldQuantity: product.stockQuantity ?? 0,
+      newQuantity: newStock,
+      reason: reason,
+      date: DateTime.now(),
+      userId: userId,
+    );
+    writeBatch.set(adjustmentRef, adjustment.toMap());
+
+    await writeBatch.commit();
   }
 }

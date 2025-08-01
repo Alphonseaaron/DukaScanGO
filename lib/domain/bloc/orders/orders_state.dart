@@ -1,23 +1,21 @@
 part of 'orders_bloc.dart';
 
 @immutable
-class OrdersState {
+abstract class OrdersState {
   final List<Order> orders;
-  final List<ProductCart> products;
-
-  const OrdersState({
-    this.orders = const [],
-    this.products = const [],
-  });
+  const OrdersState({this.orders = const []});
 
   OrdersState copyWith({
     List<Order>? orders,
-    List<ProductCart>? products,
-  }) =>
-      OrdersState(
-        orders: orders ?? this.orders,
-        products: products ?? this.products,
-      );
+  }) {
+    return OrdersInitial(
+      orders: orders ?? this.orders,
+    );
+  }
+}
+
+class OrdersInitial extends OrdersState {
+  const OrdersInitial({List<Order> orders = const []}) : super(orders: orders);
 }
 
 class LoadingOrderState extends OrdersState {}
@@ -29,5 +27,3 @@ class FailureOrdersState extends OrdersState {
 
   FailureOrdersState(this.error);
 }
-
-
