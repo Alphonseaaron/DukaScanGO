@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dukascango/domain/models/user.dart';
+import 'package:dukascango/domain/models/wholesaler.dart';
 import 'package:dukascango/domain/services/user_services.dart';
+import 'package:dukascango/domain/services/wholesaler_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +14,7 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserServices _userServices = UserServices();
+  final WholesalerServices _wholesalerServices = WholesalerServices();
   final firebase_auth.FirebaseAuth _firebaseAuth = firebase_auth.FirebaseAuth.instance;
 
   UserBloc() : super(const UserState()) {
@@ -22,6 +25,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<OnEditUserEvent>(_onEditProfileUser);
     on<OnChangePasswordEvent>(_onChangePassword);
     on<OnRegisterClientEvent>(_onRegisterClient);
+    on<OnRegisterStoreOwnerEvent>(_onRegisterStoreOwner);
+    on<OnRegisterWholesalerEvent>(_onRegisterWholesaler);
     on<OnRegisterDeliveryEvent>(_onRegisterDelivery);
     on<OnGetAllUsersEvent>(_onGetAllUsers);
     on<OnUpdateUserRoleEvent>(_onUpdateUserRole);
@@ -140,6 +145,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         geo: event.geo,
       );
       await _userServices.addUser(user);
+      final wholesaler = Wholesaler(
+        uid: userCredential.user!.uid,
+        businessName: event.name,
+        contactPerson: event.lastname,
+        deliveryAreas: [],
+        paymentDetails: '',
+      );
+      await _wholesalerServices.addWholesaler(wholesaler);
       emit(SuccessUserState());
     } catch (e) {
       emit(FailureUserState(e.toString()));
@@ -161,6 +174,64 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         email: event.email,
         phone: event.phone,
         rolId: '3', // Assuming '3' is for delivery
+        country: event.country,
+        countryCode: event.countryCode,
+        dialingCode: event.dialingCode,
+        flag: event.flag,
+        currency: event.currency,
+        geo: event.geo,
+      );
+      await _userServices.addUser(user);
+      emit(SuccessUserState());
+    } catch (e) {
+      emit(FailureUserState(e.toString()));
+    }
+  }
+
+  Future<void> _onRegisterWholesaler(
+      OnRegisterWholesalerEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(LoadingUserState());
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      final user = User(
+        uid: userCredential.user!.uid,
+        name: event.name,
+        lastname: event.lastname,
+        email: event.email,
+        phone: event.phone,
+        rolId: '4', // Assuming '4' is for wholesaler
+        country: event.country,
+        countryCode: event.countryCode,
+        dialingCode: event.dialingCode,
+        flag: event.flag,
+        currency: event.currency,
+        geo: event.geo,
+      );
+      await _userServices.addUser(user);
+      emit(SuccessUserState());
+    } catch (e) {
+      emit(FailureUserState(e.toString()));
+    }
+  }
+
+  Future<void> _onRegisterStoreOwner(
+      OnRegisterStoreOwnerEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(LoadingUserState());
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      );
+      final user = User(
+        uid: userCredential.user!.uid,
+        name: event.name,
+        lastname: event.lastname,
+        email: event.email,
+        phone: event.phone,
+        rolId: '1', // Assuming '1' is for store owner
         country: event.country,
         countryCode: event.countryCode,
         dialingCode: event.dialingCode,

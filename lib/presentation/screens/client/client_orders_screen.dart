@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/domain/models/response/orders_client_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/screens/client/client_details_order_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/models/response/orders_client_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/screens/client/client_details_order_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class ClientOrdersScreen extends StatelessWidget {
 

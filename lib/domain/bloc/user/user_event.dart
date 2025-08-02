@@ -83,6 +83,64 @@ class OnRegisterDeliveryEvent extends UserEvent {
       this.geo);
 }
 
+class OnRegisterStoreOwnerEvent extends UserEvent {
+  final String name;
+  final String lastname;
+  final String phone;
+  final String email;
+  final String password;
+  final String image;
+  final String country;
+  final String countryCode;
+  final String dialingCode;
+  final String flag;
+  final Map<String, dynamic> currency;
+  final Map<String, dynamic> geo;
+
+  OnRegisterStoreOwnerEvent(
+      this.name,
+      this.lastname,
+      this.phone,
+      this.email,
+      this.password,
+      this.image,
+      this.country,
+      this.countryCode,
+      this.dialingCode,
+      this.flag,
+      this.currency,
+      this.geo);
+}
+
+class OnRegisterWholesalerEvent extends UserEvent {
+  final String name;
+  final String lastname;
+  final String phone;
+  final String email;
+  final String password;
+  final String image;
+  final String country;
+  final String countryCode;
+  final String dialingCode;
+  final String flag;
+  final Map<String, dynamic> currency;
+  final Map<String, dynamic> geo;
+
+  OnRegisterWholesalerEvent(
+      this.name,
+      this.lastname,
+      this.phone,
+      this.email,
+      this.password,
+      this.image,
+      this.country,
+      this.countryCode,
+      this.dialingCode,
+      this.flag,
+      this.currency,
+      this.geo);
+}
+
 class OnRegisterClientEvent extends UserEvent {
   final String name;
   final String lastname;

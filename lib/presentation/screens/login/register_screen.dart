@@ -11,12 +11,16 @@ import 'package:dukascango/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
-class RegisterClientScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  final String role;
+
+  const RegisterScreen({required this.role});
+
   @override
-  _RegisterClientScreenState createState() => _RegisterClientScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterClientScreenState extends State<RegisterClientScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController _nameController;
   late TextEditingController _lastnameController;
   late TextEditingController _emailController;
@@ -65,7 +69,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           Navigator.pop(context);
           modalSuccess(
               context,
-              'Client Registered successfully',
+              '${widget.role} Registered successfully',
               () => Navigator.pushReplacement(
                   context, routeFrave(page: LoginScreen())));
         } else if (state is FailureUserState) {
@@ -91,28 +95,62 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           leadingWidth: 70,
-          title: const TextCustom(
-            text: 'Create a Account',
+          title: TextCustom(
+            text: 'Register as ${widget.role}',
           ),
           centerTitle: true,
           actions: [
             InkWell(
               onTap: () {
                 if (_keyForm.currentState!.validate()) {
-                  userBloc.add(OnRegisterClientEvent(
-                    _nameController.text,
-                    _lastnameController.text,
-                    _fullPhoneNumber,
-                    _emailController.text,
-                    _passwordController.text,
-                    userBloc.state.pictureProfilePath,
-                    _countryData['country'],
-                    _countryData['countryCode'],
-                    _countryData['dialingCode'],
-                    _countryData['flag'],
-                    _countryData['currency'],
-                    _countryData['geo'],
-                  ));
+                  final event;
+                  if (widget.role == 'Store Owner') {
+                    event = OnRegisterStoreOwnerEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  } else if (widget.role == 'Wholesaler') {
+                    event = OnRegisterWholesalerEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  } else {
+                    event = OnRegisterDeliveryEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  }
+                  userBloc.add(event);
                 }
               },
               child: Container(
@@ -206,11 +244,11 @@ class _PictureRegistre extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(100),
         onTap: () => modalPictureRegister(
-          ctx: context, 
+          ctx: context,
           onPressedChange: () async {
 
             final permissionGallery = await Permission.photos.request();
-            
+
             switch ( permissionGallery ){
 
               case PermissionStatus.granted:
@@ -225,7 +263,7 @@ class _PictureRegistre extends StatelessWidget {
                 openAppSettings();
                 break;
             }
-            
+
           },
           onPressedTake: () async {
 
@@ -250,7 +288,7 @@ class _PictureRegistre extends StatelessWidget {
           }
         ),
         child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) 
+              builder: (context, state)
                 => state.pictureProfilePath == ''
                    ? Column(
                      mainAxisAlignment: MainAxisAlignment.center,
@@ -259,9 +297,9 @@ class _PictureRegistre extends StatelessWidget {
                         SizedBox(height: 10.0),
                         TextCustom(text: 'Picture', color: Colors.grey )
                      ],
-                    ) 
+                    )
                    : Container(
-                      height: 100,  
+                      height: 100,
                       width: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -272,16 +310,8 @@ class _PictureRegistre extends StatelessWidget {
                       ),
                      ),
             ),
-           
+
       ),
     );
   }
 }
-
-
-
-
-
-
-
-

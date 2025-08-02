@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/product_cart.dart';
-import 'package:restaurant/domain/models/response/images_products_response.dart';
-import 'package:restaurant/domain/models/response/products_top_home_response.dart';
-import 'package:restaurant/domain/services/products_services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/product_cart.dart';
+import 'package:dukascango/domain/models/response/images_products_response.dart';
+import 'package:dukascango/domain/models/response/products_top_home_response.dart';
+import 'package:dukascango/domain/services/products_services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class DetailsProductScreen extends StatefulWidget {

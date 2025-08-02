@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/get_all_delivery_response.dart';
-import 'package:restaurant/domain/services/delivery_services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/response/get_all_delivery_response.dart';
+import 'package:dukascango/domain/services/delivery_services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 void modalSelectDelivery(BuildContext context, String idOrder){
 

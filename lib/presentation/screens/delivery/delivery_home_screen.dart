@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/delivery/list_orders_delivery_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/order_delivered_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/order_on_way_screen.dart';
-import 'package:restaurant/presentation/screens/home/select_role_screen.dart';
-import 'package:restaurant/presentation/screens/intro/checking_login_screen.dart';
-import 'package:restaurant/presentation/screens/profile/change_password_screen.dart';
-import 'package:restaurant/presentation/screens/profile/edit_Prodile_screen.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/delivery/list_orders_delivery_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/order_delivered_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/order_on_way_screen.dart';
+import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
+import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
+import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 
 class DeliveryHomeScreen extends StatelessWidget {
 

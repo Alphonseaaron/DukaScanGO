@@ -11,12 +11,12 @@ import 'package:dukascango/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
-class RegisterClientScreen extends StatefulWidget {
+class RegisterWholesalerScreen extends StatefulWidget {
   @override
-  _RegisterClientScreenState createState() => _RegisterClientScreenState();
+  _RegisterWholesalerScreenState createState() => _RegisterWholesalerScreenState();
 }
 
-class _RegisterClientScreenState extends State<RegisterClientScreen> {
+class _RegisterWholesalerScreenState extends State<RegisterWholesalerScreen> {
   late TextEditingController _nameController;
   late TextEditingController _lastnameController;
   late TextEditingController _emailController;
@@ -65,7 +65,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           Navigator.pop(context);
           modalSuccess(
               context,
-              'Client Registered successfully',
+              'Wholesaler Registered successfully',
               () => Navigator.pushReplacement(
                   context, routeFrave(page: LoginScreen())));
         } else if (state is FailureUserState) {
@@ -92,14 +92,14 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           elevation: 0,
           leadingWidth: 70,
           title: const TextCustom(
-            text: 'Create a Account',
+            text: 'Create a Wholesaler Account',
           ),
           centerTitle: true,
           actions: [
             InkWell(
               onTap: () {
                 if (_keyForm.currentState!.validate()) {
-                  userBloc.add(OnRegisterClientEvent(
+                  userBloc.add(OnRegisterWholesalerEvent(
                     _nameController.text,
                     _lastnameController.text,
                     _fullPhoneNumber,
@@ -136,21 +136,21 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
               const SizedBox(height: 20.0),
               Align(alignment: Alignment.center, child: _PictureRegistre()),
               const SizedBox(height: 40.0),
-              const TextCustom(text: 'Name'),
+              const TextCustom(text: 'Business Name'),
               const SizedBox(height: 5.0),
               FormFieldFrave(
                 controller: _nameController,
-                hintText: 'Enter your name',
-                validator: RequiredValidator(errorText: 'Name is required'),
+                hintText: 'Enter your business name',
+                validator: RequiredValidator(errorText: 'Business name is required'),
               ),
               const SizedBox(height: 15.0),
-              const TextCustom(text: 'Lastname'),
+              const TextCustom(text: 'Contact Person'),
               const SizedBox(height: 5.0),
               FormFieldFrave(
                 controller: _lastnameController,
-                hintText: 'Enter your lastname',
+                hintText: 'Enter contact person name',
                 validator:
-                    RequiredValidator(errorText: 'Lastname is required'),
+                    RequiredValidator(errorText: 'Contact person is required'),
               ),
               const SizedBox(height: 15.0),
               PhoneNumberField(
@@ -206,11 +206,11 @@ class _PictureRegistre extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(100),
         onTap: () => modalPictureRegister(
-          ctx: context, 
+          ctx: context,
           onPressedChange: () async {
 
             final permissionGallery = await Permission.photos.request();
-            
+
             switch ( permissionGallery ){
 
               case PermissionStatus.granted:
@@ -225,7 +225,7 @@ class _PictureRegistre extends StatelessWidget {
                 openAppSettings();
                 break;
             }
-            
+
           },
           onPressedTake: () async {
 
@@ -250,7 +250,7 @@ class _PictureRegistre extends StatelessWidget {
           }
         ),
         child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) 
+              builder: (context, state)
                 => state.pictureProfilePath == ''
                    ? Column(
                      mainAxisAlignment: MainAxisAlignment.center,
@@ -259,9 +259,9 @@ class _PictureRegistre extends StatelessWidget {
                         SizedBox(height: 10.0),
                         TextCustom(text: 'Picture', color: Colors.grey )
                      ],
-                    ) 
+                    )
                    : Container(
-                      height: 100,  
+                      height: 100,
                       width: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -272,16 +272,8 @@ class _PictureRegistre extends StatelessWidget {
                       ),
                      ),
             ),
-           
+
       ),
     );
   }
 }
-
-
-
-
-
-
-
-

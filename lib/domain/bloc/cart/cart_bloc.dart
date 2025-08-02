@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:restaurant/domain/models/product_cart.dart';
+import 'package:dukascango/domain/models/product_cart.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';

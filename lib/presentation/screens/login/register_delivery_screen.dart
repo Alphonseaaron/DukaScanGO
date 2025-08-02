@@ -11,12 +11,12 @@ import 'package:dukascango/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
-class RegisterClientScreen extends StatefulWidget {
+class RegisterDeliveryScreen extends StatefulWidget {
   @override
-  _RegisterClientScreenState createState() => _RegisterClientScreenState();
+  _RegisterDeliveryScreenState createState() => _RegisterDeliveryScreenState();
 }
 
-class _RegisterClientScreenState extends State<RegisterClientScreen> {
+class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
   late TextEditingController _nameController;
   late TextEditingController _lastnameController;
   late TextEditingController _emailController;
@@ -65,7 +65,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           Navigator.pop(context);
           modalSuccess(
               context,
-              'Client Registered successfully',
+              'Delivery Registered successfully',
               () => Navigator.pushReplacement(
                   context, routeFrave(page: LoginScreen())));
         } else if (state is FailureUserState) {
@@ -92,14 +92,14 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
           elevation: 0,
           leadingWidth: 70,
           title: const TextCustom(
-            text: 'Create a Account',
+            text: 'Register as Delivery',
           ),
           centerTitle: true,
           actions: [
             InkWell(
               onTap: () {
                 if (_keyForm.currentState!.validate()) {
-                  userBloc.add(OnRegisterClientEvent(
+                  userBloc.add(OnRegisterDeliveryEvent(
                     _nameController.text,
                     _lastnameController.text,
                     _fullPhoneNumber,
@@ -206,11 +206,11 @@ class _PictureRegistre extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(100),
         onTap: () => modalPictureRegister(
-          ctx: context, 
+          ctx: context,
           onPressedChange: () async {
 
             final permissionGallery = await Permission.photos.request();
-            
+
             switch ( permissionGallery ){
 
               case PermissionStatus.granted:
@@ -225,7 +225,7 @@ class _PictureRegistre extends StatelessWidget {
                 openAppSettings();
                 break;
             }
-            
+
           },
           onPressedTake: () async {
 
@@ -250,18 +250,18 @@ class _PictureRegistre extends StatelessWidget {
           }
         ),
         child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) 
+              builder: (context, state)
                 => state.pictureProfilePath == ''
                    ? Column(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: const [
-                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsFrave.primaryColor ),
+                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsDukascango.primaryColor ),
                         SizedBox(height: 10.0),
                         TextCustom(text: 'Picture', color: Colors.grey )
                      ],
-                    ) 
+                    )
                    : Container(
-                      height: 100,  
+                      height: 100,
                       width: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -272,16 +272,8 @@ class _PictureRegistre extends StatelessWidget {
                       ),
                      ),
             ),
-           
+
       ),
     );
   }
 }
-
-
-
-
-
-
-
-

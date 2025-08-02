@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:restaurant/domain/services/auth_Services.dart';
-import 'package:restaurant/domain/services/user_services.dart';
+import 'package:dukascango/domain/services/auth_Services.dart';
+import 'package:dukascango/domain/services/user_services.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

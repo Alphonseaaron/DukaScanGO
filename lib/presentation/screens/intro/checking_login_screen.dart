@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/home/select_role_screen.dart';
-import 'package:restaurant/presentation/screens/login/login_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
+import 'package:dukascango/presentation/screens/login/login_screen.dart';
+import 'package:dukascango/presentation/screens/wholesaler/wholesaler_home_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class CheckingLoginScreen extends StatefulWidget {
   
@@ -70,6 +71,8 @@ class _CheckingLoginScreenState extends State<CheckingLoginScreen> with TickerPr
            } else if ( state.rolId  == '2' ){
 
             Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);          
+          } else if ( state.rolId == '4' ){
+            Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerHomeScreen()), (route) => false);
           }
         }
       },
