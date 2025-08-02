@@ -8,6 +8,7 @@ import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
 import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
+import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
 
 class ProfileClientScreen extends StatelessWidget {
@@ -105,6 +106,13 @@ class ProfileClientScreen extends StatelessWidget {
                 text: 'Help',
                 icon: Icons.help_outline,
                 colorIcon: 0xff4772e6,
+              ),
+              ItemAccount(
+                text: 'Walkthrough',
+                icon: Icons.support,
+                colorIcon: 0xff4772e6,
+                onPressed: () => Navigator.push(
+                    context, routeFrave(page: ClientWalkthroughScreen())),
               ),
               const Divider(),
               ItemAccount(

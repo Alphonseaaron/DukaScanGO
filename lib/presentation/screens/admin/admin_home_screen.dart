@@ -18,6 +18,7 @@ import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
 import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
 
 class AdminHomeScreen extends StatelessWidget {
 

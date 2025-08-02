@@ -10,6 +10,7 @@ import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
 import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
+import 'package:dukascango/presentation/walkthrough/delivery_walkthrough.dart';
 
 class DeliveryHomeScreen extends StatelessWidget {
 
