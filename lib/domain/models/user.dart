@@ -14,6 +14,8 @@ class User {
   final Map<String, dynamic>? currency;
   final Map<String, dynamic>? geo;
   final String status;
+  final int loyaltyPoints;
+  final String? referralCode;
 
   User({
     required this.uid,
@@ -31,6 +33,8 @@ class User {
     this.currency,
     this.geo,
     this.status = 'active',
+    this.loyaltyPoints = 0,
+    this.referralCode,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,6 +54,8 @@ class User {
       'currency': currency,
       'geo': geo,
       'status': status,
+      'loyaltyPoints': loyaltyPoints,
+      'referralCode': referralCode,
     };
   }
 
@@ -70,6 +76,8 @@ class User {
       currency: map['currency'],
       geo: map['geo'],
       status: map['status'] ?? 'active',
+      loyaltyPoints: map['loyaltyPoints'] ?? 0,
+      referralCode: map['referralCode'],
     );
   }
 
@@ -89,6 +97,8 @@ class User {
     Map<String, dynamic>? currency,
     Map<String, dynamic>? geo,
     String? status,
+    int? loyaltyPoints,
+    String? referralCode,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -106,6 +116,8 @@ class User {
       currency: currency ?? this.currency,
       geo: geo ?? this.geo,
       status: status ?? this.status,
+      loyaltyPoints: loyaltyPoints ?? this.loyaltyPoints,
+      referralCode: referralCode ?? this.referralCode,
     );
   }
 }

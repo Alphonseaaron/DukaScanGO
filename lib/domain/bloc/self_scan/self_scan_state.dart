@@ -9,6 +9,7 @@ class SelfScanState {
   final Product? currentProduct;
   final bool isProductFound;
   final bool showUpsellBanner;
+  final List<Product> suggestions;
 
   const SelfScanState({
     this.storeId,
@@ -18,6 +19,7 @@ class SelfScanState {
     this.currentProduct,
     this.isProductFound = true,
     this.showUpsellBanner = false,
+    this.suggestions = const [],
   });
 
   SelfScanState copyWith({
@@ -28,6 +30,7 @@ class SelfScanState {
     Product? currentProduct,
     bool? isProductFound,
     bool? showUpsellBanner,
+    List<Product>? suggestions,
   }) =>
       SelfScanState(
         storeId: storeId ?? this.storeId,
@@ -37,5 +40,6 @@ class SelfScanState {
         currentProduct: currentProduct ?? this.currentProduct,
         isProductFound: isProductFound ?? this.isProductFound,
         showUpsellBanner: showUpsellBanner ?? this.showUpsellBanner,
+        suggestions: suggestions ?? this.suggestions,
       );
 }

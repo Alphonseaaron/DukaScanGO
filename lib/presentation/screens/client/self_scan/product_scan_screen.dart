@@ -1,3 +1,4 @@
+import 'package:dukascango/domain/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
@@ -84,7 +85,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
   Widget _buildUpsellBanner(BuildContext context) {
     return BlocBuilder<SelfScanBloc, SelfScanState>(
       builder: (context, state) {
-        if (state.showUpsellBanner) {
+        if (state.showUpsellBanner && state.suggestions.isNotEmpty) {
           return Dismissible(
             key: const Key('upsell_banner'),
             onDismissed: (_) {
@@ -104,10 +105,34 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                   ),
                 ],
               ),
-              child: const TextCustom(
-                text: 'Try this from another brand!',
-                fontSize: 16,
-              ),
+              child: Column(
+                children: [
+                  const TextCustom(
+                    text: 'You might also like:',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(height: 10),
+                  ...state.suggestions.map((product) => ListTile(
+                    leading: product.images.isNotEmpty
+                        ? Image.network(product.images.first, width: 50, height: 50, fit: BoxFit.cover)
+                        : const Icon(Icons.image_not_supported),
+                    title: Text(product.name),
+                    subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
+                    onTap: () {
+                      // Add the suggested product to the cart
+                      final productCart = ProductCart(
+                        uidProduct: product.id!,
+                        imageProduct: product.images.isNotEmpty ? product.images.first : '',
+                        nameProduct: product.name,
+                        price: product.price,
+                        quantity: 1,
+                      );
+                      BlocProvider.of<SelfScanBloc>(context).add(OnProductAddedToCartEvent(productCart));
+                    },
+                  )).toList(),
+                ],
+              )
             ),
           );
         }

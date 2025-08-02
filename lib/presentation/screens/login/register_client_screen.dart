@@ -21,6 +21,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
   late TextEditingController _lastnameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late TextEditingController _referralCodeController;
 
   String _fullPhoneNumber = '';
   Map<String, dynamic> _countryData = {};
@@ -33,6 +34,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
     _lastnameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _referralCodeController = TextEditingController();
     super.initState();
   }
 
@@ -43,6 +45,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
     _lastnameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _referralCodeController.dispose();
     super.dispose();
   }
 
@@ -51,6 +54,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
     _lastnameController.clear();
     _emailController.clear();
     _passwordController.clear();
+    _referralCodeController.clear();
   }
 
   @override
@@ -112,6 +116,7 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
                     _countryData['flag'],
                     _countryData['currency'],
                     _countryData['geo'],
+                    referralCode: _referralCodeController.text,
                   ));
                 }
               },
@@ -177,6 +182,13 @@ class _RegisterClientScreenState extends State<RegisterClientScreen> {
                 hintText: '********',
                 isPassword: true,
                 validator: passwordValidator,
+              ),
+              const SizedBox(height: 15.0),
+              const TextCustom(text: 'Referral Code (Optional)'),
+              const SizedBox(height: 5.0),
+              FormFieldFrave(
+                controller: _referralCodeController,
+                hintText: 'Enter referral code',
               ),
             ],
           ),
@@ -277,11 +289,3 @@ class _PictureRegistre extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-

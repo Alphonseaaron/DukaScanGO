@@ -1,7 +1,8 @@
+import 'package:dukascango/domain/models/ticket.dart';
 import 'package:flutter/material.dart';
 
 class TicketDetailsScreen extends StatelessWidget {
-  final Map<String, String> ticket;
+  final Ticket ticket;
 
   const TicketDetailsScreen({Key? key, required this.ticket}) : super(key: key);
 
@@ -16,11 +17,14 @@ class TicketDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('ID: ${ticket['id']}', style: TextStyle(fontSize: 18)),
+            Text('ID: ${ticket.id}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
-            Text('Subject: ${ticket['subject']}', style: TextStyle(fontSize: 18)),
+            Text('Subject: ${ticket.subject}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
-            Text('Status: ${ticket['status']}', style: TextStyle(fontSize: 18)),
+            Text('Description: ${ticket.description}',
+                style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text('Status: ${ticket.status}', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),

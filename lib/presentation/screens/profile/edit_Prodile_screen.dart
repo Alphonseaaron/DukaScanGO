@@ -149,6 +149,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const SizedBox(height: 5.0),
                 FormFieldFrave(controller: _emailController, readOnly: true),
                 const SizedBox(height: 20.0),
+                const TextCustom(
+                    text: 'Loyalty Points',
+                    color: ColorsDukascango.secundaryColor),
+                const SizedBox(height: 5.0),
+                FormFieldFrave(
+                  readOnly: true,
+                  initialValue: userBloc.state.user!.loyaltyPoints.toString(),
+                ),
+                const SizedBox(height: 20.0),
+                const TextCustom(
+                    text: 'Referral Code',
+                    color: ColorsDukascango.secundaryColor),
+                const SizedBox(height: 5.0),
+                FormFieldFrave(
+                  readOnly: true,
+                  initialValue: userBloc.state.user!.referralCode,
+                ),
               ],
             ),
           ),

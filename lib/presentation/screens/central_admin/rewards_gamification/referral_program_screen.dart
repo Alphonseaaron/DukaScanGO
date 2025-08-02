@@ -1,3 +1,4 @@
+import 'package:dukascango/presentation/screens/central_admin/rewards_gamification/referral_reward_screen.dart';
 import 'package:flutter/material.dart';
 
 class ReferralProgramScreen extends StatelessWidget {
@@ -7,8 +8,20 @@ class ReferralProgramScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Referral Program'),
       ),
-      body: Center(
-        child: Text('Referral Program Screen'),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Configure Reward'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReferralRewardScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

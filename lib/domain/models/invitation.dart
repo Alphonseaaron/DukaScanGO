@@ -8,6 +8,7 @@ class Invitation {
   final List<String> permissions;
   final String status; // 'pending', 'accepted', 'declined'
   final DateTime dateInvited;
+  final double? reward;
 
   Invitation({
     this.id,
@@ -17,6 +18,7 @@ class Invitation {
     required this.permissions,
     required this.status,
     required this.dateInvited,
+    this.reward,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class Invitation {
       'permissions': permissions,
       'status': status,
       'dateInvited': dateInvited,
+      'reward': reward,
     };
   }
 
@@ -39,6 +42,7 @@ class Invitation {
       permissions: List<String>.from(map['permissions']),
       status: map['status'],
       dateInvited: (map['dateInvited'] as Timestamp).toDate(),
+      reward: map['reward'],
     );
   }
 }

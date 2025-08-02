@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dukascango/domain/services/suggestion_service.dart';
 import 'package:meta/meta.dart';
 import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/domain/models/product_cart.dart';
@@ -9,12 +10,19 @@ part 'self_scan_state.dart';
 
 class SelfScanBloc extends Bloc<SelfScanEvent, SelfScanState> {
   final ProductsServices _productsServices = ProductsServices();
+  final SuggestionService _suggestionService = SuggestionService();
 
   SelfScanBloc() : super(const SelfScanState()) {
     on<OnStoreScannedEvent>(_onStoreScanned);
     on<OnProductScannedEvent>(_onProductScanned);
     on<OnProductAddedToCartEvent>(_onProductAddedToCart);
     on<OnDismissUpsellBannerEvent>(_onDismissUpsellBanner);
+    on<OnGetSuggestionsEvent>(_onGetSuggestions);
+  }
+
+  Future<void> _onGetSuggestions(OnGetSuggestionsEvent event, Emitter<SelfScanState> emit) async {
+    final suggestions = await _suggestionService.getProductSuggestions(event.productIds);
+    emit(state.copyWith(suggestions: suggestions, showUpsellBanner: true));
   }
 
   Future<void> _onStoreScanned(OnStoreScannedEvent event, Emitter<SelfScanState> emit) async {
@@ -24,7 +32,7 @@ class SelfScanBloc extends Bloc<SelfScanEvent, SelfScanState> {
   Future<void> _onProductScanned(OnProductScannedEvent event, Emitter<SelfScanState> emit) async {
     final product = await _productsServices.getProductByBarcode(event.barcode);
     if (product != null) {
-      emit(state.copyWith(currentProduct: product, isProductFound: true, showUpsellBanner: true));
+      emit(state.copyWith(currentProduct: product, isProductFound: true));
       final productCart = ProductCart(
         uidProduct: product.id!,
         imageProduct: product.images.isNotEmpty ? product.images.first : '',
@@ -33,6 +41,7 @@ class SelfScanBloc extends Bloc<SelfScanEvent, SelfScanState> {
         quantity: 1,
       );
       add(OnProductAddedToCartEvent(productCart));
+      add(OnGetSuggestionsEvent(state.cart.map((p) => p.uidProduct).toList()));
     } else {
       emit(state.copyWith(isProductFound: false, showUpsellBanner: false));
     }

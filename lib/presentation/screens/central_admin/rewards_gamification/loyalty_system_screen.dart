@@ -1,3 +1,4 @@
+import 'package:dukascango/presentation/screens/central_admin/rewards_gamification/loyalty_point_rules_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoyaltySystemScreen extends StatelessWidget {
@@ -7,8 +8,20 @@ class LoyaltySystemScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Loyalty System'),
       ),
-      body: Center(
-        child: Text('Loyalty System Screen'),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Configure Rules'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoyaltyPointRulesScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

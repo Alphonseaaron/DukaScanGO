@@ -154,6 +154,7 @@ class OnRegisterClientEvent extends UserEvent {
   final String flag;
   final Map<String, dynamic> currency;
   final Map<String, dynamic> geo;
+  final String? referralCode;
 
   OnRegisterClientEvent(
       this.name,
@@ -167,7 +168,8 @@ class OnRegisterClientEvent extends UserEvent {
       this.dialingCode,
       this.flag,
       this.currency,
-      this.geo);
+      this.geo,
+      {this.referralCode});
 }
 
 class OnDeleteStreetAddressEvent extends UserEvent {

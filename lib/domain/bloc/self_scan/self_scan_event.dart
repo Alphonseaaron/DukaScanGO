@@ -20,3 +20,9 @@ class OnProductAddedToCartEvent extends SelfScanEvent {
 }
 
 class OnDismissUpsellBannerEvent extends SelfScanEvent {}
+
+class OnGetSuggestionsEvent extends SelfScanEvent {
+  final List<String> productIds;
+
+  OnGetSuggestionsEvent(this.productIds);
+}

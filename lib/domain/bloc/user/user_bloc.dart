@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dukascango/domain/models/user_referral.dart';
+import 'package:dukascango/domain/services/user_referral_service.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dukascango/domain/models/user.dart';
@@ -8,6 +10,7 @@ import 'package:dukascango/domain/services/wholesaler_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:image_picker/image_picker.dart';
+import 'package:nanoid/nanoid.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -15,6 +18,7 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserServices _userServices = UserServices();
   final WholesalerServices _wholesalerServices = WholesalerServices();
+  final UserReferralService _userReferralService = UserReferralService();
   final firebase_auth.FirebaseAuth _firebaseAuth = firebase_auth.FirebaseAuth.instance;
 
   UserBloc() : super(const UserState()) {
@@ -117,7 +121,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(LoadingUserState());
       final user = _firebaseAuth.currentUser;
       if (user != null) {
-        await user.updatePassword(event.password);
+        await user.updatePassword(event.newPassword);
         emit(SuccessUserState());
       } else {
         emit(FailureUserState('User not authenticated'));
@@ -135,6 +139,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         email: event.email,
         password: event.password,
       );
+      final referralCode = nanoid(10);
       final user = User(
         uid: userCredential.user!.uid,
         name: event.name,
@@ -148,8 +153,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         flag: event.flag,
         currency: event.currency,
         geo: event.geo,
+        referralCode: referralCode,
       );
       await _userServices.addUser(user);
+
+      final userReferral = UserReferral(
+        userId: user.uid,
+        referralCode: referralCode,
+        referredUserIds: [],
+      );
+      await _userReferralService.addUserReferral(userReferral);
+
       final wholesaler = Wholesaler(
         uid: userCredential.user!.uid,
         businessName: event.name,
@@ -158,6 +172,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         paymentDetails: '',
       );
       await _wholesalerServices.addWholesaler(wholesaler);
+
+      if (event.referralCode != null && event.referralCode!.isNotEmpty) {
+        final referral = await _userReferralService.getUserReferralByCode(event.referralCode!);
+        if (referral != null) {
+          final updatedReferral = referral.copyWith(
+            referredUserIds: [...referral.referredUserIds, user.uid],
+          );
+          await _userReferralService.updateUserReferral(updatedReferral);
+          // TODO: Award bonus to referrer
+        }
+      }
+
       emit(SuccessUserState());
     } catch (e) {
       emit(FailureUserState(e.toString()));
