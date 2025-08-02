@@ -7,6 +7,8 @@ import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
 import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
+import 'package:dukascango/presentation/walkthrough/delivery_walkthrough.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -86,26 +88,45 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
           actions: [
-            TextButton(
-                onPressed: () {
-                  if (_keyForm.currentState!.validate()) {
-                    userBloc.add(OnEditUserEvent(
-                      _nameController.text,
-                      _lastNameController.text,
-                      _fullPhoneNumber,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
-                    ));
-                  }
-                },
-                child: TextCustom(
-                    text: 'Update account',
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    final user = BlocProvider.of<UserBloc>(context).state.user!;
+                    if (user.rolId == '1') {
+                      Navigator.push(context, routeFrave(page: AdminWalkthroughScreen()));
+                    } else if (user.rolId == '3') {
+                      Navigator.push(context, routeFrave(page: DeliveryWalkthroughScreen()));
+                    }
+                  },
+                  child: TextCustom(
+                    text: 'Walkthrough',
                     fontSize: 16,
-                    color: Colors.amber[900]!))
+                    color: Colors.amber[900]!,
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {
+                      if (_keyForm.currentState!.validate()) {
+                        userBloc.add(OnEditUserEvent(
+                          _nameController.text,
+                          _lastNameController.text,
+                          _fullPhoneNumber,
+                          _countryData['country'],
+                          _countryData['countryCode'],
+                          _countryData['dialingCode'],
+                          _countryData['flag'],
+                          _countryData['currency'],
+                          _countryData['geo'],
+                        ));
+                      }
+                    },
+                    child: TextCustom(
+                        text: 'Update account',
+                        fontSize: 16,
+                        color: Colors.amber[900]!))
+              ],
+            )
           ],
         ),
         body: SafeArea(

@@ -6,6 +6,7 @@ import 'package:dukascango/domain/services/wholesaler_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/walkthrough/wholesaler_walkthrough.dart';
 
 class WholesalerProfileScreen extends StatefulWidget {
   @override
@@ -63,28 +64,40 @@ class _WholesalerProfileScreenState extends State<WholesalerProfileScreen> {
       appBar: AppBar(
         title: TextCustom(text: 'Profile'),
         actions: [
-          TextButton(
-            onPressed: () async {
-              if (_wholesaler != null) {
-                final updatedWholesaler = Wholesaler(
-                  uid: _wholesaler!.uid,
-                  businessName: _businessNameController.text,
-                  contactPerson: _contactPersonController.text,
-                  deliveryAreas: _deliveryAreasController.text
-                      .split(',')
-                      .map((e) => e.trim())
-                      .toList(),
-                  paymentDetails: _paymentDetailsController.text,
-                );
-                await _wholesalerServices.updateWholesaler(updatedWholesaler);
-                modalSuccess(context, 'Profile updated successfully',
-                    () => Navigator.pop(context));
-              }
-            },
-            child: TextCustom(
-              text: 'Save',
-              color: ColorsFrave.primaryColor,
-            ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => WholesalerWalkthroughScreen())),
+                child: TextCustom(
+                  text: 'Walkthrough',
+                  color: ColorsFrave.primaryColor,
+                ),
+              ),
+              TextButton(
+                onPressed: () async {
+                  if (_wholesaler != null) {
+                    final updatedWholesaler = Wholesaler(
+                      uid: _wholesaler!.uid,
+                      businessName: _businessNameController.text,
+                      contactPerson: _contactPersonController.text,
+                      deliveryAreas: _deliveryAreasController.text
+                          .split(',')
+                          .map((e) => e.trim())
+                          .toList(),
+                      paymentDetails: _paymentDetailsController.text,
+                    );
+                    await _wholesalerServices.updateWholesaler(updatedWholesaler);
+                    modalSuccess(context, 'Profile updated successfully',
+                        () => Navigator.pop(context));
+                  }
+                },
+                child: TextCustom(
+                  text: 'Save',
+                  color: ColorsFrave.primaryColor,
+                ),
+              ),
+            ],
           )
         ],
       ),

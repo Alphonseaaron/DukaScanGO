@@ -12,6 +12,7 @@ import 'package:dukascango/presentation/screens/client/details_product_screen.da
 import 'package:dukascango/presentation/screens/client/search_for_category_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
 class ClientHomeScreen extends StatelessWidget {
 
