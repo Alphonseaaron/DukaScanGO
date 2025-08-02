@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/admin/admin_home_screen.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/delivery_home_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
+import 'package:dukascango/presentation/screens/wholesaler/wholesaler_home_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class SelectRoleScreen extends StatelessWidget {
 
@@ -52,11 +53,20 @@ class SelectRoleScreen extends StatelessWidget {
                   if (authState.rolId == '1')
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
-                      text: 'Restaurant',
+                      text: 'Store Owner',
                       color1: ColorsFrave.primaryColor.withOpacity(.2),
                       color2: Colors.greenAccent.withOpacity(.1),
                       onPressed: () => Navigator.pushAndRemoveUntil(context,
                           routeFrave(page: AdminHomeScreen()), (route) => false),
+                    ),
+                  if (authState.rolId == '1')
+                    _BtnRol(
+                      svg: 'Assets/svg/restaurante.svg',
+                      text: 'Wholesaler',
+                      color1: ColorsFrave.primaryColor.withOpacity(.2),
+                      color2: Colors.greenAccent.withOpacity(.1),
+                      onPressed: () => Navigator.pushAndRemoveUntil(context,
+                          routeFrave(page: WholesalerHomeScreen()), (route) => false),
                     ),
                   if (authState.rolId == '1' || authState.rolId == '3')
                     _BtnRol(

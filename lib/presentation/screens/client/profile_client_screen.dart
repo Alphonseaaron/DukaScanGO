@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/client/client_orders_screen.dart';
-import 'package:restaurant/presentation/screens/intro/checking_login_screen.dart';
-import 'package:restaurant/presentation/screens/profile/change_password_screen.dart';
-import 'package:restaurant/presentation/screens/profile/edit_Prodile_screen.dart';
-import 'package:restaurant/presentation/screens/profile/list_addresses_screen.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/client/client_orders_screen.dart';
+import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
+import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
+import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 
 
 class ProfileClientScreen extends StatelessWidget {

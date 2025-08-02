@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/card_orders_delivery.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/delivery/delivery_home_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/order_details_delivery_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/card_orders_delivery.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/order_details_delivery_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class OrderDeliveredScreen extends StatelessWidget {

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/login/login_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/login/login_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class CheckEmailScreen extends StatelessWidget {
 

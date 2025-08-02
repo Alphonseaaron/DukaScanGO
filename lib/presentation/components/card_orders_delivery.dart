@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class CardOrdersDelivery extends StatelessWidget {
 

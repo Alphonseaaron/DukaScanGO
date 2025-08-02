@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 void modalLoading(BuildContext context){
 

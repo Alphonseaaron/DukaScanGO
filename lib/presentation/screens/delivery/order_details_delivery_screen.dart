@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/order_details_response.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/date_custom.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/delivery/map_delivery_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/response/order_details_response.dart';
+import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/date_custom.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/delivery/map_delivery_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class OrdersDetailsDeliveryScreen extends StatefulWidget {

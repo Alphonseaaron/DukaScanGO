@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:restaurant/domain/models/order.dart';
+import 'package:dukascango/domain/models/order.dart';
 
 class OrdersServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

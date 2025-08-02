@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/helpers/helpers.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
 import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';

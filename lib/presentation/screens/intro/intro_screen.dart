@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:restaurant/presentation/components/components.dart';
 import 'package:restaurant/presentation/screens/login/login_screen.dart';
-import 'package:restaurant/presentation/screens/login/register_client_screen.dart';
+import 'package:dukascango/presentation/screens/login/select_registration_role_screen.dart';
 
 class IntroScreen extends StatelessWidget {
 
@@ -54,10 +54,10 @@ class IntroScreen extends StatelessWidget {
                 const SizedBox(height: 15.0),
                 _BtnSocial(
                   icon: FontAwesomeIcons.envelope,
-                  text: 'Sign up with an Email ID',
+                  text: 'Register',
                   backgroundColor: Colors.black87,
                   textColor: Colors.white,
-                  onPressed: () => Navigator.push(context, routeFrave(page: RegisterClientScreen())),
+                  onPressed: () => Navigator.push(context, routeFrave(page: SelectRegistrationRoleScreen())),
                 ),
                 const SizedBox(height: 20.0),
                 Row(

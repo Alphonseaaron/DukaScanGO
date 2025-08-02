@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/category_all_response.dart';
-import 'package:restaurant/domain/services/services.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/response/category_all_response.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 void modalSelectionCategory(BuildContext ctx){
 

@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/response/orders_by_status_response.dart';
-import 'package:restaurant/presentation/components/components.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
+import 'package:dukascango/presentation/components/components.dart';
 import 'dart:convert';
-import 'package:restaurant/presentation/helpers/helpers.dart';
-import 'package:restaurant/presentation/screens/delivery/delivery_home_screen.dart';
-import 'package:restaurant/presentation/screens/delivery/order_delivered_screen.dart';
-import 'package:restaurant/presentation/themes/colors_frave.dart';
-import 'package:restaurant/presentation/themes/theme_maps.dart';
+import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
+import 'package:dukascango/presentation/screens/delivery/order_delivered_screen.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/theme_maps.dart';
 
 class MapDeliveryScreen extends StatefulWidget {
 

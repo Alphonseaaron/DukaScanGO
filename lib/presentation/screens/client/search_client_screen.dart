@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/data/env/environment.dart';
-import 'package:restaurant/domain/bloc/blocs.dart';
-import 'package:restaurant/domain/models/product.dart';
-import 'package:restaurant/presentation/components/components.dart';
-import 'package:restaurant/presentation/screens/client/client_home_screen.dart';
-import 'package:restaurant/presentation/screens/client/details_product_screen.dart';
+import 'package:dukascango/data/env/environment.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/domain/models/product.dart';
+import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
+import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
 
 class SearchClientScreen extends StatefulWidget {
   
