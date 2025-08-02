@@ -37,7 +37,7 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
         return;
       }
       final invitation = Invitation(
-        storeId: 'store_id', // TODO: Get real store ID
+        storeId: event.storeId,
         userId: user.uid,
         role: event.role,
         permissions: event.permissions,
@@ -56,8 +56,11 @@ class InvitationBloc extends Bloc<InvitationEvent, InvitationState> {
     try {
       emit(InvitationLoading());
       await _invitationServices.updateInvitationStatus(
-          event.invitationId, 'accepted');
-      // TODO: Update user role
+          event.invitation.id!, 'accepted');
+      final user = await _userServices.getUserById(event.invitation.userId);
+      if (user != null) {
+        await _userServices.updateUser(user.copyWith(rolId: event.invitation.role));
+      }
       emit(InvitationSuccess());
     } catch (e) {
       emit(InvitationFailure(e.toString()));

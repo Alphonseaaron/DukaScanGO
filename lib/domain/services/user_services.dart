@@ -56,4 +56,26 @@ class UserServices {
     }
     return null;
   }
+
+  Future<void> createUser(String name, String email, String password, String rolId) async {
+    final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+    final User user = User(
+      uid: userCredential.user!.uid,
+      name: name,
+      email: email,
+      rolId: rolId,
+    );
+    await addUser(user);
+  }
+
+  Future<void> deleteUser(String uid) async {
+    // Note: This does not delete the user from Firebase Auth.
+    // That requires re-authentication and is a more complex flow.
+    // For now, we will just delete the user from Firestore.
+    await _firestore.collection('users').doc(uid).delete();
+  }
+
+  Future<void> updateUserStatus(String uid, String status) async {
+    await _firestore.collection('users').doc(uid).update({'status': status});
+  }
 }

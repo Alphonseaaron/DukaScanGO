@@ -1,8 +1,9 @@
+import 'package:dukascango/domain/bloc/auth/auth_bloc.dart';
+import 'package:dukascango/domain/bloc/inventory/inventory_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/dashboard/dashboard_bloc.dart';
 import 'package:dukascango/domain/models/restocking_request.dart';
-import 'package:dukascango/domain/services/inventory_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -19,6 +20,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final inventoryBloc = BlocProvider.of<InventoryBloc>(context);
+    final authBloc = BlocProvider.of<AuthBloc>(context);
+    final user = authBloc.state.user;
+
     return Scaffold(
       appBar: AppBar(
         title: const TextCustom(text: 'Dashboard'),
@@ -46,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(height: 20),
                 const TextCustom(text: 'Low Stock Items', fontSize: 20, fontWeight: FontWeight.bold),
                 const SizedBox(height: 10),
-                _buildLowStockList(state.lowStockItems),
+                _buildLowStockList(state.lowStockItems, inventoryBloc, user!.uid),
               ],
             );
           }
@@ -73,7 +78,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildLowStockList(List<dynamic> items) {
+  Widget _buildLowStockList(List<dynamic> items, InventoryBloc inventoryBloc, String userId) {
     if (items.isEmpty) {
       return const Text('No low stock items.');
     }
@@ -89,7 +94,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           trailing: TextButton(
             child: const Text('Request Restock'),
             onPressed: () {
-              // TODO: Implement this properly with a BLoC
               final request = RestockingRequest(
                 productId: item.id!,
                 productName: item.name,
@@ -97,9 +101,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 lowStockThreshold: item.lowStockThreshold!,
                 status: 'pending',
                 dateRequested: DateTime.now(),
-                requestorId: 'admin_user_id', // TODO: Get real user ID
+                requestorId: userId,
               );
-              InventoryServices().createRestockingRequest(request);
+              inventoryBloc.add(OnCreateRestockingRequestEvent(request));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Restocking request created.')),
               );

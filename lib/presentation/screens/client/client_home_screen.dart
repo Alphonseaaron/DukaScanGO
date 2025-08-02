@@ -1,3 +1,5 @@
+import 'package:dukascango/domain/models/featured_store_with_details.dart';
+import 'package:dukascango/domain/services/featured_store_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/data/env/environment.dart';
@@ -114,7 +116,39 @@ class ClientHomeScreen extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 20.0),            
+            const SizedBox(height: 20.0),
+            const TextCustom(text: 'Featured Stores', fontSize: 21, fontWeight: FontWeight.w500 ),
+            const SizedBox(height: 10.0),
+            Container(
+              height: 100,
+              child: FutureBuilder<List<FeaturedStoreWithDetails>>(
+                future: FeaturedStoreService().getFeaturedStoresWithDetails(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final store = snapshot.data![index];
+                        return Container(
+                          width: 200,
+                          margin: const EdgeInsets.only(right: 10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Center(
+                            child: Text(store.store.name),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return const ShimmerFrave();
+                },
+              ),
+            ),
+            const SizedBox(height: 20.0),
             FutureBuilder<List<Category>>(
               future: categoryServices.getAllCategories(),
               builder: (context, snapshot) {
@@ -229,4 +263,3 @@ class _ListProducts extends StatelessWidget {
     );
   }
 }
-

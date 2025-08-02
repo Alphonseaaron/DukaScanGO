@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:dukascango/domain/models/brand.dart';
+import 'package:dukascango/domain/models/response/category_all_response.dart';
+import 'package:dukascango/domain/services/brand_services.dart';
+import 'package:dukascango/domain/services/category_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -26,6 +30,9 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   late TextEditingController _supplierController;
   late TextEditingController _taxRateController;
   late TextEditingController _lowStockThresholdController;
+
+  String? _selectedBrandId;
+  String? _selectedCategoryId;
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -108,7 +115,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                       taxRate: _taxRateController.text.isNotEmpty ? double.parse(_taxRateController.text) : null,
                       lowStockThreshold: _lowStockThresholdController.text.isNotEmpty ? int.parse(_lowStockThresholdController.text) : null,
                       images: [],
-                      category: 'default', // TODO: Add category selection
+                      category: _selectedCategoryId!,
+                      brandId: _selectedBrandId,
                     );
                     productBloc.add(OnAddNewProductEvent(
                       product,
@@ -197,6 +205,65 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 hintText: '0',
                 keyboardType: TextInputType.number,
               ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Brand'),
+              const SizedBox(height: 5.0),
+              FutureBuilder<List<Brand>>(
+                future: BrandService().getBrands(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return DropdownButtonFormField<String>(
+                      value: _selectedBrandId,
+                      items: snapshot.data!
+                          .map((brand) => DropdownMenuItem(
+                                value: brand.id,
+                                child: Text(brand.name),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedBrandId = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Select a brand',
+                        border: OutlineInputBorder(),
+                      ),
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+              const SizedBox(height: 20.0),
+              const TextCustom(text: 'Category'),
+              const SizedBox(height: 5.0),
+              FutureBuilder<List<Category>>(
+                future: CategoryServices().getAllCategories(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return DropdownButtonFormField<String>(
+                      value: _selectedCategoryId,
+                      items: snapshot.data!
+                          .map((category) => DropdownMenuItem(
+                                value: category.uidCategory,
+                                child: Text(category.category),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategoryId = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Select a category',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value == null ? 'Category is required' : null,
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
               const SizedBox(height: 10.0),
               BtnDukascango(
                 text: 'Scan Barcode',
@@ -235,13 +302,6 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                               ))
                           : const Icon(Icons.wallpaper_rounded, size: 80, color: Colors.grey)),
                 ),
-              ),
-              const SizedBox(height: 20.0),
-              const TextCustom(text: 'Category'),
-              const SizedBox(height: 5.0),
-              FormFieldFrave(
-                hintText: 'Category',
-                // TODO: Implement category selection
               ),
             ],
           ),

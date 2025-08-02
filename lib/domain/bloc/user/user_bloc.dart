@@ -115,8 +115,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       OnChangePasswordEvent event, Emitter<UserState> emit) async {
     try {
       emit(LoadingUserState());
-      // TODO: Implement change password with Firebase Auth
-      emit(SuccessUserState());
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updatePassword(event.password);
+        emit(SuccessUserState());
+      } else {
+        emit(FailureUserState('User not authenticated'));
+      }
     } catch (e) {
       emit(FailureUserState(e.toString()));
     }

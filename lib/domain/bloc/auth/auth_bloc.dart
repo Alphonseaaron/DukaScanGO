@@ -25,7 +25,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.email, event.password);
 
       if (user != null) {
-        // TODO: Get user role from Firestore
         final userServices = UserServices();
         final userDb = await userServices.getUserById(user.uid);
         if (userDb != null) {
@@ -49,7 +48,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = _authServices.getCurrentUser();
 
       if (user != null) {
-        // TODO: Get user role from Firestore
         final userServices = UserServices();
         final userDb = await userServices.getUserById(user.uid);
         if (userDb != null) {

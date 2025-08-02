@@ -10,3 +10,9 @@ class OnBulkUploadFileEvent extends InventoryEvent {
 }
 
 class OnGetRestockingRequestsEvent extends InventoryEvent {}
+
+class OnCreateRestockingRequestEvent extends InventoryEvent {
+  final RestockingRequest request;
+
+  OnCreateRestockingRequestEvent(this.request);
+}

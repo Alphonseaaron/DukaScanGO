@@ -4,5 +4,6 @@ final List<String> roles = [
   'Cashier',
   'Wholesale Sales Rep',
   'Warehouse Manager',
-  'Logistics Coordinator'
+  'Logistics Coordinator',
+  'Super Admin'
 ];

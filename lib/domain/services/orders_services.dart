@@ -73,4 +73,11 @@ class OrdersServices {
         .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
+
+  Future<List<Order>> getAllOrders() async {
+    final QuerySnapshot snapshot = await _firestore.collection('orders').get();
+    return snapshot.docs
+        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+  }
 }

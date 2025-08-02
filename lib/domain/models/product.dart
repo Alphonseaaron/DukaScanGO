@@ -12,6 +12,7 @@ class Product {
   final String? supplier;
   final double? taxRate;
   final int? lowStockThreshold;
+  final String? brandId;
 
   Product({
     this.id,
@@ -27,6 +28,7 @@ class Product {
     this.supplier,
     this.taxRate,
     this.lowStockThreshold,
+    this.brandId,
   });
 
   Product copyWith({
@@ -43,6 +45,7 @@ class Product {
     String? supplier,
     double? taxRate,
     int? lowStockThreshold,
+    String? brandId,
   }) {
     return Product(
       id: id ?? this.id,
@@ -58,6 +61,7 @@ class Product {
       supplier: supplier ?? this.supplier,
       taxRate: taxRate ?? this.taxRate,
       lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,
+      brandId: brandId ?? this.brandId,
     );
   }
 
@@ -75,6 +79,7 @@ class Product {
       'supplier': supplier,
       'taxRate': taxRate,
       'lowStockThreshold': lowStockThreshold,
+      'brandId': brandId,
     };
   }
 
@@ -93,6 +98,7 @@ class Product {
       supplier: map['supplier'],
       taxRate: map['taxRate'],
       lowStockThreshold: map['lowStockThreshold'],
+      brandId: map['brandId'],
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dukascango/presentation/screens/admin/products/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/data/env/environment.dart';
@@ -23,6 +24,7 @@ class _ListProductsScreenState extends State<ListProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final productBloc = BlocProvider.of<ProductsBloc>(context);
     return BlocListener<ProductsBloc, ProductsState>(
       listener: (context, state) {
         if (state is LoadingProductsState) {
@@ -73,7 +75,7 @@ class _ListProductsScreenState extends State<ListProductsScreen> {
             if (state.products.isEmpty) {
               return const ShimmerDukascango();
             }
-            return _GridViewListProduct(listProducts: state.products);
+            return _GridViewListProduct(listProducts: state.products, productBloc: productBloc);
           },
         ),
       ),
@@ -83,8 +85,9 @@ class _ListProductsScreenState extends State<ListProductsScreen> {
 
 class _GridViewListProduct extends StatelessWidget {
   final List<Product> listProducts;
+  final ProductsBloc productBloc;
 
-  const _GridViewListProduct({required this.listProducts});
+  const _GridViewListProduct({required this.listProducts, required this.productBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -103,13 +106,25 @@ class _GridViewListProduct extends StatelessWidget {
             subtitle: TextCustom(text: 'Stock: ${product.stockQuantity ?? 'N/A'}'),
             trailing: PopupMenuButton<String>(
               onSelected: (value) {
-                if (value == 'adjust_stock') {
+                if (value == 'edit') {
+                  Navigator.push(
+                    context,
+                    routeDukascango(page: EditProductScreen(product: product)),
+                  );
+                } else if (value == 'adjust_stock') {
                   _showAdjustStockDialog(context, product);
                 } else if (value == 'delete') {
-                  // TODO: Implement delete product
+                  modalDelete(context, 'Delete Product', 'Are you sure you want to delete this product?', () {
+                    productBloc.add(OnDeleteProductEvent(product.id!));
+                    Navigator.pop(context);
+                  });
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: 'edit',
+                  child: Text('Edit'),
+                ),
                 const PopupMenuItem<String>(
                   value: 'adjust_stock',
                   child: Text('Adjust Stock'),

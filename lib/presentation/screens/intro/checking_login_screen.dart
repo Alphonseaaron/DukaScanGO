@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
+import 'package:dukascango/presentation/screens/central_admin/central_admin_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/login/login_screen.dart';
@@ -73,6 +74,8 @@ class _CheckingLoginScreenState extends State<CheckingLoginScreen> with TickerPr
             Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);          
           } else if ( state.rolId == '4' ){
             Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerHomeScreen()), (route) => false);
+          } else if ( state.rolId == '5' ){
+            Navigator.pushAndRemoveUntil(context, routeFrave(page: CentralAdminHomeScreen()), (route) => false);
           }
         }
       },

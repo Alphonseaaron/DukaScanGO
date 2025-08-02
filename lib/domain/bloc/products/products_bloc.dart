@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:dukascango/domain/bloc/auth/auth_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dukascango/domain/models/product.dart';
@@ -10,8 +11,9 @@ part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final ProductsServices _productsServices = ProductsServices();
+  final AuthBloc authBloc;
 
-  ProductsBloc() : super(const ProductsState()) {
+  ProductsBloc({required this.authBloc}) : super(const ProductsState()) {
     on<OnAddNewProductEvent>(_onAddNewProduct);
     on<OnUpdateProductEvent>(_onUpdateProduct);
     on<OnDeleteProductEvent>(_onDeleteProduct);
@@ -85,11 +87,16 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       OnAdjustStockEvent event, Emitter<ProductsState> emit) async {
     try {
       emit(LoadingProductsState());
-      // TODO: Get real user ID from AuthBloc
-      await _productsServices.adjustStock(event.product, event.newStock, event.reason, 'admin_user_id');
-      final products = await _productsServices.getProducts();
-      emit(SuccessProductsState());
-      emit(state.copyWith(products: products));
+      final user = authBloc.state.user;
+      if (user != null) {
+        await _productsServices.adjustStock(
+            event.product, event.newStock, event.reason, user.uid);
+        final products = await _productsServices.getProducts();
+        emit(SuccessProductsState());
+        emit(state.copyWith(products: products));
+      } else {
+        emit(FailureProductsState('User not authenticated'));
+      }
     } catch (e) {
       emit(FailureProductsState(e.toString()));
     }

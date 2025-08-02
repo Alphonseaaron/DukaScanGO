@@ -1,3 +1,4 @@
+import 'package:dukascango/presentation/screens/central_admin/user_management/create_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/user/user_bloc.dart';
@@ -27,7 +28,15 @@ class _StaffManagementScreenState extends State<StaffManagementScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // TODO: Implement add staff
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateUserScreen(),
+                ),
+              ).then((_) {
+                // Refresh the list when coming back
+                BlocProvider.of<UserBloc>(context).add(OnGetAllUsersEvent());
+              });
             },
           ),
         ],

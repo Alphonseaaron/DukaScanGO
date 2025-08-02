@@ -13,6 +13,7 @@ class User {
   final String? flag;
   final Map<String, dynamic>? currency;
   final Map<String, dynamic>? geo;
+  final String status;
 
   User({
     required this.uid,
@@ -29,6 +30,7 @@ class User {
     this.flag,
     this.currency,
     this.geo,
+    this.status = 'active',
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class User {
       'flag': flag,
       'currency': currency,
       'geo': geo,
+      'status': status,
     };
   }
 
@@ -66,6 +69,7 @@ class User {
       flag: map['flag'],
       currency: map['currency'],
       geo: map['geo'],
+      status: map['status'] ?? 'active',
     );
   }
 
@@ -84,6 +88,7 @@ class User {
     String? flag,
     Map<String, dynamic>? currency,
     Map<String, dynamic>? geo,
+    String? status,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -100,6 +105,7 @@ class User {
       flag: flag ?? this.flag,
       currency: currency ?? this.currency,
       geo: geo ?? this.geo,
+      status: status ?? this.status,
     );
   }
 }

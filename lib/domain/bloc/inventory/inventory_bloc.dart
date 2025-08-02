@@ -18,6 +18,18 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
   InventoryBloc() : super(const InventoryInitial()) {
     on<OnBulkUploadFileEvent>(_onBulkUploadFile);
     on<OnGetRestockingRequestsEvent>(_onGetRestockingRequests);
+    on<OnCreateRestockingRequestEvent>(_onCreateRestockingRequest);
+  }
+
+  Future<void> _onCreateRestockingRequest(
+      OnCreateRestockingRequestEvent event, Emitter<InventoryState> emit) async {
+    try {
+      emit(InventoryLoading());
+      await _inventoryServices.createRestockingRequest(event.request);
+      emit(const InventorySuccess(successCount: 1, failureCount: 0, errors: []));
+    } catch (e) {
+      emit(InventoryFailure(e.toString()));
+    }
   }
 
   Future<void> _onGetRestockingRequests(

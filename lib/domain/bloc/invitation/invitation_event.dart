@@ -7,14 +7,15 @@ class OnSendInvitationEvent extends InvitationEvent {
   final String email;
   final String role;
   final List<String> permissions;
+  final String storeId;
 
-  OnSendInvitationEvent(this.email, this.role, this.permissions);
+  OnSendInvitationEvent(this.email, this.role, this.permissions, this.storeId);
 }
 
 class OnAcceptInvitationEvent extends InvitationEvent {
-  final String invitationId;
+  final Invitation invitation;
 
-  OnAcceptInvitationEvent(this.invitationId);
+  OnAcceptInvitationEvent(this.invitation);
 }
 
 class OnDeclineInvitationEvent extends InvitationEvent {
