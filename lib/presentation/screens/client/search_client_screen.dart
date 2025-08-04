@@ -48,7 +48,7 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () => Navigator.pushReplacement(context, routeFrave(page: ClientHomeScreen())),
+                    onTap: () => Navigator.pushReplacement(context, routeDukascango(page: ClientHomeScreen())),
                     child: Container(
                       height: 44,
                       child: Icon(Icons.arrow_back_ios_new_rounded),
@@ -66,8 +66,8 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                       child: TextFormField(
                         controller: _searchController,
                         onChanged:(value){
-                          productBloc.add( OnSearchProductEvent(value));
-                          if( value.length != 0 ) productServices.searchProductsForName(value);
+                          productBloc.add( OnSearchProduct(value));
+                          if( value.length != 0 ) productsServices.searchProductsForName(value);
                         },
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -99,7 +99,7 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationFrave(1),
+      bottomNavigationBar: BottomNavigationDukascango(1),
     );
   }
 
@@ -119,7 +119,7 @@ class _ListProductSearch extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.push(
                     context,
-                    routeFrave(
+                    routeDukascango(
                         page: DetailsProductScreen(
                             product: listProduct[i]))),
                 child: Container(

@@ -8,7 +8,7 @@ import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/select_addreess_screen.dart';
 import 'package:dukascango/presentation/screens/client/self_scan/exit_receipt_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CheckOutScreen extends StatelessWidget {
 
@@ -32,12 +32,12 @@ class CheckOutScreen extends StatelessWidget {
         if(state is SuccessOrdersState) {
           Navigator.pop(context);
           if (isSelfScan) {
-            Navigator.pushAndRemoveUntil(context, routeFrave(page: ExitReceiptScreen()), (route) => false);
+            Navigator.pushAndRemoveUntil(context, routeDukascango(page: ExitReceiptScreen()), (route) => false);
           } else {
             modalSuccess(context, 'order received', () {
               cartBloc.add(OnClearCartEvent());
               paymentBloc.add(OnClearTypePaymentMethodEvent());
-              Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeDukascango(page: ClientHomeScreen()), (route) => false);
             });
           }
         }
@@ -63,8 +63,8 @@ class CheckOutScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 19),
-                TextCustom( text: 'Back ', fontSize: 17, color: ColorsFrave.primaryColor)
+                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 19),
+                TextCustom( text: 'Back ', fontSize: 17, color: ColorsDukascango.primaryColor)
               ],
             ),
           ),
@@ -93,14 +93,14 @@ class CheckOutScreen extends StatelessWidget {
                           onTap: (){
                             final order = Order(
                               clientId: userBloc.state.user!.uid,
-                              address: userBloc.state.addressName!,
+                              address: userBloc.state.user!.address,
                               total: cartBloc.state.total,
                               paymentType: paymentBloc.state.typePaymentMethod,
                               status: 'PENDING',
                               date: DateTime.now(),
                               details: cartBloc.product.map((p) => OrderDetail(
-                                productId: p.id,
-                                productName: p.name,
+                                productId: p.uidProduct,
+                                productName: p.nameProduct,
                                 price: p.price,
                                 quantity: p.quantity,
                               )).toList(),
@@ -222,7 +222,7 @@ class _CheckoutPaymentMethods extends StatelessWidget {
               BlocBuilder<PaymentsBloc, PaymentsState>(
                   builder: (_, state) => TextCustom(
                       text: state.typePaymentMethod,
-                      color: ColorsFrave.primaryColor,
+                      color: ColorsDukascango.primaryColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 16
                   )
@@ -293,10 +293,10 @@ class _CheckoutAddress extends StatelessWidget {
               const TextCustom(text: 'Shipping Address', fontWeight: FontWeight.w500),
               InkWell(
                   onTap: () => Navigator.push(
-                      context, routeFrave(page: SelectAddressScreen())),
+                      context, routeDukascango(page: SelectAddressScreen())),
                   child: const TextCustom(
                       text: 'Change',
-                      color: ColorsFrave.primaryColor,
+                      color: ColorsDukascango.primaryColor,
                       fontSize: 17))
             ],
           ),
@@ -304,8 +304,8 @@ class _CheckoutAddress extends StatelessWidget {
           const SizedBox(height: 5.0),
           BlocBuilder<UserBloc, UserState>(
               builder: (_, state) => TextCustom(
-                  text: (state.addressName != '')
-                      ? state.addressName
+                  text: (state.user!.address.isNotEmpty)
+                      ? state.user!.address
                       : 'Select Address',
                   fontSize: 17,
                   maxLine: 1))

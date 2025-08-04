@@ -10,7 +10,7 @@ class SelectPaymentScreen extends StatelessWidget {
         
       ),
       body: Center(
-         child: Text('Hola Frave Payments'),
+         child: Text('Hola Dukascango Payments'),
       ),
     );
   }

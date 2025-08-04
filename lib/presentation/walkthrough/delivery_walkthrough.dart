@@ -40,7 +40,7 @@ class _DeliveryWalkthroughScreenState extends State<DeliveryWalkthroughScreen> {
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: DeliveryHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, routeDukascango(page: DeliveryHomeScreen()), (route) => false);
   }
 
   @override

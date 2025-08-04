@@ -8,7 +8,7 @@ import 'package:dukascango/domain/models/response/products_top_home_response.dar
 import 'package:dukascango/domain/services/products_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 
 class DetailsProductScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
 
   _getImageProducts() async {
 
-    imagesProducts = await productServices.getImagesProducts(widget.product.id.toString());
+    imagesProducts = await productsServices.getImagesByProduct(widget.product.id.toString());
     setState(() { isLoading = true; });
   }
 
@@ -118,7 +118,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                 )
               ],
             )
-            : const ShimmerFrave(),
+            : const ShimmerDukascango(),
             const SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -128,7 +128,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                     decoration: BoxDecoration(
-                      color: ColorsFrave.primaryColor,
+                      color: ColorsDukascango.primaryColor,
                       borderRadius: BorderRadius.circular(5.0)
                     ),
                     child: Row(
@@ -209,7 +209,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                               height: 50,
                               width: 220,
                               decoration: BoxDecoration(
-                                color: ColorsFrave.primaryColor,
+                                color: ColorsDukascango.primaryColor,
                                 borderRadius: BorderRadius.circular(15.0)
                               ),
                               child: Row(

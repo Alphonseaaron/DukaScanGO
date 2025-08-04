@@ -69,7 +69,7 @@ class _CreateMap extends StatelessWidget {
                 mapLocation.add( OnGetAddressLocationEvent( mapLocation.state.locationCentral! ) );
               }
             },
-            style: jsonEncode(themeMapsFrave),
+            style: jsonEncode(themeMapsDukascango),
            )
           : Center(
               child: const TextCustom(text: 'Locating...'),

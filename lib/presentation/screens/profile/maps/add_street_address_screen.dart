@@ -9,7 +9,7 @@ import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/screens/profile/maps/map_address_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddStreetAddressScreen extends StatefulWidget {
 
@@ -53,7 +53,7 @@ class _AddStreetAddressScreenState extends State<AddStreetAddressScreen> {
         } else if ( state is SuccessUserState ){
 
           Navigator.pop(context);
-          modalSuccess(context, 'Street Address added successfully', () => Navigator.pushReplacement(context, routeFrave(page: ListAddressesScreen())));
+          modalSuccess(context, 'Street Address added successfully', () => Navigator.pushReplacement(context, routeDukascango(page: ListAddressesScreen())));
 
         } else if ( state is FailureUserState ){
 
@@ -72,15 +72,15 @@ class _AddStreetAddressScreenState extends State<AddStreetAddressScreen> {
           elevation: 0,
           leadingWidth: 80,
             leading: TextButton(
-              onPressed: () => Navigator.pushReplacement(context, routeFrave(page: ListAddressesScreen())), 
-              child: const TextCustom(text: 'Cancel', color: ColorsFrave.primaryColor, fontSize: 17 )
+              onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: ListAddressesScreen())),
+              child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17 )
             ),
             actions: [
               TextButton(
                 onPressed: () async {
                   if( _keyForm.currentState!.validate() ){
                     userBloc.add( 
-                      OnAddNewAddressEvent( 
+                      OnAddNewAddress(
                         _streetAddressController.text.trim(), 
                         myLocationBloc.state.addressName,
                         myLocationBloc.state.locationCentral!
@@ -88,7 +88,7 @@ class _AddStreetAddressScreenState extends State<AddStreetAddressScreen> {
                     );
                   }
                 }, 
-                child: const TextCustom(text: 'Save', color: ColorsFrave.primaryColor, fontSize: 17 )
+                child: const TextCustom(text: 'Save', color: ColorsDukascango.primaryColor, fontSize: 17 )
               ),
             ],
         ),
@@ -102,7 +102,7 @@ class _AddStreetAddressScreenState extends State<AddStreetAddressScreen> {
                 children: [
                   const TextCustom(text: 'Street Address'),
                   const SizedBox(height: 5.0),
-                  FormFieldFrave(
+                  FormFieldDukascango(
                     controller: _streetAddressController,
                     validator: RequiredValidator(errorText: 'Street Address is required'),
                   ),
@@ -116,7 +116,7 @@ class _AddStreetAddressScreenState extends State<AddStreetAddressScreen> {
                       final gpsActive = await Geolocator.isLocationServiceEnabled();
           
                       if( permissionGPS && gpsActive ){
-                        Navigator.push(context, navigatorPageFadeInFrave(context, MapLocationAddressScreen()));
+                        Navigator.push(context, routeDukascango(page: MapLocationAddressScreen()));
                       }else {
                         Navigator.pop(context);
                       }

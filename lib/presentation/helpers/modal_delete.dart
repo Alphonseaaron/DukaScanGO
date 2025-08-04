@@ -19,8 +19,8 @@ void modalDelete(BuildContext context, String name, String image, VoidCallback o
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    children: const [
-                      TextCustom(text: 'Frave ', color: Colors.red, fontWeight: FontWeight.w500 ),
+                  children: [
+                    TextCustom(text: 'Dukascango ', color: Colors.blue, fontWeight: FontWeight.w500 ),
                       TextCustom(text: 'Food', fontWeight: FontWeight.w500),
                     ],
                   ),
@@ -54,7 +54,7 @@ void modalDelete(BuildContext context, String name, String image, VoidCallback o
                 ],
               ),
               const SizedBox(height: 20.0),
-              BtnFrave(
+              BtnDukascango(
                 height: 45,
                 color: Colors.red,
                 text: 'DELETE',

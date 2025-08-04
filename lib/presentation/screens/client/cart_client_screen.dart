@@ -6,7 +6,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/check_out_screen.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CartClientScreen extends StatelessWidget {
 
@@ -30,11 +30,11 @@ class CartClientScreen extends StatelessWidget {
         leading: IconButton(
           icon: Row(
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 19),
-              TextCustom(text: 'Back', fontSize: 16, color: ColorsFrave.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 19),
+              TextCustom(text: 'Back', fontSize: 16, color: ColorsDukascango.primaryColor )
             ],
           ),
-          onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false),
+          onPressed: () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: ClientHomeScreen()), (route) => false),
         ),
         actions: [
           Center(
@@ -101,7 +101,7 @@ class CartClientScreen extends StatelessWidget {
                                         children: [
                                           TextCustom(text: state.products![i].nameProduct, fontWeight: FontWeight.w500, fontSize: 20),
                                           const SizedBox(height: 10.0),
-                                          TextCustom(text: '\$ ${state.products![i].price * state.products![i].quantity}', color: ColorsFrave.primaryColor )
+                                          TextCustom(text: '\$ ${state.products![i].price * state.products![i].quantity}', color: ColorsDukascango.primaryColor )
                                         ],
                                       ),
                                     ),
@@ -114,7 +114,7 @@ class CartClientScreen extends StatelessWidget {
                                               alignment: Alignment.center,
                                               padding: const EdgeInsets.all(2.0),
                                               decoration: BoxDecoration(
-                                                color: ColorsFrave.primaryColor,
+                                                color: ColorsDukascango.primaryColor,
                                                 shape: BoxShape.circle
                                               ),
                                               child: InkWell(
@@ -125,13 +125,13 @@ class CartClientScreen extends StatelessWidget {
                                               )
                                             ),
                                             const SizedBox(width: 10.0),
-                                            TextCustom(text: '${state.products![i].quantity}', color: ColorsFrave.primaryColor ),
+                                            TextCustom(text: '${state.products![i].quantity}', color: ColorsDukascango.primaryColor ),
                                             const SizedBox(width: 10.0),
                                             Container(
                                               alignment: Alignment.center,
                                               padding: const EdgeInsets.all(2.0),
                                               decoration: BoxDecoration(
-                                                color: ColorsFrave.primaryColor,
+                                                color: ColorsDukascango.primaryColor,
                                                 shape: BoxShape.circle
                                               ),
                                               child: InkWell(
@@ -183,14 +183,14 @@ class CartClientScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20.0),
-                      BtnFrave(
+                      BtnDukascango(
                         text: 'Checkout',
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: (state.quantityCart != 0) ? ColorsFrave.primaryColor : ColorsFrave.secundaryColor,
+                        color: (state.quantityCart != 0) ? ColorsDukascango.primaryColor : ColorsDukascango.secundaryColor,
                         onPressed: (){
                           if ( state.quantityCart != 0 ){
-                            Navigator.push(context, routeFrave(page: CheckOutScreen(isSelfScan: isSelfScan)));
+                            Navigator.push(context, routeDukascango(page: CheckOutScreen(isSelfScan: isSelfScan)));
                           }
                         },
                       )
@@ -213,7 +213,7 @@ class _WithOutProducts extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset('Assets/empty-cart.svg', height: 450),
-        const TextCustom(text: 'Without products', fontSize: 21, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor,)
+        const TextCustom(text: 'Without products', fontSize: 21, fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor,)
       ],
     );
   }

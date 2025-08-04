@@ -191,7 +191,7 @@ class _ListProductsDetails extends StatelessWidget {
               child:
                   (listProductDetails[i].picture != null && listProductDetails[i].picture!.isNotEmpty)
                       ? Image.network(
-                          '${Environment.urlApiServer}/${listProductDetails[i].picture}')
+                          '${Environment.endpointBase}/${listProductDetails[i].picture}')
                       : const Icon(Icons.image_not_supported),
             ),
             const SizedBox(width: 15.0),

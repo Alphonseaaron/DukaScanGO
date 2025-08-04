@@ -69,7 +69,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
         if (state is SuccessProductsState) {
           Navigator.pop(context);
           modalSuccess(context, 'Product added Successfully',
-              () => Navigator.pushReplacement(context, routeFrave(page: AdminHomeScreen())));
+              () => Navigator.pushReplacement(context, routeDukascango(page: AdminHomeScreen())));
         }
         if (state is FailureProductsState) {
           Navigator.pop(context);
@@ -88,7 +88,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
             child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17),
             onPressed: () {
               Navigator.pop(context);
-              productBloc.add(OnUnSelectCategoryEvent());
+              productBloc.add(OnUnselectCategoryEvent());
               productBloc.add(OnUnSelectMultipleImagesEvent());
             },
           ),
@@ -128,7 +128,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 10.0),
               const TextCustom(text: 'Product name'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _nameController,
                 hintText: 'Product',
                 validator: RequiredValidator(errorText: 'Name is required'),
@@ -136,7 +136,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Product description'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _descriptionController,
                 maxLine: 5,
                 validator: RequiredValidator(errorText: 'Description is required'),
@@ -144,7 +144,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Price'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _priceController,
                 hintText: '\$ 0.00',
                 keyboardType: TextInputType.number,
@@ -153,7 +153,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Barcode'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _barcodeController,
                 hintText: 'Barcode',
                 validator: RequiredValidator(errorText: 'Barcode is required'),
@@ -161,7 +161,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Cost Price'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _costPriceController,
                 hintText: '\$ 0.00',
                 keyboardType: TextInputType.number,
@@ -169,7 +169,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Stock Quantity'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _stockQuantityController,
                 hintText: '0',
                 keyboardType: TextInputType.number,
@@ -177,14 +177,14 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Supplier'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _supplierController,
                 hintText: 'Supplier',
               ),
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Tax Rate'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _taxRateController,
                 hintText: '0.00',
                 keyboardType: TextInputType.number,
@@ -192,7 +192,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Low Stock Threshold'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _lowStockThresholdController,
                 hintText: '0',
                 keyboardType: TextInputType.number,
@@ -239,7 +239,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Category'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 hintText: 'Category',
                 // TODO: Implement category selection
               ),

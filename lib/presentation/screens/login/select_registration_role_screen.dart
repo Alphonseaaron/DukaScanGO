@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/login/register_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class SelectRegistrationRoleScreen extends StatelessWidget {
   @override
@@ -27,17 +27,17 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
                 text: 'Choose your Role',
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: ColorsFrave.secundaryColor,
+                color: ColorsDukascango.secundaryColor,
               ),
               SizedBox(height: 30),
               _BtnRol(
                 svg: 'Assets/svg/restaurante.svg',
                 text: 'Store Owner',
-                color1: ColorsFrave.primaryColor.withOpacity(.2),
+                color1: ColorsDukascango.primaryColor.withOpacity(.2),
                 color2: Colors.greenAccent.withOpacity(.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeFrave(
+                    routeDukascango(
                         page: RegisterScreen(
                       role: 'Store Owner',
                     ))),
@@ -49,7 +49,7 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
                 color2: Colors.amber.withOpacity(.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeFrave(
+                    routeDukascango(
                         page: RegisterScreen(
                       role: 'Wholesaler',
                     ))),
@@ -61,7 +61,7 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
                 color2: Colors.purpleAccent.withOpacity(.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeFrave(
+                    routeDukascango(
                         page: RegisterScreen(
                       role: 'Delivery',
                     ))),
@@ -113,7 +113,7 @@ class _BtnRol extends StatelessWidget {
                   height: 100,
                 ),
                 TextCustom(
-                    text: text, fontSize: 20, color: ColorsFrave.secundaryColor)
+                    text: text, fontSize: 20, color: ColorsDukascango.secundaryColor)
               ],
             ),
           ),

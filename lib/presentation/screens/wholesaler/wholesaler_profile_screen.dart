@@ -5,7 +5,7 @@ import 'package:dukascango/domain/models/wholesaler.dart';
 import 'package:dukascango/domain/services/wholesaler_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/walkthrough/wholesaler_walkthrough.dart';
 
 class WholesalerProfileScreen extends StatefulWidget {
@@ -71,7 +71,7 @@ class _WholesalerProfileScreenState extends State<WholesalerProfileScreen> {
                     MaterialPageRoute(builder: (_) => WholesalerWalkthroughScreen())),
                 child: TextCustom(
                   text: 'Walkthrough',
-                  color: ColorsFrave.primaryColor,
+                  color: ColorsDukascango.primaryColor,
                 ),
               ),
               TextButton(
@@ -94,7 +94,7 @@ class _WholesalerProfileScreenState extends State<WholesalerProfileScreen> {
                 },
                 child: TextCustom(
                   text: 'Save',
-                  color: ColorsFrave.primaryColor,
+                  color: ColorsDukascango.primaryColor,
                 ),
               ),
             ],
@@ -107,22 +107,22 @@ class _WholesalerProfileScreenState extends State<WholesalerProfileScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  FormFieldFrave(
+                  FormFieldDukascango(
                     controller: _businessNameController,
                     hintText: 'Business Name',
                   ),
                   SizedBox(height: 16),
-                  FormFieldFrave(
+                  FormFieldDukascango(
                     controller: _contactPersonController,
                     hintText: 'Contact Person',
                   ),
                   SizedBox(height: 16),
-                  FormFieldFrave(
+                  FormFieldDukascango(
                     controller: _deliveryAreasController,
                     hintText: 'Delivery Areas (comma separated)',
                   ),
                   SizedBox(height: 16),
-                  FormFieldFrave(
+                  FormFieldDukascango(
                     controller: _paymentDetailsController,
                     hintText: 'Payment Details',
                   ),

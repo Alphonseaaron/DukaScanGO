@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class ManualMarketMap extends StatelessWidget {
 
@@ -36,7 +36,7 @@ class ManualMarketMap extends StatelessWidget {
                   maxRadius: 20,
                   backgroundColor: Colors.white,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: ColorsFrave.primaryColor ),
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: ColorsDukascango.primaryColor ),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
@@ -54,7 +54,7 @@ class ManualMarketMap extends StatelessWidget {
                   ),
                   child: BlocBuilder<MylocationmapBloc, MylocationmapState>(
                     builder: (_, state) 
-                      => TextCustom(text: state.addressName, color: ColorsFrave.primaryColor, fontSize: 17 )
+                      => TextCustom(text: state.addressName, color: ColorsDukascango.primaryColor, fontSize: 17 )
                   ),
                 )
               ],
@@ -65,7 +65,7 @@ class ManualMarketMap extends StatelessWidget {
         Center(
           child: Transform.translate(
             offset: Offset(0, -15),
-            child: BounceInDownFrave(
+            child: BounceInDownDukascango(
               child: const Icon(Icons.location_on, size: 50)
             )
           ),
@@ -77,12 +77,12 @@ class ManualMarketMap extends StatelessWidget {
           child: MaterialButton(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             minWidth: MediaQuery.of(context).size.width - 80,
-            color: ColorsFrave.primaryColor,
+            color: ColorsDukascango.primaryColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             child: const TextCustom(text: 'Confirm Address', color: Colors.white, fontSize: 17,),
             onPressed: (){
               if( myLocationBloc.state.addressName != '' ){
-                Navigator.pushReplacement(context, routeFrave(page: AddStreetAddressScreen()));
+                Navigator.pushReplacement(context, routeDukascango(page: AddStreetAddressScreen()));
               }
             },
           )

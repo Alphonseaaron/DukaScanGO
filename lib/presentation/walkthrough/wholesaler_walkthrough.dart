@@ -40,7 +40,7 @@ class _WholesalerWalkthroughScreenState extends State<WholesalerWalkthroughScree
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, routeDukascango(page: WholesalerHomeScreen()), (route) => false);
   }
 
   @override

@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/presentation/helpers/custom_markert.dart';
-import 'package:dukascango/presentation/themes/theme_maps.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 part 'mapclient_event.dart';
@@ -34,6 +32,11 @@ class MapclientBloc extends Bloc<MapclientEvent, MapclientState> {
       add( OnReadyMapClientEvent() );
 
     }
+  }
+
+  void moveCamera( LatLng location ){
+    final cameraUpdate = CameraUpdate.newLatLng(location);
+    _mapController.animateCamera(cameraUpdate);
   }
 
 

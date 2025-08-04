@@ -5,7 +5,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/category/categories_admin_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddCategoryAdminScreen extends StatefulWidget {
   
@@ -48,7 +48,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
         }
         if(state is SuccessProductsState ) {
           Navigator.pop(context);
-          Navigator.pushReplacement(context, routeFrave(page: CategoriesAdminScreen()));
+          Navigator.pushReplacement(context, routeDukascango(page: CategoriesAdminScreen()));
         }
         if( state is FailureProductsState ){
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: TextCustom(text: state.error, color: Colors.white), backgroundColor: Colors.red ));
@@ -66,8 +66,8 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor , size: 17),
-                TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor )
+                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor , size: 17),
+                TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor )
               ],
             ),
           ),
@@ -79,7 +79,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
                   productBloc.add(OnAddNewCategoryEvent(_nameCategoryController.text, _categoryDescriptionController.text));
                 }
               }, 
-              child: const TextCustom(text: 'Save', color: ColorsFrave.primaryColor )
+              child: const TextCustom(text: 'Save', color: ColorsDukascango.primaryColor )
             )
           ],
         ),
@@ -93,7 +93,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
                 const SizedBox(height: 20.0),
                 const TextCustom(text: 'Category name'),
                 const SizedBox(height: 5.0),
-                FormFieldFrave(
+                FormFieldDukascango(
                   controller: _nameCategoryController,
                   hintText: 'Drinks',
                   validator: RequiredValidator(errorText: 'Category name is required'),
@@ -101,7 +101,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
                 const SizedBox(height: 25.0),
                 const TextCustom(text: 'Category Description'),
                 const SizedBox(height: 5.0),
-                FormFieldFrave(
+                FormFieldDukascango(
                   controller: _categoryDescriptionController,
                   maxLine: 8,
                 )

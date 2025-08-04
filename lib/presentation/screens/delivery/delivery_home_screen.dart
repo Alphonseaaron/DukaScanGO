@@ -9,7 +9,7 @@ import 'package:dukascango/presentation/screens/delivery/order_on_way_screen.dar
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
-import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_profile_screen.dart';
 import 'package:dukascango/presentation/walkthrough/delivery_walkthrough.dart';
 
 class DeliveryHomeScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class DeliveryHomeScreen extends StatelessWidget {
           modalLoading(context);
         } else if ( state is SuccessAuthState ){
           Navigator.pop(context);
-          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeFrave(page: DeliveryHomeScreen())));
+          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeDukascango(page: DeliveryHomeScreen())));
           Navigator.pop(context);
 
         } else if ( state is FailureAuthState ){
@@ -46,7 +46,7 @@ class DeliveryHomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               Center(
-                child: TextCustom(text: authBloc.state.user!.firstName + ' ' + authBloc.state.user!.lastName, fontSize: 25, fontWeight: FontWeight.w500 )
+                child: TextCustom(text: authBloc.state.user!.name, fontSize: 25, fontWeight: FontWeight.w500 )
               ),
               const SizedBox(height: 5.0),
               Center(
@@ -59,19 +59,19 @@ class DeliveryHomeScreen extends StatelessWidget {
                 text: 'Profile setting',
                 icon: Icons.person,
                 colorIcon: 0xff01C58C,
-                onPressed: () => Navigator.push(context, routeFrave(page: EditProfileScreen())),
+                onPressed: () => Navigator.push(context, routeDukascango(page: EditProfileScreen())),
               ),
               ItemAccount(
                 text: 'Change Password',
                 icon: Icons.lock_rounded,
                 colorIcon: 0xff1B83F5,
-                onPressed: () => Navigator.push(context, routeFrave(page: ChangePasswordScreen())),
+                onPressed: () => Navigator.push(context, routeDukascango(page: ChangePasswordScreen())),
               ),
               ItemAccount(
                 text: 'Change Role',
                 icon: Icons.swap_horiz_rounded,
                 colorIcon: 0xffE62755,
-                onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: SelectRoleScreen()), (route) => false),
+                onPressed: () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: SelectRoleScreen()), (route) => false),
               ),
               ItemAccount(
                 text: 'Dark mode',
@@ -85,19 +85,19 @@ class DeliveryHomeScreen extends StatelessWidget {
                 text: 'Orders',
                 icon: Icons.checklist_rounded,
                 colorIcon: 0xff5E65CD,
-                 onPressed: () => Navigator.push(context, routeFrave(page: ListOrdersDeliveryScreen())),
+                 onPressed: () => Navigator.push(context, routeDukascango(page: ListOrdersDeliveryScreen())),
               ),
               ItemAccount(
                 text: 'On Way',
                 icon: Icons.delivery_dining_rounded,
                 colorIcon: 0xff1A60C1,
-                onPressed: () => Navigator.push(context, routeFrave(page: OrderOnWayScreen())),
+                onPressed: () => Navigator.push(context, routeDukascango(page: OrderOnWayScreen())),
               ),
               ItemAccount(
                 text: 'Delivered',
                 icon: Icons.check_rounded,
                 colorIcon: 0xff4BB17B,
-                onPressed: () => Navigator.push(context, routeFrave(page: OrderDeliveredScreen())),
+                onPressed: () => Navigator.push(context, routeDukascango(page: OrderDeliveredScreen())),
               ),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Personal', color: Colors.grey ),
@@ -129,7 +129,7 @@ class DeliveryHomeScreen extends StatelessWidget {
                 colorIcon: 0xffF02849,
                 onPressed: () {
                   authBloc.add(LogOutEvent());
-                  Navigator.pushAndRemoveUntil(context, routeFrave(page: CheckingLoginScreen()), (route) => false);
+                  Navigator.pushAndRemoveUntil(context, routeDukascango(page: CheckingLoginScreen()), (route) => false);
                 },
               ),
             ],

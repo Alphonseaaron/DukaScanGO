@@ -3,7 +3,7 @@ import 'package:dukascango/domain/models/response/category_all_response.dart';
 import 'package:dukascango/domain/services/category_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/admin/category/add_category_admin_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CategoriesAdminScreen extends StatelessWidget {
 
@@ -22,16 +22,16 @@ class CategoriesAdminScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 17),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor,)
+              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 17),
+              TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor,)
             ],
           ),
         ),
         elevation: 0,
         actions: [
           TextButton(
-            onPressed: () => Navigator.push(context, routeFrave(page: AddCategoryAdminScreen())), 
-            child: const TextCustom(text: 'Add', color: ColorsFrave.primaryColor, fontSize: 17)
+            onPressed: () => Navigator.push(context, routeDukascango(page: AddCategoryAdminScreen())),
+            child: const TextCustom(text: 'Add', color: ColorsDukascango.primaryColor, fontSize: 17)
           )
         ],
       ),
@@ -85,7 +85,7 @@ class _ListCategories extends StatelessWidget {
                   width: 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7.0),
-                    border: Border.all(color: ColorsFrave.primaryColor, width: 4.5)
+                    border: Border.all(color: ColorsDukascango.primaryColor, width: 4.5)
                   ),
                 ),
                 const SizedBox(width: 20.0),

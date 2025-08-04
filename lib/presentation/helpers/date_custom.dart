@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class DateCustom {
 
-  static String getDateFrave(){
+  static String getDateDukascango(){
 
     int time = DateTime.now().hour;
 

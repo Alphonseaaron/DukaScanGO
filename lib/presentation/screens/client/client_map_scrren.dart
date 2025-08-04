@@ -7,7 +7,7 @@ import 'package:dukascango/domain/models/response/orders_client_response.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'dart:convert';
 import 'package:dukascango/presentation/helpers/helpers.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/themes/theme_maps.dart';
 
 class ClientMapScreen extends StatefulWidget {
@@ -84,7 +84,7 @@ class _MapClient extends StatelessWidget {
         myLocationButtonEnabled: false,
         onMapCreated: mapClientBloc.initMapClient,
         markers: state.markerClient.values.toSet(),
-        style: jsonEncode(themeMapsFrave),
+        style: jsonEncode(themeMapsDukascango),
       ),
     );
       
@@ -128,7 +128,7 @@ class _InfoCardClient extends StatelessWidget {
               TextCustom(text: orderClient.delivery),
               const Spacer(),
               InkWell(
-                onTap: () async => await urlLauncherFrave.makePhoneCall('tel:${orderClient.deliveryPhone}'),
+                onTap: () async => await urlLauncherDukascango.makePhoneCall('tel:${orderClient.deliveryPhone}'),
                 child: Container(
                   height: 45,
                   width: 45,
@@ -136,7 +136,7 @@ class _InfoCardClient extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.grey[200]
                   ),
-                  child: const Icon(Icons.phone, color: ColorsFrave.primaryColor),
+                  child: const Icon(Icons.phone, color: ColorsDukascango.primaryColor),
                 ),
               )
             ],

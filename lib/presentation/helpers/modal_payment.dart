@@ -98,7 +98,7 @@ void modalPaymentWithNewCard({ required BuildContext ctx, required String amount
                   ),
                 ),
                 const SizedBox(height: 30.0),
-                BtnFrave(
+                BtnDukascango(
                   color: Color(0xff002C8B),
                   text: 'PAY NOW',
                   fontWeight: FontWeight.w500,

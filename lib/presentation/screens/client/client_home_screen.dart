@@ -11,7 +11,7 @@ import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
 import 'package:dukascango/presentation/screens/client/search_for_category_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
 class ClientHomeScreen extends StatelessWidget {
@@ -46,11 +46,11 @@ class ClientHomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8.0),
-                    TextCustom(text: DateCustom.getDateFrave() + ', ${authBloc.state.user!.firstName}', fontSize: 17, color: ColorsFrave.secundaryColor),
+                    TextCustom(text: DateCustom.getDateDukascango() + ', ${authBloc.state.user!.name}', fontSize: 17, color: ColorsDukascango.secundaryColor),
                   ],
                 ),
                 InkWell(
-                  onTap: () => Navigator.pushReplacement(context, routeFrave(page: CartClientScreen())),
+                  onTap: () => Navigator.pushReplacement(context, routeDukascango(page: CartClientScreen())),
                   child: Stack(
                     children: [
                       const Icon(Icons.shopping_bag_outlined, size: 30),
@@ -100,12 +100,12 @@ class ClientHomeScreen extends StatelessWidget {
                   children: [
                     const TextCustom(text: 'Address'),
                     InkWell(
-                      onTap: () => Navigator.push(context, routeFrave(page: ListAddressesScreen())),
+                      onTap: () => Navigator.push(context, routeDukascango(page: ListAddressesScreen())),
                       child: BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) 
                           => TextCustom( 
-                              text: ( state.addressName != '' ) ? state.addressName : 'without direction', 
-                              color: ColorsFrave.primaryColor, 
+                              text: ( state.user!.address.isNotEmpty ) ? state.user!.address : 'without direction',
+                              color: ColorsDukascango.primaryColor,
                               fontSize: 17,
                               maxLine: 1,
                             )
@@ -123,7 +123,7 @@ class ClientHomeScreen extends StatelessWidget {
                 final List<Category>? category = snapshot.data;
                 
                 return !snapshot.hasData
-                  ? const ShimmerFrave()
+                  ? const ShimmerDukascango()
                   : Container(
                     height: 45,
                     child: ListView.builder(
@@ -134,7 +134,7 @@ class ClientHomeScreen extends StatelessWidget {
                       => InkWell(
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
-                          onTap: () => Navigator.push(context, routeFrave(page: SearchForCategoryScreen(idCategory: category[i].id, category: category[i].category ))),
+                          onTap: () => Navigator.push(context, routeDukascango(page: SearchForCategoryScreen(idCategory: category[i].id, category: category[i].category ))),
                           child: Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(right: 10.0),
@@ -155,17 +155,18 @@ class ClientHomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 TextCustom(text: 'Populer Items', fontSize: 21, fontWeight: FontWeight.w500 ),
-                TextCustom(text: 'See All', color: ColorsFrave.primaryColor, fontSize: 17)
+                TextCustom(text: 'See All', color: ColorsDukascango.primaryColor, fontSize: 17)
               ],
             ),
             const SizedBox(height: 20.0),
             _ListProducts(),
             const SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationFrave(0),
+      bottomNavigationBar: BottomNavigationDukascango(0),
     );
   }
 }
@@ -175,7 +176,7 @@ class _ListProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Productsdb>>(
-      future: productServices.getProductsTopHome(),
+      future: productServices.getProductsTopHome,
       builder: (_, snapshot) {
         
         final List<Productsdb>? listProduct = snapshot.data;
@@ -183,11 +184,11 @@ class _ListProducts extends StatelessWidget {
         return !snapshot.hasData
           ? Column(
               children: const [
-                ShimmerFrave(),
+                ShimmerDukascango(),
                 SizedBox(height: 10.0),
-                ShimmerFrave(),
+                ShimmerDukascango(),
                 SizedBox(height: 10.0),
-                ShimmerFrave(),
+                ShimmerDukascango(),
               ],
             )
           : GridView.builder(
@@ -218,7 +219,7 @@ class _ListProducts extends StatelessWidget {
                             child: Image.network('http://192.168.1.35:7070/' + listProduct[i].picture , height: 150)
                           ),
                         ),
-                        TextCustom(text: listProduct[i].nameProduct , textOverflow: TextOverflow.ellipsis, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor, fontSize: 19 ),
+                        TextCustom(text: listProduct[i].nameProduct , textOverflow: TextOverflow.ellipsis, fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor, fontSize: 19 ),
                         const SizedBox(height: 5.0),
                         TextCustom(text: '\$ ${listProduct[i].price.toString()}', fontSize: 16, fontWeight: FontWeight.w500 )
                       ],

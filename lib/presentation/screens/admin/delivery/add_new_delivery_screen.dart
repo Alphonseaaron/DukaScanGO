@@ -8,7 +8,6 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
-import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddNewDeliveryScreen extends StatefulWidget {
@@ -95,19 +94,13 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
             TextButton(
                 onPressed: () {
                   if (_keyForm.currentState!.validate()) {
-                    userBloc.add(OnRegisterDeliveryEvent(
+                  userBloc.add(OnRegisterDelivery(
                       _nameController.text,
                       _lastnameController.text,
                       _fullPhoneNumber,
                       _emailController.text,
                       _passwordController.text,
                       userBloc.state.pictureProfilePath,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
                     ));
                   }
                 },
@@ -157,7 +150,15 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
                   controller: _emailController,
                   hintText: 'email@dukascango.com',
                   keyboardType: TextInputType.emailAddress,
-                  validator: validatedEmail),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter an email';
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Password'),
               const SizedBox(height: 5.0),
@@ -165,7 +166,15 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
                 controller: _passwordController,
                 hintText: '********',
                 isPassword: true,
-                validator: passwordValidator,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
               ),
             ],
           ),

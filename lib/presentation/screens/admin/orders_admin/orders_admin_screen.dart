@@ -65,7 +65,9 @@ class _OrdersAdminScreenState extends State<OrdersAdminScreen>
               indicatorWeight: 2,
               labelColor: ColorsDukascango.primaryColor,
               unselectedLabelColor: Colors.grey,
-              indicator: DukascangoIndicatorTabBar(),
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(width: 2.0, color: ColorsDukascango.primaryColor),
+              ),
               isScrollable: true,
               tabs: List<Widget>.generate(
                   payType.length,

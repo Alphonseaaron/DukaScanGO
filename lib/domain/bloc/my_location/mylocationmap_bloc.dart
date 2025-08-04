@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:meta/meta.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:dukascango/presentation/themes/theme_maps.dart';
 
 part 'mylocationmap_event.dart';
 part 'mylocationmap_state.dart';
@@ -54,6 +52,11 @@ class MylocationmapBloc extends Bloc<MylocationmapEvent, MylocationmapState> {
       add( OnGetAddressLocationEvent( state.location! ) );
     }
 
+  }
+
+  void moveCamera( LatLng location ){
+    final cameraUpdate = CameraUpdate.newLatLng(location);
+    _mapController.animateCamera(cameraUpdate);
   }
 
 

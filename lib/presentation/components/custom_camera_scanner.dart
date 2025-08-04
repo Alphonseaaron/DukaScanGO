@@ -88,7 +88,7 @@ class _CustomCameraScannerState extends State<CustomCameraScanner> with SingleTi
 class _ScannerOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.black.withOpacity(0.5);
+    final paint = Paint()..color = Colors.black.withAlpha(128);
     final background = Path()..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
     final scanWindowWidth = size.width * 0.8;
     final scanWindowHeight = size.width * 0.8;

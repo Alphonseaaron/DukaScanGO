@@ -1,7 +1,7 @@
 import 'package:dukascango/domain/models/wallet_ledger_entry_model.dart';
 import 'package:dukascango/domain/services/wallet_service.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/helpers/animation_route.dart';
+import 'package:dukascango/presentation/components/animation_route.dart';
 import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/components/custom_camera_scanner.dart';
@@ -131,7 +131,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                   BtnDukascango(
                     text: 'View Cart & Checkout',
                     onPressed: () {
-                      Navigator.push(context, routeFrave(page: CartClientScreen(isSelfScan: true)));
+                      Navigator.push(context, routeDukascango(page: CartClientScreen(isSelfScan: true)));
                     },
                   ),
                 ],

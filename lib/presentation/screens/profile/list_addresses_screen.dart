@@ -8,7 +8,7 @@ import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/client/profile_client_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class ListAddressesScreen extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _ListAddressesScreenState extends State<ListAddressesScreen> with WidgetsB
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if( state == AppLifecycleState.resumed ){
       if( await Permission.location.isGranted ){
-        Navigator.push(context, routeFrave(page: AddStreetAddressScreen()));
+        Navigator.push(context, routeDukascango(page: AddStreetAddressScreen()));
       }
     }
   }
@@ -45,7 +45,7 @@ class _ListAddressesScreenState extends State<ListAddressesScreen> with WidgetsB
     switch ( status ){
       
       case PermissionStatus.granted:
-        Navigator.push(context, routeFrave(page: AddStreetAddressScreen()));  
+        Navigator.push(context, routeDukascango(page: AddStreetAddressScreen()));
         break;
       case PermissionStatus.limited:
         break;
@@ -86,13 +86,13 @@ class _ListAddressesScreenState extends State<ListAddressesScreen> with WidgetsB
           elevation: 0,
           leadingWidth: 80,
           leading: TextButton(
-            onPressed: () => Navigator.pushReplacement(context, routeFrave(page: ProfileClientScreen())), 
-            child: const TextCustom(text: 'Cancel', color: ColorsFrave.primaryColor, fontSize: 17 )
+            onPressed: () => Navigator.pushReplacement(context, routeDukascango(page: ProfileClientScreen())),
+            child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17 )
           ),
           actions: [
             TextButton(
               onPressed: () async => accessLocation( await Permission.location.request() ), 
-              child: const TextCustom(text: 'Add', color: ColorsFrave.primaryColor, fontSize: 17 )
+              child: const TextCustom(text: 'Add', color: ColorsDukascango.primaryColor, fontSize: 17 )
             ),
           ],
         ),
@@ -100,7 +100,7 @@ class _ListAddressesScreenState extends State<ListAddressesScreen> with WidgetsB
           future: userServices.getAddresses(),
           builder: (context, snapshot) 
             => (!snapshot.hasData)
-              ? const ShimmerFrave()
+              ? const ShimmerDukascango()
               : _ListAddresses(listAddress: snapshot.data!)
         ),
       ),
@@ -150,12 +150,12 @@ class _ListAddresses extends StatelessWidget {
                   child: ListTile(
                     leading: BlocBuilder<UserBloc, UserState>(
                       builder: (_, state) 
-                        => ( state.uidAddress == listAddress[i].id ) ? Icon(Icons.radio_button_checked_rounded, color: ColorsFrave.primaryColor) : Icon(Icons.radio_button_off_rounded)
+                        => ( state.user!.address == listAddress[i].id.toString() ) ? Icon(Icons.radio_button_checked_rounded, color: ColorsDukascango.primaryColor) : Icon(Icons.radio_button_off_rounded)
                     ),
                     title: TextCustom(text: listAddress[i].street, fontSize: 20, fontWeight: FontWeight.w500 ),
-                    subtitle: TextCustom(text: listAddress[i].reference, fontSize: 16, color: ColorsFrave.secundaryColor ),
+                    subtitle: TextCustom(text: listAddress[i].reference, fontSize: 16, color: ColorsDukascango.secundaryColor ),
                     trailing: Icon(Icons.swap_horiz_rounded, color: Colors.red[300] ),
-                    onTap: () => userBloc.add( OnSelectAddressButtonEvent( listAddress[i].id, listAddress[i].reference)),
+                    onTap: () => userBloc.add( OnSelectAddressEvent( listAddress[i].id.toString(), listAddress[i].street)),
                   ),
                 ),
               )
@@ -176,7 +176,7 @@ class _WithoutListAddress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset('Assets/my-location.svg', height: 400 ),
-          const TextCustom(text: 'Without Address', fontSize: 25, fontWeight: FontWeight.w500, color: ColorsFrave.secundaryColor ),
+          const TextCustom(text: 'Without Address', fontSize: 25, fontWeight: FontWeight.w500, color: ColorsDukascango.secundaryColor ),
           const SizedBox(height: 80),
         ],
       ),

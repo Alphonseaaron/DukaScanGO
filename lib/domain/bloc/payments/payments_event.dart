@@ -1,9 +1,9 @@
 part of 'payments_bloc.dart';
 
-import 'package:dukascango/domain/models/payment_gateway_model.dart';
-
 @immutable
-abstract class PaymentsEvent {}
+abstract class PaymentsEvent {
+  const PaymentsEvent();
+}
 
 // Existing events for compatibility
 class OnSelectTypePaymentMethodEvent extends PaymentsEvent {
@@ -11,15 +11,17 @@ class OnSelectTypePaymentMethodEvent extends PaymentsEvent {
   final IconData icon;
   final Color color;
 
-  OnSelectTypePaymentMethodEvent(this.typePayment, this.icon, this.color);
+  const OnSelectTypePaymentMethodEvent(this.typePayment, this.icon, this.color);
 }
-class OnClearTypePaymentMethodEvent extends PaymentsEvent {}
+class OnClearTypePaymentMethodEvent extends PaymentsEvent {
+  const OnClearTypePaymentMethodEvent();
+}
 
 
 // New events for the payment flow
 class LoadPaymentGatewaysEvent extends PaymentsEvent {
   final String userCountryCode;
-  LoadPaymentGatewaysEvent(this.userCountryCode);
+  const LoadPaymentGatewaysEvent(this.userCountryCode);
 }
 
 class SelectPaymentGatewayEvent extends PaymentsEvent {

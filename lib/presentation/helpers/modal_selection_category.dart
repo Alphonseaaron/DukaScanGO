@@ -4,7 +4,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/response/category_all_response.dart';
 import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 void modalSelectionCategory(BuildContext ctx){
 
@@ -54,7 +54,11 @@ void modalSelectionCategory(BuildContext ctx){
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, i) 
                           => InkWell(
-                            onTap: () => productBloc.add(OnSelectCategoryEvent(category[i].id, category[i].category)),
+                            onTap: () {
+                              if (category != null) {
+                                productBloc.add(OnSelectCategory(category[i].id, category[i].category));
+                              }
+                            },
                             child: Container(
                                 height: 40,
                                 color: Colors.white,
@@ -67,7 +71,7 @@ void modalSelectionCategory(BuildContext ctx){
                                           height: 20,
                                           width: 20,
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: ColorsFrave.primaryColor, width: 3.5),
+                                            border: Border.all(color: ColorsDukascango.primaryColor, width: 3.5),
                                             borderRadius: BorderRadius.circular(6.0)
                                           ),
                                         ),

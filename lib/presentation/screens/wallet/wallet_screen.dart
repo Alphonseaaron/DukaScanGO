@@ -90,7 +90,7 @@ class WalletScreen extends StatelessWidget {
       separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
         final entry = state.ledgerEntries[index];
-        final isCredit = entry.type == LedgerEntryType.credit;
+        final isCredit = entry.type == 'credit';
         return ListTile(
           leading: Icon(isCredit ? Icons.arrow_downward : Icons.arrow_upward, color: isCredit ? Colors.green : Colors.red, size: 30),
           title: TextCustom(text: entry.description),
