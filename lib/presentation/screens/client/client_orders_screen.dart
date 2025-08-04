@@ -5,7 +5,7 @@ import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/screens/client/client_details_order_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class ClientOrdersScreen extends StatelessWidget {
 
@@ -25,23 +25,23 @@ class ClientOrdersScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 17),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 17),
+              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor )
             ],
           ),
         ),
       ),
       body: FutureBuilder<List<OrdersClient>>(
-        future: ordersServices.getOrdersByClient,
+        future: ordersServices.getListOrdersForClient(),
         builder: (context, snapshot) 
           => (!snapshot.hasData)
              ? Column(
                children: const [
-                 ShimmerDukascango(),
+                 ShimmerFrave(),
                  SizedBox(height: 10.0),
-                 ShimmerDukascango(),
+                 ShimmerFrave(),
                  SizedBox(height: 10.0),
-                 ShimmerDukascango(),
+                 ShimmerFrave(),
                ],
              )
              : _ListOrdersClient(listOrders: snapshot.data!)
@@ -65,7 +65,7 @@ class _ListOrdersClient extends StatelessWidget {
           itemCount: listOrders.length,
           itemBuilder: (context, i) 
             => GestureDetector(
-              onTap: () => Navigator.push(context, routeDukascango(page: ClientDetailsOrderScreen(orderClient: listOrders[i]))),
+              onTap: () => Navigator.push(context, routeFrave(page: ClientDetailsOrderScreen(orderClient: listOrders[i]))),
               child: Container(
                   margin: const EdgeInsets.only(bottom: 20.0),
                   padding: const EdgeInsets.all(15.0),
@@ -80,11 +80,11 @@ class _ListOrdersClient extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextCustom(text: 'ORDER # ${listOrders[i].id}', fontSize: 16, fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor),
+                          TextCustom(text: 'ORDER # ${listOrders[i].id}', fontSize: 16, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor),
                           TextCustom(text: listOrders[i].status ,
                             fontSize: 16, 
                             fontWeight: FontWeight.w500, 
-                            color: ( listOrders[i].status == 'DELIVERED' ? ColorsDukascango.primaryColor : ColorsDukascango.secundaryColor )
+                            color: ( listOrders[i].status == 'DELIVERED' ? ColorsFrave.primaryColor : ColorsFrave.secundaryColor )
                           ),
                         ],
                       ),

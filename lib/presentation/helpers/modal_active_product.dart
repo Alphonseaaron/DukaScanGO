@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 void modalActiveOrInactiveProduct(BuildContext context, int status, String nameProduct, int idProduct, String picture){
@@ -26,7 +26,7 @@ void modalActiveOrInactiveProduct(BuildContext context, int status, String nameP
                 children: [
                   Row(
                     children: const [
-                      TextCustom(text: 'Dukascango ', color: ColorsDukascango.primaryColor, fontWeight: FontWeight.w500 ),
+                      TextCustom(text: 'Frave ', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500 ),
                       TextCustom(text: 'Food', fontWeight: FontWeight.w500),
                     ],
                   ),
@@ -58,12 +58,12 @@ void modalActiveOrInactiveProduct(BuildContext context, int status, String nameP
                 ],
               ),
               const SizedBox(height: 20.0),
-              BtnDukascango(
+              BtnFrave(
                 height: 45,
                 text: (status == 1) ? 'SOLD OUT' : 'IN STOCK',
                 color: (status == 1) ? Colors.red : Colors.green,
                 onPressed: () {
-                  productBloc.add(OnUpdateStatusProduct(idProduct, status));
+                  productBloc.add( OnUpdateStatusProductEvent( idProduct.toString(), (status == 1) ? '0' : '1' ) );
                   Navigator.pop(context);
                 },
               )

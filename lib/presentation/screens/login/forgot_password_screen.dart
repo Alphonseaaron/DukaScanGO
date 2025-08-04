@@ -3,7 +3,7 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/login/check_email_screen.dart';
 import 'package:dukascango/presentation/screens/login/login_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
 
@@ -44,12 +44,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         centerTitle: true,
         leadingWidth: 80,
         leading: InkWell(
-          onTap: () => Navigator.pushReplacement(context, routeDukascango(page: LoginScreen())),
+          onTap: () => Navigator.pushReplacement(context, routeFrave(page: LoginScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: ColorsDukascango.primaryColor ),
-              TextCustom(text: 'Back', color: ColorsDukascango.primaryColor, fontSize: 16)
+              Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: ColorsFrave.primaryColor ),
+              TextCustom(text: 'Back', color: ColorsFrave.primaryColor, fontSize: 16)
             ],
           ),
         ),
@@ -73,18 +73,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 30.0),
               const TextCustom(text: 'Email Address'),
               const SizedBox(height: 5.0),
-              FormFieldDukascango(
+              FormFieldFrave(
                 controller: _emailController,
-                hintText: 'example@dukascango.com',
+                hintText: 'example@frave.com',
                 validator: validatedEmail,
               ),
               const SizedBox(height: 30.0),
-              BtnDukascango(
+              BtnFrave(
                 text: 'Send Instructions',
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 onPressed: (){
-                    Navigator.push(context, routeDukascango(page: CheckEmailScreen()));
+                    Navigator.push(context, routeFrave(page: CheckEmailScreen()));
                 },
               )
             ],

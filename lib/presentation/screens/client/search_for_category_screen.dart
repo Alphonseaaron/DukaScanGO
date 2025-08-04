@@ -5,7 +5,7 @@ import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/StaggeredDualView.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class SearchForCategoryScreen extends StatelessWidget {
 
@@ -32,10 +32,10 @@ class SearchForCategoryScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: FutureBuilder<List<Productsdb>>(
-          future: productsServices.searchProductsForCategory(idCategory.toString()),
+          future: productServices.searchPorductsForCategory(idCategory.toString()),
           builder: (context, snapshot) 
             => (!snapshot.hasData) 
-              ? const ShimmerDukascango()
+              ? const ShimmerFrave()
               : ListProducts(listProduct: snapshot.data! )
           
         ),
@@ -76,7 +76,7 @@ class ListProducts extends StatelessWidget {
                         child: Image.network('http://192.168.1.35:7070/' + listProduct[i].picture , height: 150)
                       ),
                     ),
-                    TextCustom(text: listProduct[i].nameProduct , textOverflow: TextOverflow.ellipsis, fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor, fontSize: 19 ),
+                    TextCustom(text: listProduct[i].nameProduct , textOverflow: TextOverflow.ellipsis, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor, fontSize: 19 ),
                     const SizedBox(height: 5.0),
                     TextCustom(text: '\$ ${listProduct[i].price.toString()}', fontSize: 16, fontWeight: FontWeight.w500 )
                   ],
@@ -91,7 +91,7 @@ class ListProducts extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset('Assets/empty-cart.svg', height: 450),
-        const TextCustom(text: 'Without products', fontSize: 21, color: ColorsDukascango.primaryColor )
+        const TextCustom(text: 'Without products', fontSize: 21, color: ColorsFrave.primaryColor )
       ],
     );
   }

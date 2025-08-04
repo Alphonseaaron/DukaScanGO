@@ -4,7 +4,7 @@ import 'package:dukascango/presentation/screens/wholesaler/wholesaler_orders_scr
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_products_screen.dart';
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_profile_screen.dart';
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_staff_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class WholesalerHomeScreen extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _WholesalerHomeScreenState extends State<WholesalerHomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
-        selectedItemColor: ColorsDukascango.primaryColor,
+        selectedItemColor: ColorsFrave.primaryColor,
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(

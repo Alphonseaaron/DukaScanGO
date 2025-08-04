@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 void modalSuccess(BuildContext context, String text, VoidCallback onPressed ){
 
@@ -18,7 +18,7 @@ void modalSuccess(BuildContext context, String text, VoidCallback onPressed ){
               children: [
                 Row(
                   children: const [
-                    TextCustom(text: 'Frave ', color: ColorsDukascango.primaryColor, fontWeight: FontWeight.w500 ),
+                    TextCustom(text: 'Frave ', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500 ),
                     TextCustom(text: 'Food', fontWeight: FontWeight.w500),
                   ],
                 ),

@@ -5,11 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/bloc/financial_reporting/financial_reporting_bloc.dart';
-import 'package:dukascango/domain/bloc/dashboard/dashboard_bloc.dart';
-import 'package:dukascango/domain/bloc/inventory/inventory_bloc.dart';
 import 'package:dukascango/domain/bloc/invitation/invitation_bloc.dart';
-import 'package:dukascango/domain/services/payment_gateway_manager.dart';
-import 'package:dukascango/domain/services/wallet_service.dart';
 import 'package:dukascango/domain/services/push_notification.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
  
@@ -48,9 +44,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     
-    final paymentGatewayManager = PaymentGatewayManager();
-    final walletService = WalletService();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark ));
 
     return MultiBlocProvider(

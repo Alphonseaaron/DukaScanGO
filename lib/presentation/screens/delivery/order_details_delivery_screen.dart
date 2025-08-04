@@ -10,7 +10,7 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/delivery/map_delivery_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class OrdersDetailsDeliveryScreen extends StatefulWidget {
@@ -46,7 +46,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
 
     switch (status){
       case PermissionStatus.granted:
-        Navigator.pushReplacement(context, routeDukascango(page: MapDeliveryScreen(order: widget.order)));
+        Navigator.pushReplacement(context, routeFrave(page: MapDeliveryScreen(order: widget.order)));
         break;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
@@ -95,8 +95,8 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Icon(Icons.arrow_back_ios_new_rounded, size: 17, color: ColorsDukascango.primaryColor ),
-                  TextCustom(text: 'Back', color: ColorsDukascango.primaryColor, fontSize: 17)
+                  Icon(Icons.arrow_back_ios_new_rounded, size: 17, color: ColorsFrave.primaryColor ),
+                  TextCustom(text: 'Back', color: ColorsFrave.primaryColor, fontSize: 17)
                 ],
               ),
             ),
@@ -106,16 +106,16 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
               Expanded(
                 flex: 2,
                 child: FutureBuilder<List<DetailsOrder>>(
-                  future: ordersServices.getOrderDetailsById( widget.order.orderId.toString() ),
+                  future: ordersServices.gerOrderDetailsById( widget.order.orderId.toString() ),
                   builder: (context, snapshot) 
                     => ( !snapshot.hasData )
                         ? Column(
                           children: const [
-                            ShimmerDukascango(),
+                            ShimmerFrave(),
                             SizedBox(height: 10.0),
-                            ShimmerDukascango(),
+                            ShimmerFrave(),
                             SizedBox(height: 10.0),
-                            ShimmerDukascango(),
+                            ShimmerFrave(),
                           ],
                         )
                       : _ListProductsDetails(listProductDetails: snapshot.data!)
@@ -131,7 +131,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextCustom(text: 'TOTAL', color: ColorsDukascango.primaryColor, fontSize: 18, fontWeight: FontWeight.w500),
+                        TextCustom(text: 'TOTAL', color: ColorsFrave.primaryColor, fontSize: 18, fontWeight: FontWeight.w500),
                         TextCustom(text: '\$ ${widget.order.amount}0', fontSize: 22, fontWeight: FontWeight.w500),
                       ],
                     ),
@@ -139,7 +139,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextCustom(text: 'PAYMENT', color: ColorsDukascango.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
+                        TextCustom(text: 'PAYMENT', color: ColorsFrave.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
                         TextCustom(text: widget.order.payType, fontSize: 16),
                       ],
                     ),
@@ -147,7 +147,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const TextCustom(text: 'CLIENT', color: ColorsDukascango.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
+                        const TextCustom(text: 'CLIENT', color: ColorsFrave.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
                         Row(
                           children: [
                             Container(
@@ -170,7 +170,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const TextCustom(text: 'DATE', color: ColorsDukascango.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
+                        const TextCustom(text: 'DATE', color: ColorsFrave.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
                         TextCustom(text: DateCustom.getDateOrder(widget.order.currentDate.toString()), fontSize: 16),
                       ],
                     ),
@@ -178,7 +178,7 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const TextCustom(text: 'ADDRESS', color: ColorsDukascango.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
+                        const TextCustom(text: 'ADDRESS', color: ColorsFrave.primaryColor, fontSize: 17, fontWeight: FontWeight.w500),
                         TextCustom(text: widget.order.reference, maxLine: 1, fontSize: 15),
                       ],
                     ),
@@ -195,18 +195,18 @@ class _OrdersDetailsDeliveryScreenState extends State<OrdersDetailsDeliveryScree
                     children: [
                       BlocBuilder<MylocationmapBloc, MylocationmapState>(
                         builder: (context, state) 
-                          =>  BtnDukascango(
+                          =>  BtnFrave(
                           text:  widget.order.status == 'DISPATCHED' ? 'START DELIVERY' : 'GO TO MAP',
                           color: widget.order.status == 'DISPATCHED' ? Color(0xff0C6CF2) : Colors.indigo,
                           fontWeight: FontWeight.w500,
                           onPressed: (){
                             if( widget.order.status == 'DISPATCHED' ){
                               if( state.location != null ){
-                                orderBloc.add( OnUpdateStatusOrderToOnWay(widget.order.orderId.toString(), state.location! ));
+                                orderBloc.add( OnUpdateStatusOrderOnWayEvent(widget.order.orderId.toString(), state.location! ));
                               }
                             }
                             if( widget.order.status == 'ON WAY' ){
-                              Navigator.push(context, routeDukascango(page: MapDeliveryScreen(order: widget.order)));
+                              Navigator.push(context, routeFrave(page: MapDeliveryScreen(order: widget.order)));
                             }
                           },
                         ),

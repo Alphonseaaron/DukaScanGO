@@ -4,13 +4,10 @@ import 'package:dukascango/domain/models/wallet_ledger_entry_model.dart';
 import 'package:dukascango/domain/models/wallet_model.dart';
 import 'package:dukascango/domain/services/wallet_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'wallet_bloc_test.mocks.dart';
-
-@GenerateMocks([WalletService])
+class MockWalletService extends Mock implements WalletService {}
 
 void main() {
   group('WalletBloc', () {
@@ -40,7 +37,7 @@ void main() {
     final ledgerEntries = [
       WalletLedgerEntry(
         id: 'entry1',
-      type: LedgerEntryType.credit,
+        type: LedgerEntryType.credit,
         amount: 100.0,
         description: 'Initial deposit',
         gatewayFee: 0.0,

@@ -11,7 +11,7 @@ import 'dart:convert';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
 import 'package:dukascango/presentation/screens/delivery/order_delivered_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 import 'package:dukascango/presentation/themes/theme_maps.dart';
 
 class MapDeliveryScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _MapDeliveryScreenState extends State<MapDeliveryScreen> with WidgetsBindi
 
       if( !await Geolocator.isLocationServiceEnabled() || !await Permission.location.isGranted ){
 
-        Navigator.pushReplacement(context, routeDukascango(page: DeliveryHomeScreen()));
+        Navigator.pushReplacement(context, routeFrave(page: DeliveryHomeScreen()));
 
       }
     }
@@ -76,7 +76,7 @@ class _MapDeliveryScreenState extends State<MapDeliveryScreen> with WidgetsBindi
         } else if ( state is SuccessOrdersState ){
 
           Navigator.pop(context);
-          modalSuccess(context, 'DELIVERED', () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: OrderDeliveredScreen()), (route) => false));
+          modalSuccess(context, 'DELIVERED', () => Navigator.pushAndRemoveUntil(context, routeFrave(page: OrderDeliveredScreen()), (route) => false));
 
         } else if ( state is FailureOrdersState ){
 
@@ -171,7 +171,7 @@ class _InformationBottom extends StatelessWidget {
               TextCustom(text: order.cliente),
               const Spacer(),
               InkWell(
-                onTap: () async => await urlLauncherFrave().makePhoneCall('tel:${order.clientPhone}'),
+                onTap: () async => await urlLauncherFrave.makePhoneCall('tel:${order.clientPhone}'),
                 child: Container(
                   height: 45,
                   width: 45,
@@ -179,7 +179,7 @@ class _InformationBottom extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.grey[200]
                   ),
-                  child: const Icon(Icons.phone, color: ColorsDukascango.primaryColor),
+                  child: const Icon(Icons.phone, color: ColorsFrave.primaryColor),
                 ),
               )
             ],
@@ -187,7 +187,7 @@ class _InformationBottom extends StatelessWidget {
           const SizedBox(height: 10.0),
           BlocBuilder<MylocationmapBloc, MylocationmapState>(
             builder: (context, state) 
-              => BtnDukascango(
+              => BtnFrave(
               height: 45,
               text: 'DELIVERED',
               fontWeight: FontWeight.w500,
@@ -202,11 +202,11 @@ class _InformationBottom extends StatelessWidget {
           
                 if( distanceDelivery <= 150 ){
           
-                  orderBloc.add( OnUpdateStatusOrderToDelivered(order.orderId.toString()) );
+                  orderBloc.add( OnUpdateStatusOrderDeliveredEvent(order.orderId.toString()) );
           
                 } else {
           
-                  modalInfoDukascango(context, 'Its still far away');
+                  modalInfoFrave(context, 'Its still far away');
           
                 }
               },
@@ -245,10 +245,10 @@ class _MapDelivery extends StatelessWidget {
               zoomControlsEnabled: false,
               myLocationEnabled: false,
               myLocationButtonEnabled: false,
-              onMapCreated: mapDelivery.initMapDeliveryDukascango,
+              onMapCreated: mapDelivery.initMapDeliveryFrave,
               markers: mapDelivery.state.markers.values.toSet(),
               polylines: mapDelivery.state.polyline!.values.toSet(),
-              style: jsonEncode(themeMapsDukascango),
+              style: jsonEncode(themeMapsFrave),
             )
           : Center(
               child: const TextCustom(text: 'Locating...'),
@@ -279,7 +279,7 @@ class _BtnLocation extends StatelessWidget {
           backgroundColor: Colors.white,
           maxRadius: 25,
           child: IconButton(
-            icon: Icon(Icons.my_location_rounded, color: ColorsDukascango.primaryColor ),
+            icon: Icon(Icons.my_location_rounded, color: ColorsFrave.primaryColor ),
             onPressed: () => mapDeliveryBloc.moveCamareLocation(locationBloc.state.location!),
           ),
         ),
@@ -308,7 +308,7 @@ class _BtnGoogleMap extends StatelessWidget {
           backgroundColor: Colors.white,
           maxRadius: 25,
           child: InkWell(
-            onTap: () async => await UrlLauncherFrave().openMapLaunch(order.latitude, order.longitude),
+            onTap: () async => await urlLauncherFrave.openMapLaunch(order.latitude, order.longitude),
             child: Image.asset('Assets/google-map.png', height: 30)
           )
         ),

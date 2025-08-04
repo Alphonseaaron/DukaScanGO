@@ -71,7 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               context,
               '${widget.role} Registered successfully',
               () => Navigator.pushReplacement(
-                  context, routeDukascango(page: LoginScreen())));
+                  context, routeFrave(page: LoginScreen())));
         } else if (state is FailureUserState) {
           Navigator.pop(context);
           errorMessageSnack(context, state.error);
@@ -103,14 +103,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
             InkWell(
               onTap: () {
                 if (_keyForm.currentState!.validate()) {
-                  userBloc.add(OnRegisterClient(
-                    _nameController.text,
-                    _lastnameController.text,
-                    _fullPhoneNumber,
-                    _emailController.text,
-                    _passwordController.text,
-                    userBloc.state.pictureProfilePath,
-                  ));
+                  final event;
+                  if (widget.role == 'Store Owner') {
+                    event = OnRegisterStoreOwnerEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  } else if (widget.role == 'Wholesaler') {
+                    event = OnRegisterWholesalerEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  } else {
+                    event = OnRegisterDeliveryEvent(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _fullPhoneNumber,
+                      _emailController.text,
+                      _passwordController.text,
+                      userBloc.state.pictureProfilePath,
+                      _countryData['country'],
+                      _countryData['countryCode'],
+                      _countryData['dialingCode'],
+                      _countryData['flag'],
+                      _countryData['currency'],
+                      _countryData['geo'],
+                    );
+                  }
+                  userBloc.add(event);
                 }
               },
               child: Container(
@@ -136,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 40.0),
               const TextCustom(text: 'Name'),
               const SizedBox(height: 5.0),
-              FormFieldDukascango(
+              FormFieldFrave(
                 controller: _nameController,
                 hintText: 'Enter your name',
                 validator: RequiredValidator(errorText: 'Name is required'),
@@ -144,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Lastname'),
               const SizedBox(height: 5.0),
-              FormFieldDukascango(
+              FormFieldFrave(
                 controller: _lastnameController,
                 hintText: 'Enter your lastname',
                 validator:
@@ -162,35 +202,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Email'),
               const SizedBox(height: 5.0),
-              FormFieldDukascango(
+              FormFieldFrave(
                   controller: _emailController,
-                  hintText: 'email@dukascango.com',
+                  hintText: 'email@frave.com',
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an email';
-                    }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  }),
+                  validator: validatedEmail),
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Password'),
               const SizedBox(height: 5.0),
-              FormFieldDukascango(
+              FormFieldFrave(
                 controller: _passwordController,
                 hintText: '********',
                 isPassword: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
+                validator: passwordValidator,
               ),
             ],
           ),
@@ -269,7 +293,7 @@ class _PictureRegistre extends StatelessWidget {
                    ? Column(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: const [
-                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsDukascango.primaryColor ),
+                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsFrave.primaryColor ),
                         SizedBox(height: 10.0),
                         TextCustom(text: 'Picture', color: Colors.grey )
                      ],

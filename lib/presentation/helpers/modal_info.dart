@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dukascango/presentation/components/components.dart';
 
-void modalInfoDukascango(BuildContext context, String text){
+void modalInfoFrave(BuildContext context, String text){
 
   showDialog(
     context: context,
@@ -15,9 +15,9 @@ void modalInfoDukascango(BuildContext context, String text){
             child: Column(
               children: [
                 Row(
-                  children: [
-                    const TextCustom(text: 'Dukascango ', color: Colors.blue, fontWeight: FontWeight.w500 ),
-                    const TextCustom(text: 'Food', fontWeight: FontWeight.w500),
+                  children: const [
+                    TextCustom(text: 'Frave ', color: Colors.amber, fontWeight: FontWeight.w500 ),
+                    TextCustom(text: 'Food', fontWeight: FontWeight.w500),
                   ],
                 ),
                 const Divider(),
@@ -31,7 +31,7 @@ void modalInfoDukascango(BuildContext context, String text){
                       begin: Alignment.centerLeft,
                       colors: [
                         Colors.white,
-                        Colors.blue
+                        Colors.amber
                       ]
                     )
                   ),
@@ -39,7 +39,7 @@ void modalInfoDukascango(BuildContext context, String text){
                     margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue
+                      color: Colors.amber
                     ),
                     child: const Icon(Icons.priority_high_rounded, color: Colors.white, size: 38),
                   ),                  
@@ -54,7 +54,7 @@ void modalInfoDukascango(BuildContext context, String text){
                     height: 35,
                     width: 150,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(5.0)
                     ),
                     child: const TextCustom(text: 'Done', color: Colors.white, fontSize: 16 ),

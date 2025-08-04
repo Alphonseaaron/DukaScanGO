@@ -1,14 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart' hide Order;
-import 'package:dukascango/domain/models/order.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:dukascango/domain/models/order.dart' as order_model;
 
 class OrdersServices {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final firestore.FirebaseFirestore _firestore = firestore.FirebaseFirestore.instance;
 
-  Future<void> addOrder(Order order) async {
+  Future<void> addOrder(order_model.Order order) async {
     await _firestore.collection('orders').add(order.toMap());
   }
 
-  Future<List<Order>> getOrdersByStatus(String status) async {
+  Future<List<order_model.Order>> getOrdersByStatus(String status) async {
     final QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('status', isEqualTo: status)

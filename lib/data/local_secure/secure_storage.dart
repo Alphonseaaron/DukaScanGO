@@ -1,7 +1,7 @@
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SecureStorageDukascango {
+class SecureStorageFrave {
 
 
   final secureStorage = FlutterSecureStorage();
@@ -31,4 +31,4 @@ class SecureStorageDukascango {
 
 }
 
-final secureStorage = SecureStorageDukascango();
+final secureStorage = SecureStorageFrave();

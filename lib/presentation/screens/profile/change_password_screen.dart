@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
 
@@ -78,7 +78,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             leadingWidth: 80,
             leading: TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const TextCustom(text: 'Cancel', fontSize: 17, color: ColorsDukascango.primaryColor )
+              child: const TextCustom(text: 'Cancel', fontSize: 17, color: ColorsFrave.primaryColor )
             ),
             actions: [
               TextButton(
@@ -87,7 +87,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     userBloc.add( OnChangePasswordEvent(_currentPasswordController.text, _newPasswordController.text) );
                   }
                 }, 
-                child: const TextCustom(text: 'Save', fontSize: 16, color: ColorsDukascango.primaryColor)
+                child: const TextCustom(text: 'Save', fontSize: 16, color: ColorsFrave.primaryColor)
               )
             ],
           ),

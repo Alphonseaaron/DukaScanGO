@@ -6,7 +6,7 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_home_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
@@ -59,11 +59,11 @@ class _CheckingLoginScreenState extends State<CheckingLoginScreen> with TickerPr
         
         if( state is LoadingAuthState ){
 
-          Navigator.pushReplacement(context, routeDukascango(page: CheckingLoginScreen()));
+          Navigator.pushReplacement(context, routeFrave(page: CheckingLoginScreen()));
         
         } else if ( state is LogOutAuthState ){
 
-          Navigator.pushAndRemoveUntil(context, routeDukascango(page: LoginScreen()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, routeFrave(page: LoginScreen()), (route) => false);
          
         } else if ( state.rolId != null && state.rolId != '' ){
 
@@ -74,27 +74,27 @@ class _CheckingLoginScreenState extends State<CheckingLoginScreen> with TickerPr
 
           if (!walkthroughCompleted) {
             if (state.rolId == '1') {
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: AdminWalkthroughScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: AdminWalkthroughScreen()), (route) => false);
             } else if (state.rolId == '2') {
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: ClientWalkthroughScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientWalkthroughScreen()), (route) => false);
             } else if (state.rolId == '3') {
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: DeliveryWalkthroughScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: DeliveryWalkthroughScreen()), (route) => false);
             } else if (state.rolId == '4') {
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: WholesalerWalkthroughScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerWalkthroughScreen()), (route) => false);
             }
           } else {
             if( state.rolId  == '1' || state.rolId  == '3' ){
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: SelectRoleScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: SelectRoleScreen()), (route) => false);
             } else if ( state.rolId  == '2' ){
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: ClientHomeScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
             } else if ( state.rolId == '4' ){
-              Navigator.pushAndRemoveUntil(context, routeDukascango(page: WholesalerHomeScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerHomeScreen()), (route) => false);
             }
           }
         }
       },
       child: Scaffold(
-        backgroundColor: ColorsDukascango.primaryColor,
+        backgroundColor: ColorsFrave.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -6,7 +6,7 @@ import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/client/client_orders_screen.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
-import 'package:dukascango/presentation/screens/profile/edit_profile_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
@@ -24,7 +24,7 @@ class ProfileClientScreen extends StatelessWidget {
           modalLoading(context);
         } else if ( state is SuccessAuthState ){
           Navigator.pop(context);
-          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeDukascango(page: ProfileClientScreen())));
+          modalSuccess(context, 'Picture Change Successfully', () => Navigator.pushReplacement(context, routeFrave(page: ProfileClientScreen())));
           Navigator.pop(context);
         } else if ( state is FailureAuthState ){
           Navigator.pop(context);
@@ -46,7 +46,7 @@ class ProfileClientScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               Center(
-                child: TextCustom(text: authBloc.state.user!.name, fontSize: 25, fontWeight: FontWeight.w500 )
+                child: TextCustom(text: authBloc.state.user!.firstName + ' ' + authBloc.state.user!.lastName, fontSize: 25, fontWeight: FontWeight.w500 )
               ),
               const SizedBox(height: 5.0),
               Center(
@@ -59,25 +59,25 @@ class ProfileClientScreen extends StatelessWidget {
                 text: 'Profile setting',
                 icon: Icons.person,
                 colorIcon: 0xff01C58C,
-                onPressed: () => Navigator.push(context, routeDukascango(page: EditProfileScreen())),
+                onPressed: () => Navigator.push(context, routeFrave(page: EditProfileScreen())),
               ),
               ItemAccount(
                 text: 'Change Password',
                 icon: Icons.lock_rounded,
                 colorIcon: 0xff1B83F5,
-                onPressed: () => Navigator.push(context, routeDukascango(page: ChangePasswordScreen())),
+                onPressed: () => Navigator.push(context, routeFrave(page: ChangePasswordScreen())),
               ),
               ItemAccount(
                 text: 'Add addresses',
                 icon: Icons.my_location_rounded,
                 colorIcon: 0xffFB5019,
-                onPressed: () => Navigator.push(context, routeDukascango(page: ListAddressesScreen())),
+                onPressed: () => Navigator.push(context, routeFrave(page: ListAddressesScreen())),
               ),
               ItemAccount(
                 text: 'Orders',
                 icon: Icons.shopping_bag_outlined,
                 colorIcon: 0xffFBAD49,
-                onPressed: () => Navigator.push(context, routeDukascango(page: ClientOrdersScreen())),
+                onPressed: () => Navigator.push(context, routeFrave(page: ClientOrdersScreen())),
               ),
               ItemAccount(
                 text: 'Dark mode',
@@ -112,7 +112,7 @@ class ProfileClientScreen extends StatelessWidget {
                 icon: Icons.support,
                 colorIcon: 0xff4772e6,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: ClientWalkthroughScreen())),
+                    context, routeFrave(page: ClientWalkthroughScreen())),
               ),
               const Divider(),
               ItemAccount(
@@ -121,13 +121,13 @@ class ProfileClientScreen extends StatelessWidget {
                 colorIcon: 0xffF02849,
                 onPressed: () {
                   authBloc.add(LogOutEvent());
-                  Navigator.pushAndRemoveUntil(context, routeDukascango(page: CheckingLoginScreen()), (route) => false);
+                  Navigator.pushAndRemoveUntil(context, routeFrave(page: CheckingLoginScreen()), (route) => false);
                 },
               ),
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationDukascango(3),
+        bottomNavigationBar: BottomNavigationFrave(3),
       ),
     );
   }

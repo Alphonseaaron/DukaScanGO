@@ -7,7 +7,7 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/intro_screen.dart';
 import 'package:dukascango/presentation/screens/login/forgot_password_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -67,11 +67,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
           if( state.rolId == '1' || state.rolId == '3' ){
 
-            Navigator.pushAndRemoveUntil(context, routeDukascango(page: SelectRoleScreen()), (route) => false);
+            Navigator.pushAndRemoveUntil(context, routeFrave(page: SelectRoleScreen()), (route) => false);
           
           } else if ( state.rolId == '2' ){
 
-            Navigator.pushAndRemoveUntil(context, routeDukascango(page: ClientHomeScreen()), (route) => false);
+            Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
         
           }
         }
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             InkWell(
                               onTap: () => Navigator.pushReplacement(
-                                  context, routeDukascango(page: IntroScreen())),
+                                  context, routeFrave(page: IntroScreen())),
                               borderRadius: BorderRadius.circular(100.0),
                               child: Container(
                                 height: 40,
@@ -115,8 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Row(
                               children: const [
                                 TextCustom(
-                                    text: 'Dukascango ',
-                                    color: ColorsDukascango.primaryColor,
+                                    text: 'Frave ',
+                                    color: ColorsFrave.primaryColor,
                                     fontWeight: FontWeight.w500),
                                 TextCustom(
                                     text: 'Food',
@@ -153,16 +153,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: constraints.maxHeight * 0.05),
                       const TextCustom(text: 'Email Address'),
                       const SizedBox(height: 5.0),
-                      FormFieldDukascango(
+                      FormFieldFrave(
                         controller: _emailController,
-                        hintText: 'email@dukascango.com',
+                        hintText: 'email@frave.com',
                         keyboardType: TextInputType.emailAddress,
                         validator: validatedEmail,
                       ),
                       const SizedBox(height: 20.0),
                       const TextCustom(text: 'Password'),
                       const SizedBox(height: 5.0),
-                      FormFieldDukascango(
+                      FormFieldFrave(
                         controller: _passwordController,
                         hintText: '********',
                         isPassword: true,
@@ -173,13 +173,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.centerRight,
                           child: InkWell(
                               onTap: () => Navigator.push(context,
-                                  routeDukascango(page: ForgotPasswordScreen())),
+                                  routeFrave(page: ForgotPasswordScreen())),
                               child: const TextCustom(
                                   text: 'Forgot Password?',
                                   fontSize: 17,
-                                  color: ColorsDukascango.primaryColor))),
+                                  color: ColorsFrave.primaryColor))),
                       SizedBox(height: constraints.maxHeight * 0.04),
-                      BtnDukascango(
+                      BtnFrave(
                         text: 'Login',
                         fontSize: 21,
                         height: 50,

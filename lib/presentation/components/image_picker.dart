@@ -5,7 +5,7 @@ import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 
-class ImagePickerDukascango extends StatelessWidget {
+class ImagePickerFrave extends StatelessWidget {
 
   final ImagePicker _picker = ImagePicker();
 

@@ -5,6 +5,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
+import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
 import 'package:dukascango/presentation/walkthrough/delivery_walkthrough.dart';
@@ -93,9 +94,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   onPressed: () {
                     final user = BlocProvider.of<UserBloc>(context).state.user!;
                     if (user.rolId == '1') {
-                      Navigator.push(context, routeDukascango(page: AdminWalkthroughScreen()));
+                      Navigator.push(context, routeFrave(page: AdminWalkthroughScreen()));
                     } else if (user.rolId == '3') {
-                      Navigator.push(context, routeDukascango(page: DeliveryWalkthroughScreen()));
+                      Navigator.push(context, routeFrave(page: DeliveryWalkthroughScreen()));
                     }
                   },
                   child: TextCustom(
@@ -139,7 +140,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const TextCustom(
                     text: 'Name', color: ColorsDukascango.secundaryColor),
                 const SizedBox(height: 5.0),
-                FormFieldDukascango(
+                FormFieldFrave(
                     controller: _nameController,
                     validator:
                         RequiredValidator(errorText: 'Name is required')),
@@ -147,7 +148,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const TextCustom(
                     text: 'Lastname', color: ColorsDukascango.secundaryColor),
                 const SizedBox(height: 5.0),
-                FormFieldDukascango(
+                FormFieldFrave(
                   controller: _lastNameController,
                   hintText: 'lastname',
                   validator:
@@ -167,7 +168,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     text: 'Email Address',
                     color: ColorsDukascango.secundaryColor),
                 const SizedBox(height: 5.0),
-                FormFieldDukascango(controller: _emailController, readOnly: true),
+                FormFieldFrave(controller: _emailController, readOnly: true),
                 const SizedBox(height: 20.0),
               ],
             ),

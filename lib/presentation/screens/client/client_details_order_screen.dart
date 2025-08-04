@@ -7,7 +7,7 @@ import 'package:dukascango/domain/services/orders_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/screens/client/client_map_scrren.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class ClientDetailsOrderScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
 
     switch (status){
       case PermissionStatus.granted:
-        Navigator.pushReplacement(context, routeDukascango(page: ClientMapScreen(orderClient: orderClient)));
+        Navigator.pushReplacement(context, routeFrave(page: ClientMapScreen(orderClient: orderClient)));
         break;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
@@ -49,8 +49,8 @@ class ClientDetailsOrderScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsDukascango.primaryColor, size: 17),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 17),
+              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor )
             ],
           ),
         ),
@@ -62,7 +62,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
               text: orderClient.status, 
               fontSize: 16, 
               fontWeight: FontWeight.w500,
-              color: (orderClient.status == 'DELIVERED' ? ColorsDukascango.primaryColor : ColorsDukascango.secundaryColor),
+              color: (orderClient.status == 'DELIVERED' ? ColorsFrave.primaryColor : ColorsFrave.secundaryColor),
             ),
           ),
         ],
@@ -72,16 +72,16 @@ class ClientDetailsOrderScreen extends StatelessWidget {
           Expanded(
             flex: 2,
             child: FutureBuilder<List<DetailsOrder>>(
-              future: ordersServices.getOrderDetailsById('${orderClient.id}'),
+              future: ordersServices.gerOrderDetailsById('${orderClient.id}'),
               builder: (context, snapshot) 
                 => ( !snapshot.hasData )
                     ? Column(
                       children: const [
-                        ShimmerDukascango(),
+                        ShimmerFrave(),
                         SizedBox(height: 10.0),
-                        ShimmerDukascango(),
+                        ShimmerFrave(),
                         SizedBox(height: 10.0),
-                        ShimmerDukascango(),
+                        ShimmerFrave(),
                       ],
                     )
                   : _ListProductsDetails(listProductDetails: snapshot.data!)
@@ -96,7 +96,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TextCustom(text: 'TOTAL', fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor ),
+                    const TextCustom(text: 'TOTAL', fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor ),
                     TextCustom(text: '\$ ${orderClient.amount}0', fontWeight: FontWeight.w500),
                   ],
                 ),
@@ -104,7 +104,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TextCustom(text: 'DELIVERY', fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor, fontSize: 17),
+                    const TextCustom(text: 'DELIVERY', fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor, fontSize: 17),
                     Row(
                       children: [
                         Container(
@@ -126,7 +126,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TextCustom(text: 'DATE', fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor , fontSize: 17),
+                    const TextCustom(text: 'DATE', fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor , fontSize: 17),
                     TextCustom(text: DateCustom.getDateOrder(orderClient.currentDate.toString()), fontSize: 16),
                   ],
                 ),
@@ -134,7 +134,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TextCustom(text: 'ADDRESS', fontWeight: FontWeight.w500, color: ColorsDukascango.primaryColor , fontSize: 16),
+                    const TextCustom(text: 'ADDRESS', fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor , fontSize: 16),
                     TextCustom(text: orderClient.reference, fontSize: 16, maxLine: 1),
                   ],
                 ),
@@ -145,7 +145,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
           (orderClient.status == 'ON WAY')
           ? Padding(
             padding: const EdgeInsets.all(15.0),
-            child: BtnDukascango(
+            child: BtnFrave(
               text: 'FOLLOW DELIVERY',
               fontWeight: FontWeight.w500,
               onPressed: () async => accessGps(await Permission.location.request(), context),

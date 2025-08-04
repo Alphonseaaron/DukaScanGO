@@ -6,7 +6,7 @@ import 'package:dukascango/presentation/components/card_orders_delivery.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
 import 'package:dukascango/presentation/screens/delivery/order_details_delivery_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class OrderDeliveredScreen extends StatelessWidget {
@@ -23,12 +23,12 @@ class OrderDeliveredScreen extends StatelessWidget {
         elevation: 0,
         leadingWidth: 80,
         leading: InkWell(
-          onTap: () => Navigator.push(context, routeDukascango(page: DeliveryHomeScreen())),
+          onTap: () => Navigator.push(context, routeFrave(page: DeliveryHomeScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, size: 17, color: ColorsDukascango.primaryColor),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded, size: 17, color: ColorsFrave.primaryColor),
+              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor )
             ],
           ),
         ),
@@ -39,11 +39,11 @@ class OrderDeliveredScreen extends StatelessWidget {
           => ( !snapshot.hasData )
             ? Column(
                 children: const [
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                   SizedBox(height: 10.0),
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                   SizedBox(height: 10.0),
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                 ],
               )
             : _ListOrdersForDelivery(listOrdersDelivery: snapshot.data!)
@@ -66,7 +66,7 @@ class _ListOrdersForDelivery extends StatelessWidget {
           itemBuilder: (_, i) => 
             CardOrdersDelivery(
               orderResponse: listOrdersDelivery[i],
-              onPressed: () => Navigator.push(context, routeDukascango(page: OrdersDetailsDeliveryScreen(order: listOrdersDelivery[i]))),
+              onPressed: () => Navigator.push(context, routeFrave(page: OrdersDetailsDeliveryScreen(order: listOrdersDelivery[i]))),
             )
         )
       : Column(
@@ -75,7 +75,7 @@ class _ListOrdersForDelivery extends StatelessWidget {
         children: [
           Center(child: SvgPicture.asset('Assets/no-data.svg', height: 300)),
           const SizedBox(height: 15.0),
-          const TextCustom(text: 'Without Orders delivered', color: ColorsDukascango.primaryColor, fontWeight: FontWeight.w500, fontSize: 21)
+          const TextCustom(text: 'Without Orders delivered', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500, fontSize: 21)
         ],
       );
   }

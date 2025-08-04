@@ -5,7 +5,7 @@ import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/card_orders_delivery.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/delivery/order_details_delivery_screen.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 
 class ListOrdersDeliveryScreen extends StatelessWidget {
@@ -26,8 +26,8 @@ class ListOrdersDeliveryScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, size: 19, color: ColorsDukascango.primaryColor ),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsDukascango.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded, size: 19, color: ColorsFrave.primaryColor ),
+              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor )
             ],
           ),
         ),
@@ -38,11 +38,11 @@ class ListOrdersDeliveryScreen extends StatelessWidget {
           => ( !snapshot.hasData )
             ? Column(
                 children: const [
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                   SizedBox(height: 10.0),
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                   SizedBox(height: 10.0),
-                  ShimmerDukascango(),
+                  ShimmerFrave(),
                 ],
               )
             : _ListOrdersForDelivery(listOrdersDelivery: snapshot.data!)
@@ -65,7 +65,7 @@ class _ListOrdersForDelivery extends StatelessWidget {
           itemBuilder: (_, i) 
             => CardOrdersDelivery(
                 orderResponse: listOrdersDelivery[i],
-                onPressed: () => Navigator.push(context, routeDukascango(page: OrdersDetailsDeliveryScreen(order: listOrdersDelivery[i]))),
+                onPressed: () => Navigator.push(context, routeFrave(page: OrdersDetailsDeliveryScreen(order: listOrdersDelivery[i]))),
                )
         )
       : Column(
@@ -74,7 +74,7 @@ class _ListOrdersForDelivery extends StatelessWidget {
         children: [
           Center(child: SvgPicture.asset('Assets/no-data.svg', height: 300)),
           const SizedBox(height: 15.0),
-          const TextCustom(text: 'Without Orders', color: ColorsDukascango.primaryColor, fontWeight: FontWeight.w500, fontSize: 21)
+          const TextCustom(text: 'Without Orders', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500, fontSize: 21)
         ],
       );
   }

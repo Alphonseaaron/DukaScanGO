@@ -1,9 +1,7 @@
 part of 'payments_bloc.dart';
 
 @immutable
-abstract class PaymentsEvent {
-  const PaymentsEvent();
-}
+abstract class PaymentsEvent {}
 
 // Existing events for compatibility
 class OnSelectTypePaymentMethodEvent extends PaymentsEvent {
@@ -11,17 +9,15 @@ class OnSelectTypePaymentMethodEvent extends PaymentsEvent {
   final IconData icon;
   final Color color;
 
-  const OnSelectTypePaymentMethodEvent(this.typePayment, this.icon, this.color);
+  OnSelectTypePaymentMethodEvent(this.typePayment, this.icon, this.color);
 }
-class OnClearTypePaymentMethodEvent extends PaymentsEvent {
-  const OnClearTypePaymentMethodEvent();
-}
+class OnClearTypePaymentMethodEvent extends PaymentsEvent {}
 
 
 // New events for the payment flow
 class LoadPaymentGatewaysEvent extends PaymentsEvent {
   final String userCountryCode;
-  const LoadPaymentGatewaysEvent(this.userCountryCode);
+  LoadPaymentGatewaysEvent(this.userCountryCode);
 }
 
 class SelectPaymentGatewayEvent extends PaymentsEvent {

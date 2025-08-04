@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dukascango/domain/services/orders_services.dart';
 import 'package:meta/meta.dart';
+import 'package:dukascango/domain/models/order.dart';
 
 part 'financial_reporting_event.dart';
 part 'financial_reporting_state.dart';

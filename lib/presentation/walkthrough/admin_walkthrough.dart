@@ -40,7 +40,7 @@ class _AdminWalkthroughScreenState extends State<AdminWalkthroughScreen> {
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeDukascango(page: AdminHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, routeFrave(page: AdminHomeScreen()), (route) => false);
   }
 
   @override

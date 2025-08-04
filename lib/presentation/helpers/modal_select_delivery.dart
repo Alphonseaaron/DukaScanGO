@@ -5,7 +5,7 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/response/get_all_delivery_response.dart';
 import 'package:dukascango/domain/services/delivery_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/themes/colors_frave.dart';
 
 void modalSelectDelivery(BuildContext context, String idOrder){
 
@@ -29,7 +29,7 @@ void modalSelectDelivery(BuildContext context, String idOrder){
                 children: [
                   Row(
                     children: const [
-                      TextCustom(text: 'Frave ', color: ColorsDukascango.primaryColor, fontWeight: FontWeight.w500 ),
+                      TextCustom(text: 'Frave ', color: ColorsFrave.primaryColor, fontWeight: FontWeight.w500 ),
                       TextCustom(text: 'Food', fontWeight: FontWeight.w500),
                     ],
                   ),
@@ -49,12 +49,12 @@ void modalSelectDelivery(BuildContext context, String idOrder){
                   builder: (context, snapshot) 
                     => ( !snapshot.hasData )
                       ? Column(
-                          children: [
-                            ShimmerDukascango(),
+                          children: const [
+                            ShimmerFrave(),
                             SizedBox(height: 10.0),
-                            ShimmerDukascango(),
+                            ShimmerFrave(),
                             SizedBox(height: 10.0),
-                            ShimmerDukascango(),
+                            ShimmerFrave(),
                           ],
                         )
                       : _ListDeliveryModal(listDelivery: snapshot.data! )
@@ -62,14 +62,14 @@ void modalSelectDelivery(BuildContext context, String idOrder){
               ),
               BlocBuilder<DeliveryBloc, DeliveryState>(
                 builder: (context, state) 
-                  => BtnDukascango(
+                  => BtnFrave(
                   text: 'SEND ORDER',
                   fontWeight: FontWeight.w500,
                   onPressed: (){
               
                     if( state.idDelivery != '0' ){
               
-                      orderBloc.add( OnUpdateStatusOrderToDispatched( idOrder, state.idDelivery, state.notificationTokenDelivery! ) );
+                      orderBloc.add( OnUpdateStatusOrderToDispatchedEvent( idOrder, state.idDelivery, state.notificationTokenDelivery ) );
                       Navigator.pop(context);
               
                     }

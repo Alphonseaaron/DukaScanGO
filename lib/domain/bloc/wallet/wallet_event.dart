@@ -1,11 +1,9 @@
 part of 'wallet_bloc.dart';
 
 @immutable
-abstract class WalletEvent {
-  const WalletEvent();
-}
+abstract class WalletEvent {}
 
 class LoadWalletDetailsEvent extends WalletEvent {
   final String walletId;
-  const LoadWalletDetailsEvent(this.walletId);
+  LoadWalletDetailsEvent(this.walletId);
 }

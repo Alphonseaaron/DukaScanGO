@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Route navigatorPageFadeInDukascango (BuildContext context, Widget page){
+Route navigatorPageFadeInFrave (BuildContext context, Widget page){
 
   return PageRouteBuilder(
     transitionDuration: Duration(milliseconds: 450),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/screens/login/login_screen.dart';
+import 'package:restaurant/presentation/components/components.dart';
+import 'package:restaurant/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/screens/login/select_registration_role_screen.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class IntroScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
-            TextCustom(text: 'Dukascango ', color:  Color(0xff0C6CF2), fontWeight: FontWeight.w500, fontSize: 25),
+            TextCustom(text: 'Frave ', color:  Color(0xff0C6CF2), fontWeight: FontWeight.w500, fontSize: 25),
             TextCustom(text: 'Food', fontSize: 25, fontWeight: FontWeight.w500),
           ],
         ),
@@ -57,7 +57,7 @@ class IntroScreen extends StatelessWidget {
                   text: 'Register',
                   backgroundColor: Colors.black87,
                   textColor: Colors.white,
-                  onPressed: () => Navigator.push(context, routeDukascango(page: SelectRegistrationRoleScreen())),
+                  onPressed: () => Navigator.push(context, routeFrave(page: SelectRegistrationRoleScreen())),
                 ),
                 const SizedBox(height: 20.0),
                 Row(
@@ -79,13 +79,13 @@ class IntroScreen extends StatelessWidget {
                 const SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:20.0),
-                  child: BtnDukascango(
+                  child: BtnFrave(
                     text: 'Login',
                     fontWeight: FontWeight.w500,
                     borderRadius: 10.0,
                     height: 50,
                     fontSize: 20,
-                    onPressed: () => Navigator.push(context, routeDukascango(page: LoginScreen())),
+                    onPressed: () => Navigator.push(context, routeFrave(page: LoginScreen())),
                   ),
                 ),
                 const SizedBox(height: 20.0)

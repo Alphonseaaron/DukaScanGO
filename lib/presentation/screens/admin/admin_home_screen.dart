@@ -16,7 +16,7 @@ import 'package:dukascango/presentation/screens/admin/staff/staff_management_scr
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
-import 'package:dukascango/presentation/screens/profile/edit_profile_screen.dart';
+import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
 
@@ -49,12 +49,12 @@ class AdminHomeScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
-              Align(alignment: Alignment.center, child: ImagePickerFrave()),
+              Align(alignment: Alignment.center, child: ImagePickerDukascango()),
               const SizedBox(height: 10.0),
               Center(
                 child: BlocBuilder<UserBloc, UserState>(
                   builder: (_, state) 
-                    => TextCustom( text: ( state.user != null) ? state.user!.name.toUpperCase() + ' ' + state.user!.lastname.toUpperCase() : '',
+                    => TextCustom( text: ( state.user != null) ? state.user!.firstName.toUpperCase() + ' ' + state.user!.lastName.toUpperCase() : '',
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         maxLine: 1,
