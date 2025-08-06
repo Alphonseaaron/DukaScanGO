@@ -6,35 +6,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/bloc/financial_reporting/financial_reporting_bloc.dart';
 import 'package:dukascango/domain/bloc/invitation/invitation_bloc.dart';
+import 'package:dukascango/domain/bloc/dashboard/dashboard_bloc.dart';
+import 'package:dukascango/domain/bloc/inventory/inventory_bloc.dart';
+import 'package:dukascango/domain/bloc/payments/payments_bloc.dart';
+import 'package:dukascango/domain/bloc/wallet/wallet_bloc.dart';
 import 'package:dukascango/domain/services/push_notification.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
- 
+
 PushNotification pushNotification = PushNotification();
 
-Future<void> _firebaseMessagingBackground( RemoteMessage message ) async {
-
+Future<void> _firebaseMessagingBackground(RemoteMessage message) async {
   await Firebase.initializeApp();
-
 }
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackground);
   pushNotification.initNotifacion();
   runApp(MyApp());
 }
- 
 
- 
 class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     pushNotification.onMessagingListener();
@@ -43,18 +41,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark));
 
     return MultiBlocProvider(
-      providers: [ 
+      providers: [
         BlocProvider(create: (context) => AuthBloc()..add(CheckLoginEvent())),
         BlocProvider(create: (context) => GeneralBloc()),
         BlocProvider(create: (context) => ProductsBloc()),
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => MylocationmapBloc()),
-        BlocProvider(create: (context) => PaymentsBloc(paymentGatewayManager: paymentGatewayManager, walletService: walletService)),
+        BlocProvider(
+            create: (context) => PaymentsBloc(
+                paymentGatewayManager: paymentGatewayManager,
+                walletService: walletService)),
         BlocProvider(create: (context) => OrdersBloc()),
         BlocProvider(create: (context) => DeliveryBloc()),
         BlocProvider(create: (context) => MapdeliveryBloc()),

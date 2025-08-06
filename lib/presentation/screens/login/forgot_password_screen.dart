@@ -3,20 +3,16 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/login/check_email_screen.dart';
 import 'package:dukascango/presentation/screens/login/login_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-
   late TextEditingController _emailController;
   final _formKey = GlobalKey<FormState>();
-
 
   @override
   void initState() {
@@ -31,25 +27,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const TextCustom(text: 'Reset Password', fontSize: 21, fontWeight: FontWeight.w500 ),
+        title: const TextCustom(
+            text: 'Reset Password', fontSize: 21, fontWeight: FontWeight.w500),
         centerTitle: true,
         leadingWidth: 80,
         leading: InkWell(
-          onTap: () => Navigator.pushReplacement(context, routeFrave(page: LoginScreen())),
+          onTap: () => Navigator.pushReplacement(
+              context, routeDukascango(page: LoginScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: ColorsFrave.primaryColor ),
-              TextCustom(text: 'Back', color: ColorsFrave.primaryColor, fontSize: 16)
+              Icon(Icons.arrow_back_ios_new_rounded,
+                  size: 18, color: ColorsDukascango.primaryColor),
+              TextCustom(
+                  text: 'Back',
+                  color: ColorsDukascango.primaryColor,
+                  fontSize: 16)
             ],
           ),
         ),
@@ -62,29 +62,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
               const TextCustom(
-                text: 'Enter the email associated with your account and well send an email with instruccions to reset your password.', 
-                maxLine: 4, 
+                text:
+                    'Enter the email associated with your account and well send an email with instruccions to reset your password.',
+                maxLine: 4,
                 color: Colors.grey,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30.0),
               const TextCustom(text: 'Email Address'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _emailController,
                 hintText: 'example@frave.com',
                 validator: validatedEmail,
               ),
               const SizedBox(height: 30.0),
-              BtnFrave(
+              BtnDukascango(
                 text: 'Send Instructions',
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                onPressed: (){
-                    Navigator.push(context, routeFrave(page: CheckEmailScreen()));
+                onPressed: () {
+                  Navigator.push(
+                      context, routeDukascango(page: CheckEmailScreen()));
                 },
               )
             ],
@@ -93,5 +96,4 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-
 }

@@ -46,7 +46,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
         if (state is SuccessProductsState) {
           Navigator.pop(context);
           Navigator.pushReplacement(
-              context, routeFrave(page: CategoriesAdminScreen()));
+              context, routeDukascango(page: CategoriesAdminScreen()));
         }
         if (state is FailureProductsState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

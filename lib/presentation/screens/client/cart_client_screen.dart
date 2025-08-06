@@ -6,23 +6,22 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/check_out_screen.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CartClientScreen extends StatelessWidget {
-
   final bool isSelfScan;
 
   const CartClientScreen({Key? key, this.isSelfScan = false}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     final cartBloc = BlocProvider.of<CartBloc>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const TextCustom(text: 'My Bag', fontSize: 20, fontWeight: FontWeight.w500 ),
+        title: const TextCustom(
+            text: 'My Bag', fontSize: 20, fontWeight: FontWeight.w500),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -30,19 +29,22 @@ class CartClientScreen extends StatelessWidget {
         leading: IconButton(
           icon: Row(
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 19),
-              TextCustom(text: 'Back', fontSize: 16, color: ColorsFrave.primaryColor )
+              Icon(Icons.arrow_back_ios_new_rounded,
+                  color: ColorsDukascango.primaryColor, size: 19),
+              TextCustom(
+                  text: 'Back',
+                  fontSize: 16,
+                  color: ColorsDukascango.primaryColor)
             ],
           ),
-          onPressed: () => Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false),
+          onPressed: () => Navigator.pushAndRemoveUntil(context,
+              routeDukascango(page: ClientHomeScreen()), (route) => false),
         ),
         actions: [
           Center(
-            child: BlocBuilder<CartBloc, CartState>(
-              builder: (context, state) 
-                => TextCustom(text: '${state.quantityCart} Items', fontSize: 17 )
-            )
-          ),
+              child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) => TextCustom(
+                      text: '${state.quantityCart} Items', fontSize: 17))),
           const SizedBox(width: 10.0)
         ],
       ),
@@ -51,120 +53,144 @@ class CartClientScreen extends StatelessWidget {
           children: [
             Expanded(
               child: BlocBuilder<CartBloc, CartState>(
-                builder: (context, state) 
-                  => (state.quantityCart != 0 ) 
-                    ? ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        itemCount: state.quantityCart,
-                        itemBuilder: (_, i) 
-                          => Dismissible(
-                            key: Key(state.products![i].uidProduct),
-                            direction: DismissDirection.endToStart,
-                            background: Container(),
-                            secondaryBackground: Container(
-                              padding: const EdgeInsets.only(right: 35.0),
-                              margin: const EdgeInsets.only(bottom: 15.0),
-                              alignment: Alignment.centerRight,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), bottomRight: Radius.circular(20.0))
-                              ),
-                              child: const Icon(Icons.delete_sweep_rounded, color: Colors.white, size: 40),
-                            ),
-                            onDismissed: (direccion) => cartBloc.add(OnDeleteProductToCartEvent(i)),
-                            child: Container(
-                                height: 90,
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(bottom: 15.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(10.0)
+                  builder: (context, state) => (state.quantityCart != 0)
+                      ? ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          itemCount: state.quantityCart,
+                          itemBuilder: (_, i) => Dismissible(
+                                key: Key(state.products![i].uidProduct),
+                                direction: DismissDirection.endToStart,
+                                background: Container(),
+                                secondaryBackground: Container(
+                                  padding: const EdgeInsets.only(right: 35.0),
+                                  margin: const EdgeInsets.only(bottom: 15.0),
+                                  alignment: Alignment.centerRight,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20.0),
+                                          bottomRight: Radius.circular(20.0))),
+                                  child: const Icon(Icons.delete_sweep_rounded,
+                                      color: Colors.white, size: 40),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 100,
-                                      padding: const EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          scale: 8,
-                                          image: NetworkImage('${Environment.endpointBase}${state.products![i].imageProduct}')
-                                        )
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 130,
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          TextCustom(text: state.products![i].nameProduct, fontWeight: FontWeight.w500, fontSize: 20),
-                                          const SizedBox(height: 10.0),
-                                          TextCustom(text: '\$ ${state.products![i].price * state.products![i].quantity}', color: ColorsFrave.primaryColor )
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              alignment: Alignment.center,
-                                              padding: const EdgeInsets.all(2.0),
-                                              decoration: BoxDecoration(
-                                                color: ColorsFrave.primaryColor,
-                                                shape: BoxShape.circle
-                                              ),
-                                              child: InkWell(
-                                                child: Icon(Icons.remove, color: Colors.white ),
-                                                onTap: (){ 
-                                                  if( state.products![i].quantity > 1 ) cartBloc.add(OnDecreaseProductQuantityToCartEvent(i)); 
-                                                },
-                                              )
-                                            ),
-                                            const SizedBox(width: 10.0),
-                                            TextCustom(text: '${state.products![i].quantity}', color: ColorsFrave.primaryColor ),
-                                            const SizedBox(width: 10.0),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              padding: const EdgeInsets.all(2.0),
-                                              decoration: BoxDecoration(
-                                                color: ColorsFrave.primaryColor,
-                                                shape: BoxShape.circle
-                                              ),
-                                              child: InkWell(
-                                                child: const Icon(Icons.add, color: Colors.white ),
-                                                onTap: () => cartBloc.add(OnIncreaseQuantityProductToCartEvent(i))
-                                              )
-                                            )
-                                          ],
+                                onDismissed: (direccion) =>
+                                    cartBloc.add(OnDeleteProductToCartEvent(i)),
+                                child: Container(
+                                    height: 90,
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(bottom: 15.0),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          padding: const EdgeInsets.all(5.0),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  scale: 8,
+                                                  image: NetworkImage(
+                                                      '${Environment.endpointBase}${state.products![i].imageProduct}'))),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                )
-                            ),
-                          )
-                    )
-                    : _WithOutProducts()
-              ),
+                                        Container(
+                                          width: 130,
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              TextCustom(
+                                                  text: state
+                                                      .products![i].nameProduct,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 20),
+                                              const SizedBox(height: 10.0),
+                                              TextCustom(
+                                                  text:
+                                                      '\$ ${state.products![i].price * state.products![i].quantity}',
+                                                  color: ColorsDukascango
+                                                      .primaryColor)
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                    alignment: Alignment.center,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            2.0),
+                                                    decoration: BoxDecoration(
+                                                        color: ColorsDukascango
+                                                            .primaryColor,
+                                                        shape: BoxShape.circle),
+                                                    child: InkWell(
+                                                      child: Icon(Icons.remove,
+                                                          color: Colors.white),
+                                                      onTap: () {
+                                                        if (state.products![i]
+                                                                .quantity >
+                                                            1)
+                                                          cartBloc.add(
+                                                              OnDecreaseProductQuantityToCartEvent(
+                                                                  i));
+                                                      },
+                                                    )),
+                                                const SizedBox(width: 10.0),
+                                                TextCustom(
+                                                    text:
+                                                        '${state.products![i].quantity}',
+                                                    color: ColorsDukascango
+                                                        .primaryColor),
+                                                const SizedBox(width: 10.0),
+                                                Container(
+                                                    alignment: Alignment.center,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            2.0),
+                                                    decoration: BoxDecoration(
+                                                        color: ColorsDukascango
+                                                            .primaryColor,
+                                                        shape: BoxShape.circle),
+                                                    child: InkWell(
+                                                        child: const Icon(
+                                                            Icons.add,
+                                                            color:
+                                                                Colors.white),
+                                                        onTap: () => cartBloc.add(
+                                                            OnIncreaseQuantityProductToCartEvent(
+                                                                i))))
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              ))
+                      : _WithOutProducts()),
             ),
             Container(
               height: 200,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               color: Colors.white,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 10.0),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(10.0)
-                ),
+                    color: Colors.grey[50],
+                    borderRadius: BorderRadius.circular(10.0)),
                 child: BlocBuilder<CartBloc, CartState>(
-                  builder: (context, state) 
-                    => Column(
+                  builder: (context, state) => Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
@@ -183,14 +209,20 @@ class CartClientScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20.0),
-                      BtnFrave(
+                      BtnDukascango(
                         text: 'Checkout',
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: (state.quantityCart != 0) ? ColorsFrave.primaryColor : ColorsFrave.secundaryColor,
-                        onPressed: (){
-                          if ( state.quantityCart != 0 ){
-                            Navigator.push(context, routeFrave(page: CheckOutScreen(isSelfScan: isSelfScan)));
+                        color: (state.quantityCart != 0)
+                            ? ColorsDukascango.primaryColor
+                            : ColorsDukascango.secundaryColor,
+                        onPressed: () {
+                          if (state.quantityCart != 0) {
+                            Navigator.push(
+                                context,
+                                routeDukascango(
+                                    page: CheckOutScreen(
+                                        isSelfScan: isSelfScan)));
                           }
                         },
                       )
@@ -207,13 +239,17 @@ class CartClientScreen extends StatelessWidget {
 }
 
 class _WithOutProducts extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SvgPicture.asset('Assets/empty-cart.svg', height: 450),
-        const TextCustom(text: 'Without products', fontSize: 21, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor,)
+        const TextCustom(
+          text: 'Without products',
+          fontSize: 21,
+          fontWeight: FontWeight.w500,
+          color: ColorsDukascango.primaryColor,
+        )
       ],
     );
   }

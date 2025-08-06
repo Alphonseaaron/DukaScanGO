@@ -17,7 +17,8 @@ class _AdminWalkthroughScreenState extends State<AdminWalkthroughScreen> {
   final List<Widget> _walkthroughPages = [
     const WalkthroughPage(
       title: 'Welcome, Admin!',
-      description: 'This walkthrough will guide you through the main features for admins.',
+      description:
+          'This walkthrough will guide you through the main features for admins.',
       image: 'Assets/svg/bussiness-man.svg',
     ),
     const WalkthroughPage(
@@ -40,7 +41,8 @@ class _AdminWalkthroughScreenState extends State<AdminWalkthroughScreen> {
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: AdminHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context, routeDukascango(page: AdminHomeScreen()), (route) => false);
   }
 
   @override

@@ -35,7 +35,7 @@ class _WholesalerHomeScreenState extends State<WholesalerHomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
-        selectedItemColor: ColorsFrave.primaryColor,
+        selectedItemColor: ColorsDukascango.primaryColor,
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(

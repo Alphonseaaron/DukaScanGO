@@ -8,22 +8,18 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
 
 class SearchClientScreen extends StatefulWidget {
-  
   @override
   _SearchClientScreenState createState() => _SearchClientScreenState();
 }
 
 class _SearchClientScreenState extends State<SearchClientScreen> {
-
   late TextEditingController _searchController;
-
 
   @override
   void initState() {
     _searchController = TextEditingController();
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -32,10 +28,8 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
     super.dispose();
   }
 
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     final productBloc = BlocProvider.of<ProductsBloc>(context);
 
     return Scaffold(
@@ -48,7 +42,8 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () => Navigator.pushReplacement(context, routeFrave(page: ClientHomeScreen())),
+                    onTap: () => Navigator.pushReplacement(
+                        context, routeDukascango(page: ClientHomeScreen())),
                     child: Container(
                       height: 44,
                       child: Icon(Icons.arrow_back_ios_new_rounded),
@@ -60,21 +55,21 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                       alignment: Alignment.center,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(8.0)
-                      ),
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(8.0)),
                       child: TextFormField(
                         controller: _searchController,
-                        onChanged:(value){
-                          productBloc.add( OnSearchProductEvent(value));
-                          if( value.length != 0 ) productServices.searchProductsForName(value);
+                        onChanged: (value) {
+                          productBloc.add(OnSearchProductEvent(value));
+                          if (value.length != 0)
+                            productServices.searchProductsForName(value);
                         },
                         decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: const Icon(Icons.search),
-                          hintText: 'Search products',
-                          hintStyle: GoogleFonts.getFont('Inter', color: Colors.grey)
-                        ),
+                            border: InputBorder.none,
+                            prefixIcon: const Icon(Icons.search),
+                            hintText: 'Search products',
+                            hintStyle: GoogleFonts.getFont('Inter',
+                                color: Colors.grey)),
                       ),
                     ),
                   ),
@@ -83,7 +78,8 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
               const SizedBox(height: 20.0),
               BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (_, state) {
-                  if (state.searchProduct == null || state.searchProduct!.isEmpty) {
+                  if (state.searchProduct == null ||
+                      state.searchProduct!.isEmpty) {
                     return _HistorySearch();
                   }
                   if (state.products.isEmpty) {
@@ -102,7 +98,6 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
       bottomNavigationBar: BottomNavigationFrave(1),
     );
   }
-
 }
 
 class _ListProductSearch extends StatelessWidget {
@@ -119,9 +114,8 @@ class _ListProductSearch extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.push(
                     context,
-                    routeFrave(
-                        page: DetailsProductScreen(
-                            product: listProduct[i]))),
+                    routeDukascango(
+                        page: DetailsProductScreen(product: listProduct[i]))),
                 child: Container(
                   height: 90,
                   width: MediaQuery.of(context).size.width,
@@ -159,15 +153,13 @@ class _ListProductSearch extends StatelessWidget {
   }
 }
 
-
-
 class _HistorySearch extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const TextCustom(text: 'RECENT SEARCH', fontSize: 16, color: Colors.grey),
+        const TextCustom(
+            text: 'RECENT SEARCH', fontSize: 16, color: Colors.grey),
         const SizedBox(height: 10.0),
         ListTile(
           contentPadding: const EdgeInsets.all(0),

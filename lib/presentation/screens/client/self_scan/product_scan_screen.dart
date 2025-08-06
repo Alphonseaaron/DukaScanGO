@@ -30,14 +30,17 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
         if (!state.isProductFound) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: TextCustom(text: 'Product not found', color: Colors.white),
+              content:
+                  TextCustom(text: 'Product not found', color: Colors.white),
               backgroundColor: Colors.red,
             ),
           );
         } else if (state.currentProduct != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: TextCustom(text: '${state.currentProduct!.name} added to cart', color: Colors.white),
+              content: TextCustom(
+                  text: '${state.currentProduct!.name} added to cart',
+                  color: Colors.white),
               backgroundColor: ColorsDukascango.primaryColor,
             ),
           );
@@ -88,7 +91,8 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
           return Dismissible(
             key: const Key('upsell_banner'),
             onDismissed: (_) {
-              BlocProvider.of<SelfScanBloc>(context).add(OnDismissUpsellBannerEvent());
+              BlocProvider.of<SelfScanBloc>(context)
+                  .add(OnDismissUpsellBannerEvent());
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -127,11 +131,16 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextCustom(text: 'Cart: ${state.cart.length} items | Ksh ${state.total.toStringAsFixed(2)}'),
+                  TextCustom(
+                      text:
+                          'Cart: ${state.cart.length} items | Ksh ${state.total.toStringAsFixed(2)}'),
                   BtnDukascango(
                     text: 'View Cart & Checkout',
                     onPressed: () {
-                      Navigator.push(context, routeFrave(page: CartClientScreen(isSelfScan: true)));
+                      Navigator.push(
+                          context,
+                          routeDukascango(
+                              page: CartClientScreen(isSelfScan: true)));
                     },
                   ),
                 ],
@@ -139,7 +148,8 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
             },
           ),
           const SizedBox(height: 10),
-          const TextCustom(text: 'Powered by DukaScanGO', color: Colors.grey, fontSize: 12),
+          const TextCustom(
+              text: 'Powered by DukaScanGO', color: Colors.grey, fontSize: 12),
         ],
       ),
     );
@@ -166,7 +176,8 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                 text: 'Submit',
                 onPressed: () {
                   if (_barcodeController.text.isNotEmpty) {
-                    selfScanBloc.add(OnProductScannedEvent(_barcodeController.text));
+                    selfScanBloc
+                        .add(OnProductScannedEvent(_barcodeController.text));
                     _barcodeController.clear();
                     Navigator.pop(context);
                   }

@@ -67,7 +67,7 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
               context,
               'Delivery Registered successfully',
               () => Navigator.pushReplacement(
-                  context, routeFrave(page: LoginScreen())));
+                  context, routeDukascango(page: LoginScreen())));
         } else if (state is FailureUserState) {
           Navigator.pop(context);
           errorMessageSnack(context, state.error);
@@ -138,7 +138,7 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
               const SizedBox(height: 40.0),
               const TextCustom(text: 'Name'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _nameController,
                 hintText: 'Enter your name',
                 validator: RequiredValidator(errorText: 'Name is required'),
@@ -146,11 +146,10 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Lastname'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _lastnameController,
                 hintText: 'Enter your lastname',
-                validator:
-                    RequiredValidator(errorText: 'Lastname is required'),
+                validator: RequiredValidator(errorText: 'Lastname is required'),
               ),
               const SizedBox(height: 15.0),
               PhoneNumberField(
@@ -164,7 +163,7 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Email'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                   controller: _emailController,
                   hintText: 'email@frave.com',
                   keyboardType: TextInputType.emailAddress,
@@ -172,7 +171,7 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Password'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _passwordController,
                 hintText: '********',
                 isPassword: true,
@@ -186,93 +185,84 @@ class _RegisterDeliveryScreenState extends State<RegisterDeliveryScreen> {
   }
 }
 
-
 class _PictureRegistre extends StatelessWidget {
-
   final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
-
     final userBloc = BlocProvider.of<UserBloc>(context);
 
     return Container(
       height: 150,
       width: 150,
       decoration: BoxDecoration(
-        border: Border.all(style: BorderStyle.solid, color: Colors.grey[300]!),
-        shape: BoxShape.circle
-      ),
+          border:
+              Border.all(style: BorderStyle.solid, color: Colors.grey[300]!),
+          shape: BoxShape.circle),
       child: InkWell(
         borderRadius: BorderRadius.circular(100),
         onTap: () => modalPictureRegister(
-          ctx: context,
-          onPressedChange: () async {
+            ctx: context,
+            onPressedChange: () async {
+              final permissionGallery = await Permission.photos.request();
 
-            final permissionGallery = await Permission.photos.request();
+              switch (permissionGallery) {
+                case PermissionStatus.granted:
+                  Navigator.pop(context);
+                  final XFile? imagePath =
+                      await _picker.pickImage(source: ImageSource.gallery);
+                  if (imagePath != null)
+                    userBloc.add(OnSelectPictureEvent(imagePath.path));
+                  break;
+                case PermissionStatus.denied:
+                case PermissionStatus.restricted:
+                case PermissionStatus.limited:
+                case PermissionStatus.permanentlyDenied:
+                  openAppSettings();
+                  break;
+              }
+            },
+            onPressedTake: () async {
+              final permissionPhotos = await Permission.camera.request();
 
-            switch ( permissionGallery ){
+              switch (permissionPhotos) {
+                case PermissionStatus.granted:
+                  Navigator.pop(context);
+                  final XFile? photoPath =
+                      await _picker.pickImage(source: ImageSource.camera);
+                  if (photoPath != null)
+                    userBloc.add(OnSelectPictureEvent(photoPath.path));
+                  break;
 
-              case PermissionStatus.granted:
-                Navigator.pop(context);
-                final XFile? imagePath = await _picker.pickImage(source: ImageSource.gallery);
-                if( imagePath != null ) userBloc.add( OnSelectPictureEvent(imagePath.path));
-                break;
-              case PermissionStatus.denied:
-              case PermissionStatus.restricted:
-              case PermissionStatus.limited:
-              case PermissionStatus.permanentlyDenied:
-                openAppSettings();
-                break;
-            }
-
-          },
-          onPressedTake: () async {
-
-            final permissionPhotos = await Permission.camera.request();
-
-            switch ( permissionPhotos ){
-
-              case PermissionStatus.granted:
-                Navigator.pop(context);
-                final XFile? photoPath = await _picker.pickImage(source: ImageSource.camera);
-                if( photoPath != null ) userBloc.add( OnSelectPictureEvent(photoPath.path));
-                break;
-
-              case PermissionStatus.denied:
-              case PermissionStatus.restricted:
-              case PermissionStatus.limited:
-              case PermissionStatus.permanentlyDenied:
-                openAppSettings();
-                break;
-            }
-
-          }
-        ),
+                case PermissionStatus.denied:
+                case PermissionStatus.restricted:
+                case PermissionStatus.limited:
+                case PermissionStatus.permanentlyDenied:
+                  openAppSettings();
+                  break;
+              }
+            }),
         child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state)
-                => state.pictureProfilePath == ''
-                   ? Column(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: const [
-                        Icon(Icons.wallpaper_rounded, size: 60, color: ColorsDukascango.primaryColor ),
-                        SizedBox(height: 10.0),
-                        TextCustom(text: 'Picture', color: Colors.grey )
-                     ],
-                    )
-                   : Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
+          builder: (context, state) => state.pictureProfilePath == ''
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.wallpaper_rounded,
+                        size: 60, color: ColorsDukascango.primaryColor),
+                    SizedBox(height: 10.0),
+                    TextCustom(text: 'Picture', color: Colors.grey)
+                  ],
+                )
+              : Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: FileImage(File(state.pictureProfilePath))
-                        )
-                      ),
-                     ),
-            ),
-
+                          image: FileImage(File(state.pictureProfilePath)))),
+                ),
+        ),
       ),
     );
   }

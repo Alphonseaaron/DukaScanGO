@@ -7,7 +7,8 @@ class ClientWalkthroughScreen extends StatefulWidget {
   const ClientWalkthroughScreen({Key? key}) : super(key: key);
 
   @override
-  State<ClientWalkthroughScreen> createState() => _ClientWalkthroughScreenState();
+  State<ClientWalkthroughScreen> createState() =>
+      _ClientWalkthroughScreenState();
 }
 
 class _ClientWalkthroughScreenState extends State<ClientWalkthroughScreen> {
@@ -17,7 +18,8 @@ class _ClientWalkthroughScreenState extends State<ClientWalkthroughScreen> {
   final List<Widget> _walkthroughPages = [
     const WalkthroughPage(
       title: 'Welcome to our App!',
-      description: 'This walkthrough will guide you through the main features for clients.',
+      description:
+          'This walkthrough will guide you through the main features for clients.',
       image: 'Assets/delivery.svg',
     ),
     const WalkthroughPage(
@@ -27,12 +29,14 @@ class _ClientWalkthroughScreenState extends State<ClientWalkthroughScreen> {
     ),
     const WalkthroughPage(
       title: 'Add to Cart',
-      description: 'Add your favorite products to the cart and proceed to checkout.',
+      description:
+          'Add your favorite products to the cart and proceed to checkout.',
       image: 'Assets/delivery.svg',
     ),
     const WalkthroughPage(
       title: 'Self-Scan Feature',
-      description: 'Use our self-scan feature for a faster checkout experience in-store.',
+      description:
+          'Use our self-scan feature for a faster checkout experience in-store.',
       image: 'Assets/google-map.png',
     ),
   ];
@@ -40,7 +44,8 @@ class _ClientWalkthroughScreenState extends State<ClientWalkthroughScreen> {
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context, routeDukascango(page: ClientHomeScreen()), (route) => false);
   }
 
   @override

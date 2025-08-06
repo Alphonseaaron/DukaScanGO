@@ -7,7 +7,8 @@ class DeliveryWalkthroughScreen extends StatefulWidget {
   const DeliveryWalkthroughScreen({Key? key}) : super(key: key);
 
   @override
-  State<DeliveryWalkthroughScreen> createState() => _DeliveryWalkthroughScreenState();
+  State<DeliveryWalkthroughScreen> createState() =>
+      _DeliveryWalkthroughScreenState();
 }
 
 class _DeliveryWalkthroughScreenState extends State<DeliveryWalkthroughScreen> {
@@ -17,7 +18,8 @@ class _DeliveryWalkthroughScreenState extends State<DeliveryWalkthroughScreen> {
   final List<Widget> _walkthroughPages = [
     const WalkthroughPage(
       title: 'Welcome, Delivery!',
-      description: 'This walkthrough will guide you through the main features for delivery personnel.',
+      description:
+          'This walkthrough will guide you through the main features for delivery personnel.',
       image: 'Assets/svg/delivery-bike.svg',
     ),
     const WalkthroughPage(
@@ -40,7 +42,8 @@ class _DeliveryWalkthroughScreenState extends State<DeliveryWalkthroughScreen> {
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: DeliveryHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context, routeDukascango(page: DeliveryHomeScreen()), (route) => false);
   }
 
   @override

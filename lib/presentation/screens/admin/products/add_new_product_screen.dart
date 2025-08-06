@@ -68,13 +68,17 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
         }
         if (state is SuccessProductsState) {
           Navigator.pop(context);
-          modalSuccess(context, 'Product added Successfully',
-              () => Navigator.pushReplacement(context, routeFrave(page: AdminHomeScreen())));
+          modalSuccess(
+              context,
+              'Product added Successfully',
+              () => Navigator.pushReplacement(
+                  context, routeDukascango(page: AdminHomeScreen())));
         }
         if (state is FailureProductsState) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: TextCustom(text: state.error, color: Colors.white), backgroundColor: Colors.red));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: TextCustom(text: state.error, color: Colors.white),
+              backgroundColor: Colors.red));
         }
       },
       child: Scaffold(
@@ -85,7 +89,10 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
           centerTitle: true,
           leadingWidth: 80,
           leading: TextButton(
-            child: const TextCustom(text: 'Cancel', color: ColorsDukascango.primaryColor, fontSize: 17),
+            child: const TextCustom(
+                text: 'Cancel',
+                color: ColorsDukascango.primaryColor,
+                fontSize: 17),
             onPressed: () {
               Navigator.pop(context);
               productBloc.add(OnUnSelectCategoryEvent());
@@ -102,11 +109,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                       description: _descriptionController.text,
                       price: double.parse(_priceController.text),
                       barcode: _barcodeController.text,
-                      costPrice: _costPriceController.text.isNotEmpty ? double.parse(_costPriceController.text) : null,
-                      stockQuantity: _stockQuantityController.text.isNotEmpty ? int.parse(_stockQuantityController.text) : null,
+                      costPrice: _costPriceController.text.isNotEmpty
+                          ? double.parse(_costPriceController.text)
+                          : null,
+                      stockQuantity: _stockQuantityController.text.isNotEmpty
+                          ? int.parse(_stockQuantityController.text)
+                          : null,
                       supplier: _supplierController.text,
-                      taxRate: _taxRateController.text.isNotEmpty ? double.parse(_taxRateController.text) : null,
-                      lowStockThreshold: _lowStockThresholdController.text.isNotEmpty ? int.parse(_lowStockThresholdController.text) : null,
+                      taxRate: _taxRateController.text.isNotEmpty
+                          ? double.parse(_taxRateController.text)
+                          : null,
+                      lowStockThreshold:
+                          _lowStockThresholdController.text.isNotEmpty
+                              ? int.parse(_lowStockThresholdController.text)
+                              : null,
                       images: [],
                       category: 'default', // TODO: Add category selection
                     );
@@ -116,19 +132,21 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                     ));
                   }
                 },
-                child: const TextCustom(text: ' Save ', color: ColorsDukascango.primaryColor))
+                child: const TextCustom(
+                    text: ' Save ', color: ColorsDukascango.primaryColor))
           ],
         ),
         body: Form(
           key: _keyForm,
           child: ListView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
               const SizedBox(height: 10.0),
               const TextCustom(text: 'Product name'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _nameController,
                 hintText: 'Product',
                 validator: RequiredValidator(errorText: 'Name is required'),
@@ -136,15 +154,16 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Product description'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _descriptionController,
                 maxLine: 5,
-                validator: RequiredValidator(errorText: 'Description is required'),
+                validator:
+                    RequiredValidator(errorText: 'Description is required'),
               ),
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Price'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _priceController,
                 hintText: '\$ 0.00',
                 keyboardType: TextInputType.number,
@@ -153,7 +172,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Barcode'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _barcodeController,
                 hintText: 'Barcode',
                 validator: RequiredValidator(errorText: 'Barcode is required'),
@@ -161,7 +180,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Cost Price'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _costPriceController,
                 hintText: '\$ 0.00',
                 keyboardType: TextInputType.number,
@@ -169,7 +188,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Stock Quantity'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _stockQuantityController,
                 hintText: '0',
                 keyboardType: TextInputType.number,
@@ -177,14 +196,14 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Supplier'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _supplierController,
                 hintText: 'Supplier',
               ),
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Tax Rate'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _taxRateController,
                 hintText: '0.00',
                 keyboardType: TextInputType.number,
@@ -192,7 +211,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Low Stock Threshold'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 controller: _lowStockThresholdController,
                 hintText: '0',
                 keyboardType: TextInputType.number,
@@ -201,7 +220,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               BtnDukascango(
                 text: 'Scan Barcode',
                 onPressed: () async {
-                  final barcode = await Navigator.push<String>(context, routeFrave(page: AdminScanBarcodeScreen()));
+                  final barcode = await Navigator.push<String>(
+                      context, routeDukascango(page: AdminScanBarcodeScreen()));
                   if (barcode != null) {
                     _barcodeController.text = barcode;
                   }
@@ -214,32 +234,40 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 onTap: () async {
                   final ImagePicker _picker = ImagePicker();
                   final List<XFile>? images = await _picker.pickMultiImage();
-                  if (images != null) productBloc.add(OnSelectMultipleImagesEvent(images));
+                  if (images != null)
+                    productBloc.add(OnSelectMultipleImagesEvent(images));
                 },
                 child: Container(
                   height: 150,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(8.0)),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8.0)),
                   child: BlocBuilder<ProductsBloc, ProductsState>(
                       builder: (context, state) => state.images != null
                           ? ListView.builder(
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 5.0),
                               scrollDirection: Axis.horizontal,
                               itemCount: state.images?.length,
                               itemBuilder: (_, i) => Container(
-                                height: 100,
-                                width: 120,
-                                margin: const EdgeInsets.only(right: 10.0),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(image: FileImage(File(state.images![i].path)), fit: BoxFit.cover)),
-                              ))
-                          : const Icon(Icons.wallpaper_rounded, size: 80, color: Colors.grey)),
+                                    height: 100,
+                                    width: 120,
+                                    margin: const EdgeInsets.only(right: 10.0),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(
+                                                File(state.images![i].path)),
+                                            fit: BoxFit.cover)),
+                                  ))
+                          : const Icon(Icons.wallpaper_rounded,
+                              size: 80, color: Colors.grey)),
                 ),
               ),
               const SizedBox(height: 20.0),
               const TextCustom(text: 'Category'),
               const SizedBox(height: 5.0),
-              FormFieldFrave(
+              FormFieldDukascango(
                 hintText: 'Category',
                 // TODO: Implement category selection
               ),

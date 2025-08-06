@@ -3,13 +3,11 @@ import 'package:dukascango/domain/models/response/category_all_response.dart';
 import 'package:dukascango/domain/services/category_services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/admin/category/add_category_admin_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CategoriesAdminScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -22,78 +20,80 @@ class CategoriesAdminScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 17),
-              TextCustom(text: 'Back', fontSize: 17, color: ColorsFrave.primaryColor,)
+              Icon(Icons.arrow_back_ios_new_rounded,
+                  color: ColorsDukascango.primaryColor, size: 17),
+              TextCustom(
+                text: 'Back',
+                fontSize: 17,
+                color: ColorsDukascango.primaryColor,
+              )
             ],
           ),
         ),
         elevation: 0,
         actions: [
           TextButton(
-            onPressed: () => Navigator.push(context, routeFrave(page: AddCategoryAdminScreen())),
-            child: const TextCustom(text: 'Add', color: ColorsFrave.primaryColor, fontSize: 17)
-          )
+              onPressed: () => Navigator.push(
+                  context, routeDukascango(page: AddCategoryAdminScreen())),
+              child: const TextCustom(
+                  text: 'Add',
+                  color: ColorsDukascango.primaryColor,
+                  fontSize: 17))
         ],
       ),
       body: FutureBuilder<List<Category>>(
-        future: categoryServices.getAllCategories(),
-        builder: (context, snapshot) 
-          => !snapshot.hasData 
-            ? Center(
-              child: Row(
-                children: const [
-                  CircularProgressIndicator(),
-                  TextCustom(text: 'Loading Categories...')
-                ],
-              ),
-            )
-            : _ListCategories(listCategory: snapshot.data! )
-      ),
+          future: categoryServices.getAllCategories(),
+          builder: (context, snapshot) => !snapshot.hasData
+              ? Center(
+                  child: Row(
+                    children: const [
+                      CircularProgressIndicator(),
+                      TextCustom(text: 'Loading Categories...')
+                    ],
+                  ),
+                )
+              : _ListCategories(listCategory: snapshot.data!)),
     );
   }
 }
 
 class _ListCategories extends StatelessWidget {
-  
   final List<Category> listCategory;
 
-  const _ListCategories({ required this.listCategory});
+  const _ListCategories({required this.listCategory});
 
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       physics: const BouncingScrollPhysics(),
       itemCount: listCategory.length,
-      itemBuilder: (_, i) 
-        => Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: Container(
-            height: 55,
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            decoration: BoxDecoration(
+      itemBuilder: (_, i) => Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: Container(
+          height: 55,
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(
               color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(10.0)
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: 20,
+                width: 20,
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7.0),
-                    border: Border.all(color: ColorsFrave.primaryColor, width: 4.5)
-                  ),
-                ),
-                const SizedBox(width: 20.0),
-                TextCustom(text: listCategory[i].category),
-              ],
-            ),
+                    border: Border.all(
+                        color: ColorsDukascango.primaryColor, width: 4.5)),
+              ),
+              const SizedBox(width: 20.0),
+              TextCustom(text: listCategory[i].category),
+            ],
           ),
         ),
+      ),
     );
   }
 }

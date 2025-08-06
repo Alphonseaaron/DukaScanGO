@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:dukascango/domain/models/response/orders_by_status_response.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CardOrdersDelivery extends StatelessWidget {
-
   final OrdersResponse orderResponse;
   final VoidCallback? onPressed;
 
@@ -16,12 +15,11 @@ class CardOrdersDelivery extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(color: Colors.grey, blurRadius: 10, spreadRadius: -5)
-        ]
-      ),
+          color: Colors.grey[50],
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(color: Colors.grey, blurRadius: 10, spreadRadius: -5)
+          ]),
       width: MediaQuery.of(context).size.width,
       child: InkWell(
         onTap: onPressed,
@@ -36,25 +34,37 @@ class CardOrdersDelivery extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TextCustom(text: 'Date', fontSize: 16, color: ColorsFrave.secundaryColor),
-                  TextCustom(text: DateCustom.getDateOrder(orderResponse.currentDate.toString()), fontSize: 16),
+                  const TextCustom(
+                      text: 'Date',
+                      fontSize: 16,
+                      color: ColorsDukascango.secundaryColor),
+                  TextCustom(
+                      text: DateCustom.getDateOrder(
+                          orderResponse.currentDate.toString()),
+                      fontSize: 16),
                 ],
               ),
               const SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TextCustom(text: 'Client', fontSize:16, color: ColorsFrave.secundaryColor),
+                  const TextCustom(
+                      text: 'Client',
+                      fontSize: 16,
+                      color: ColorsDukascango.secundaryColor),
                   TextCustom(text: orderResponse.cliente, fontSize: 16),
                 ],
               ),
               const SizedBox(height: 10.0),
-              const TextCustom(text: 'Address shipping', fontSize: 16, color: ColorsFrave.secundaryColor),
+              const TextCustom(
+                  text: 'Address shipping',
+                  fontSize: 16,
+                  color: ColorsDukascango.secundaryColor),
               const SizedBox(height: 5.0),
               Align(
-                alignment: Alignment.centerRight,
-                child: TextCustom(text: orderResponse.reference, fontSize: 16, maxLine: 2)
-              ),
+                  alignment: Alignment.centerRight,
+                  child: TextCustom(
+                      text: orderResponse.reference, fontSize: 16, maxLine: 2)),
               const SizedBox(height: 5.0),
             ],
           ),

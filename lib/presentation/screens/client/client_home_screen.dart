@@ -11,14 +11,12 @@ import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
 import 'package:dukascango/presentation/screens/client/search_for_category_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
 class ClientHomeScreen extends StatelessWidget {
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     final authBloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
@@ -29,7 +27,7 @@ class ClientHomeScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           children: [
             const SizedBox(height: 20.0),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -38,19 +36,23 @@ class ClientHomeScreen extends StatelessWidget {
                       height: 45,
                       width: 45,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage('${Environment.endpointBase}${authBloc.state.user!.image}')
-                        )
-                      ),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  '${Environment.endpointBase}${authBloc.state.user!.image}'))),
                     ),
                     const SizedBox(width: 8.0),
-                    TextCustom(text: DateCustom.getDateFrave() + ', ${authBloc.state.user!.firstName}', fontSize: 17, color: ColorsFrave.secundaryColor),
+                    TextCustom(
+                        text: DateCustom.getDateFrave() +
+                            ', ${authBloc.state.user!.firstName}',
+                        fontSize: 17,
+                        color: ColorsDukascango.secundaryColor),
                   ],
                 ),
                 InkWell(
-                  onTap: () => Navigator.pushReplacement(context, routeFrave(page: CartClientScreen())),
+                  onTap: () => Navigator.pushReplacement(
+                      context, routeDukascango(page: CartClientScreen())),
                   child: Stack(
                     children: [
                       const Icon(Icons.shopping_bag_outlined, size: 30),
@@ -61,27 +63,29 @@ class ClientHomeScreen extends StatelessWidget {
                             height: 20,
                             width: 15,
                             decoration: BoxDecoration(
-                              color: Color(0xff0C6CF2),
-                              shape: BoxShape.circle
-                            ),
+                                color: Color(0xff0C6CF2),
+                                shape: BoxShape.circle),
                             child: Center(
-                              child: BlocBuilder<CartBloc, CartState>(
-                                builder: (context, state) 
-                                  => TextCustom(text: state.quantityCart.toString(), color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)
-                              )
-                            )
-                          ),
-                        ),
+                                child: BlocBuilder<CartBloc, CartState>(
+                                    builder: (context, state) => TextCustom(
+                                        text: state.quantityCart.toString(),
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15)))),
+                      ),
                     ],
                   ),
                 )
               ],
-            ),            
+            ),
             const SizedBox(height: 20.0),
             const Padding(
-              padding: EdgeInsets.only(right: 50.0),
-              child: TextCustom(text: 'What do you want eat today?', fontSize: 28, maxLine: 2, fontWeight: FontWeight.w500 )
-            ),
+                padding: EdgeInsets.only(right: 50.0),
+                child: TextCustom(
+                    text: 'What do you want eat today?',
+                    fontSize: 28,
+                    maxLine: 2,
+                    fontWeight: FontWeight.w500)),
             const SizedBox(height: 20.0),
             Row(
               children: [
@@ -89,10 +93,10 @@ class ClientHomeScreen extends StatelessWidget {
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.circular(15.0)
-                  ),
-                  child: const Icon(Icons.place_outlined, size: 38, color: Colors.grey ),
+                      border: Border.all(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(15.0)),
+                  child: const Icon(Icons.place_outlined,
+                      size: 38, color: Colors.grey),
                 ),
                 const SizedBox(width: 10.0),
                 Column(
@@ -100,68 +104,77 @@ class ClientHomeScreen extends StatelessWidget {
                   children: [
                     const TextCustom(text: 'Address'),
                     InkWell(
-                      onTap: () => Navigator.push(context, routeFrave(page: ListAddressesScreen())),
+                      onTap: () => Navigator.push(context,
+                          routeDukascango(page: ListAddressesScreen())),
                       child: BlocBuilder<UserBloc, UserState>(
-                        builder: (context, state) 
-                          => TextCustom( 
-                              text: ( state.addressName != '' ) ? state.addressName : 'without direction',
-                              color: ColorsFrave.primaryColor,
-                              fontSize: 17,
-                              maxLine: 1,
-                            )
-                      ),
+                          builder: (context, state) => TextCustom(
+                                text: (state.addressName != '')
+                                    ? state.addressName
+                                    : 'without direction',
+                                color: ColorsDukascango.primaryColor,
+                                fontSize: 17,
+                                maxLine: 1,
+                              )),
                     )
                   ],
                 )
               ],
             ),
-            const SizedBox(height: 20.0),            
+            const SizedBox(height: 20.0),
             FutureBuilder<List<Category>>(
               future: categoryServices.getAllCategories(),
               builder: (context, snapshot) {
-            
                 final List<Category>? category = snapshot.data;
-                
+
                 return !snapshot.hasData
-                  ? const ShimmerFrave()
-                  : Container(
-                    height: 45,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: category!.length,
-                      itemBuilder: (context, i) 
-                      => InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () => Navigator.push(context, routeFrave(page: SearchForCategoryScreen(idCategory: category[i].id, category: category[i].category ))),
-                          child: Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(right: 10.0),
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xff5469D4).withOpacity(.1),
-                              borderRadius: BorderRadius.circular(25.0)
+                    ? const ShimmerDukascango()
+                    : Container(
+                        height: 45,
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: category!.length,
+                          itemBuilder: (context, i) => InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () => Navigator.push(
+                                context,
+                                routeDukascango(
+                                    page: SearchForCategoryScreen(
+                                        idCategory: category[i].id,
+                                        category: category[i].category))),
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(right: 10.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              decoration: BoxDecoration(
+                                  color: Color(0xff5469D4).withOpacity(.1),
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: TextCustom(text: category[i].category),
                             ),
-                            child: TextCustom(text: category[i].category),
                           ),
-                      ),
-                    ),
-                  );
+                        ),
+                      );
               },
             ),
             const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                TextCustom(text: 'Populer Items', fontSize: 21, fontWeight: FontWeight.w500 ),
-                TextCustom(text: 'See All', color: ColorsFrave.primaryColor, fontSize: 17)
+                TextCustom(
+                    text: 'Populer Items',
+                    fontSize: 21,
+                    fontWeight: FontWeight.w500),
+                TextCustom(
+                    text: 'See All',
+                    color: ColorsDukascango.primaryColor,
+                    fontSize: 17)
               ],
             ),
             const SizedBox(height: 20.0),
             _ListProducts(),
             const SizedBox(height: 20.0),
-            
           ],
         ),
       ),
@@ -171,63 +184,71 @@ class ClientHomeScreen extends StatelessWidget {
 }
 
 class _ListProducts extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Productsdb>>(
       future: productServices.getProductsTopHome(),
       builder: (_, snapshot) {
-        
         final List<Productsdb>? listProduct = snapshot.data;
 
         return !snapshot.hasData
-          ? Column(
-              children: const [
-                ShimmerFrave(),
-                SizedBox(height: 10.0),
-                ShimmerFrave(),
-                SizedBox(height: 10.0),
-                ShimmerFrave(),
-              ],
-            )
-          : GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 25,
-                mainAxisSpacing: 20,
-                mainAxisExtent: 220
-              ),
-              itemCount: listProduct?.length,
-              itemBuilder: (_, i) 
-                => Container(
+            ? Column(
+                children: const [
+                  ShimmerDukascango(),
+                  SizedBox(height: 10.0),
+                  ShimmerDukascango(),
+                  SizedBox(height: 10.0),
+                  ShimmerDukascango(),
+                ],
+              )
+            : GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 25,
+                    mainAxisSpacing: 20,
+                    mainAxisExtent: 220),
+                itemCount: listProduct?.length,
+                itemBuilder: (_, i) => Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(20.0)
-                  ),
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(20.0)),
                   child: GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailsProductScreen(product: listProduct[i]))),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                DetailsProductScreen(product: listProduct[i]))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           child: Hero(
-                            tag: listProduct![i].id, 
-                            child: Image.network('http://192.168.1.35:7070/' + listProduct[i].picture , height: 150)
-                          ),
+                              tag: listProduct![i].id,
+                              child: Image.network(
+                                  'http://192.168.1.35:7070/' +
+                                      listProduct[i].picture,
+                                  height: 150)),
                         ),
-                        TextCustom(text: listProduct[i].nameProduct , textOverflow: TextOverflow.ellipsis, fontWeight: FontWeight.w500, color: ColorsFrave.primaryColor, fontSize: 19 ),
+                        TextCustom(
+                            text: listProduct[i].nameProduct,
+                            textOverflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w500,
+                            color: ColorsDukascango.primaryColor,
+                            fontSize: 19),
                         const SizedBox(height: 5.0),
-                        TextCustom(text: '\$ ${listProduct[i].price.toString()}', fontSize: 16, fontWeight: FontWeight.w500 )
+                        TextCustom(
+                            text: '\$ ${listProduct[i].price.toString()}',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500)
                       ],
                     ),
                   ),
                 ),
-            );
+              );
       },
     );
   }
 }
-

@@ -7,13 +7,11 @@ import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_home_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class SelectRoleScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    
     final authState = BlocProvider.of<AuthBloc>(context).state;
 
     return Scaffold(
@@ -35,38 +33,42 @@ class SelectRoleScreen extends StatelessWidget {
                       TextCustom(
                           text: 'Duka ',
                           fontSize: 25,
-                          color: ColorsFrave.primaryColor,
+                          color: ColorsDukascango.primaryColor,
                           fontWeight: FontWeight.w500),
                       TextCustom(
                           text: 'ScanGO',
                           fontSize: 25,
-                          color: ColorsFrave.secundaryColor,
+                          color: ColorsDukascango.secundaryColor,
                           fontWeight: FontWeight.w500),
                     ],
                   ),
                   SizedBox(height: constraints.maxHeight * 0.02),
                   const TextCustom(
                       text: 'How do you want to continue?',
-                      color: ColorsFrave.secundaryColor,
+                      color: ColorsDukascango.secundaryColor,
                       fontSize: 25),
                   SizedBox(height: constraints.maxHeight * 0.03),
                   if (authState.rolId == '1')
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Store Owner',
-                      color1: ColorsFrave.primaryColor.withOpacity(.2),
+                      color1: ColorsDukascango.primaryColor.withOpacity(.2),
                       color2: Colors.greenAccent.withOpacity(.1),
-                      onPressed: () => Navigator.pushAndRemoveUntil(context,
-                          routeFrave(page: AdminHomeScreen()), (route) => false),
+                      onPressed: () => Navigator.pushAndRemoveUntil(
+                          context,
+                          routeDukascango(page: AdminHomeScreen()),
+                          (route) => false),
                     ),
                   if (authState.rolId == '1')
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Wholesaler',
-                      color1: ColorsFrave.primaryColor.withOpacity(.2),
+                      color1: ColorsDukascango.primaryColor.withOpacity(.2),
                       color2: Colors.greenAccent.withOpacity(.1),
-                      onPressed: () => Navigator.pushAndRemoveUntil(context,
-                          routeFrave(page: WholesalerHomeScreen()), (route) => false),
+                      onPressed: () => Navigator.pushAndRemoveUntil(
+                          context,
+                          routeDukascango(page: WholesalerHomeScreen()),
+                          (route) => false),
                     ),
                   if (authState.rolId == '1' || authState.rolId == '3')
                     _BtnRol(
@@ -75,7 +77,7 @@ class SelectRoleScreen extends StatelessWidget {
                       color1: const Color(0xffFE6488).withOpacity(.2),
                       color2: Colors.amber.withOpacity(.1),
                       onPressed: () => Navigator.pushReplacement(
-                          context, routeFrave(page: ClientHomeScreen())),
+                          context, routeDukascango(page: ClientHomeScreen())),
                     ),
                   if (authState.rolId == '1' || authState.rolId == '3')
                     _BtnRol(
@@ -85,7 +87,7 @@ class SelectRoleScreen extends StatelessWidget {
                       color2: Colors.purpleAccent.withOpacity(.1),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
-                          routeFrave(page: DeliveryHomeScreen()),
+                          routeDukascango(page: DeliveryHomeScreen()),
                           (route) => false),
                     ),
                 ],
@@ -99,14 +101,18 @@ class SelectRoleScreen extends StatelessWidget {
 }
 
 class _BtnRol extends StatelessWidget {
-  
   final String svg;
   final String text;
   final Color color1;
   final Color color2;
   final VoidCallback? onPressed;
 
-  const _BtnRol({ required this.svg, required this.text, required this.color1, required this.color2, this.onPressed });
+  const _BtnRol(
+      {required this.svg,
+      required this.text,
+      required this.color1,
+      required this.color2,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -121,20 +127,21 @@ class _BtnRol extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             gradient: LinearGradient(
-              begin: Alignment.bottomLeft,
-              colors: [
-                color1,
-                color2
-              ]
-            ),                  
+                begin: Alignment.bottomLeft, colors: [color1, color2]),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SvgPicture.asset( svg, height: 100,),
-                TextCustom(text: text, fontSize: 20, color: ColorsFrave.secundaryColor )
+                SvgPicture.asset(
+                  svg,
+                  height: 100,
+                ),
+                TextCustom(
+                    text: text,
+                    fontSize: 20,
+                    color: ColorsDukascango.secundaryColor)
               ],
             ),
           ),
@@ -143,4 +150,3 @@ class _BtnRol extends StatelessWidget {
     );
   }
 }
-

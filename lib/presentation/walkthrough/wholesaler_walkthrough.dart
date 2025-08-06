@@ -7,17 +7,20 @@ class WholesalerWalkthroughScreen extends StatefulWidget {
   const WholesalerWalkthroughScreen({Key? key}) : super(key: key);
 
   @override
-  State<WholesalerWalkthroughScreen> createState() => _WholesalerWalkthroughScreenState();
+  State<WholesalerWalkthroughScreen> createState() =>
+      _WholesalerWalkthroughScreenState();
 }
 
-class _WholesalerWalkthroughScreenState extends State<WholesalerWalkthroughScreen> {
+class _WholesalerWalkthroughScreenState
+    extends State<WholesalerWalkthroughScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
   final List<Widget> _walkthroughPages = [
     const WalkthroughPage(
       title: 'Welcome, Wholesaler!',
-      description: 'This walkthrough will guide you through the main features for wholesalers.',
+      description:
+          'This walkthrough will guide you through the main features for wholesalers.',
       image: 'Assets/svg/bussiness-man.svg',
     ),
     const WalkthroughPage(
@@ -40,7 +43,8 @@ class _WholesalerWalkthroughScreenState extends State<WholesalerWalkthroughScree
   Future<void> _finishWalkthrough() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('walkthrough_completed', true);
-    Navigator.pushAndRemoveUntil(context, routeFrave(page: WholesalerHomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        routeDukascango(page: WholesalerHomeScreen()), (route) => false);
   }
 
   @override

@@ -7,30 +7,26 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/home/select_role_screen.dart';
 import 'package:dukascango/presentation/screens/intro/intro_screen.dart';
 import 'package:dukascango/presentation/screens/login/forgot_password_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class LoginScreen extends StatefulWidget {
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  
+
   final _keyForm = GlobalKey<FormState>();
-  
+
   @override
   void initState() {
-
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
 
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -41,38 +37,28 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     final authBloc = BlocProvider.of<AuthBloc>(context);
     final userBloc = BlocProvider.of<UserBloc>(context);
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        
-        if( state is LoadingAuthState ){
-
+        if (state is LoadingAuthState) {
           modalLoading(context);
-        
-        } else if ( state is FailureAuthState ){
-
+        } else if (state is FailureAuthState) {
           Navigator.pop(context);
           errorMessageSnack(context, state.error);
-
-        } else if ( state.rolId != null && state.rolId != '' ){
-
-          userBloc.add( OnGetUserEvent(state.user!) );
+        } else if (state.rolId != null && state.rolId != '') {
+          userBloc.add(OnGetUserEvent(state.user!));
           Navigator.pop(context);
 
-          if( state.rolId == '1' || state.rolId == '3' ){
-
-            Navigator.pushAndRemoveUntil(context, routeFrave(page: SelectRoleScreen()), (route) => false);
-          
-          } else if ( state.rolId == '2' ){
-
-            Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
-        
+          if (state.rolId == '1' || state.rolId == '3') {
+            Navigator.pushAndRemoveUntil(context,
+                routeDukascango(page: SelectRoleScreen()), (route) => false);
+          } else if (state.rolId == '2') {
+            Navigator.pushAndRemoveUntil(context,
+                routeDukascango(page: ClientHomeScreen()), (route) => false);
           }
         }
       },
@@ -97,8 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: () => Navigator.pushReplacement(
-                                  context, routeFrave(page: IntroScreen())),
+                              onTap: () => Navigator.pushReplacement(context,
+                                  routeDukascango(page: IntroScreen())),
                               borderRadius: BorderRadius.circular(100.0),
                               child: Container(
                                 height: 40,
@@ -116,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: const [
                                 TextCustom(
                                     text: 'Frave ',
-                                    color: ColorsFrave.primaryColor,
+                                    color: ColorsDukascango.primaryColor,
                                     fontWeight: FontWeight.w500),
                                 TextCustom(
                                     text: 'Food',
@@ -153,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: constraints.maxHeight * 0.05),
                       const TextCustom(text: 'Email Address'),
                       const SizedBox(height: 5.0),
-                      FormFieldFrave(
+                      FormFieldDukascango(
                         controller: _emailController,
                         hintText: 'email@frave.com',
                         keyboardType: TextInputType.emailAddress,
@@ -162,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 20.0),
                       const TextCustom(text: 'Password'),
                       const SizedBox(height: 5.0),
-                      FormFieldFrave(
+                      FormFieldDukascango(
                         controller: _passwordController,
                         hintText: '********',
                         isPassword: true,
@@ -172,22 +158,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                           alignment: Alignment.centerRight,
                           child: InkWell(
-                              onTap: () => Navigator.push(context,
-                                  routeFrave(page: ForgotPasswordScreen())),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  routeDukascango(
+                                      page: ForgotPasswordScreen())),
                               child: const TextCustom(
                                   text: 'Forgot Password?',
                                   fontSize: 17,
-                                  color: ColorsFrave.primaryColor))),
+                                  color: ColorsDukascango.primaryColor))),
                       SizedBox(height: constraints.maxHeight * 0.04),
-                      BtnFrave(
+                      BtnDukascango(
                         text: 'Login',
                         fontSize: 21,
                         height: 50,
                         fontWeight: FontWeight.w500,
                         onPressed: () {
                           if (_keyForm.currentState!.validate()) {
-                            authBloc.add(LoginEvent(
-                                _emailController.text, _passwordController.text));
+                            authBloc.add(LoginEvent(_emailController.text,
+                                _passwordController.text));
                           }
                         },
                       )

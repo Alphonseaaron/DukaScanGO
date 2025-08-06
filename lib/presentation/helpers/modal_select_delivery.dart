@@ -28,10 +28,10 @@ void modalSelectDelivery(BuildContext context, String idOrder) {
                 Row(
                   children: const [
                     TextCustom(
-                        text: 'Frave ',
+                        text: 'Duka',
                         color: ColorsDukascango.primaryColor,
                         fontWeight: FontWeight.w500),
-                    TextCustom(text: 'Food', fontWeight: FontWeight.w500),
+                    TextCustom(text: 'ScanGO', fontWeight: FontWeight.w500),
                   ],
                 ),
                 InkWell(

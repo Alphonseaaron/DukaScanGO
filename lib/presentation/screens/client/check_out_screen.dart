@@ -8,17 +8,15 @@ import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/select_addreess_screen.dart';
 import 'package:dukascango/presentation/screens/client/self_scan/exit_receipt_screen.dart';
-import 'package:dukascango/presentation/themes/colors_frave.dart';
+import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class CheckOutScreen extends StatelessWidget {
-
   final bool isSelfScan;
 
   const CheckOutScreen({Key? key, this.isSelfScan = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final orderBloc = BlocProvider.of<OrdersBloc>(context);
     final userBloc = BlocProvider.of<UserBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
@@ -26,35 +24,36 @@ class CheckOutScreen extends StatelessWidget {
 
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
-        if(state is LoadingOrderState) {
+        if (state is LoadingOrderState) {
           modalLoading(context);
         }
-        if(state is SuccessOrdersState) {
+        if (state is SuccessOrdersState) {
           Navigator.pop(context);
           if (isSelfScan) {
-            Navigator.pushAndRemoveUntil(context, routeFrave(page: ExitReceiptScreen()), (route) => false);
+            Navigator.pushAndRemoveUntil(context,
+                routeDukascango(page: ExitReceiptScreen()), (route) => false);
           } else {
             modalSuccess(context, 'order received', () {
               cartBloc.add(OnClearCartEvent());
               paymentBloc.add(OnClearTypePaymentMethodEvent());
-              Navigator.pushAndRemoveUntil(context, routeFrave(page: ClientHomeScreen()), (route) => false);
+              Navigator.pushAndRemoveUntil(context,
+                  routeDukascango(page: ClientHomeScreen()), (route) => false);
             });
           }
         }
-        if(state is FailureOrdersState) {
+        if (state is FailureOrdersState) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: TextCustom(text: state.error, color: Colors.white),
-              backgroundColor: Colors.red
-            )
-          );
+              backgroundColor: Colors.red));
         }
       },
       child: Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
           backgroundColor: Colors.grey[50],
-          title: const TextCustom(text: 'Checkout', fontWeight: FontWeight.w500),
+          title:
+              const TextCustom(text: 'Checkout', fontWeight: FontWeight.w500),
           centerTitle: true,
           elevation: 0,
           leadingWidth: 80,
@@ -63,15 +62,20 @@ class CheckOutScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.arrow_back_ios_new_rounded, color: ColorsFrave.primaryColor, size: 19),
-                TextCustom( text: 'Back ', fontSize: 17, color: ColorsFrave.primaryColor)
+                Icon(Icons.arrow_back_ios_new_rounded,
+                    color: ColorsDukascango.primaryColor, size: 19),
+                TextCustom(
+                    text: 'Back ',
+                    fontSize: 17,
+                    color: ColorsDukascango.primaryColor)
               ],
             ),
           ),
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,54 +88,56 @@ class CheckOutScreen extends StatelessWidget {
                 _DetailsTotal(),
                 const SizedBox(height: 20.0),
                 Expanded(
-                  child: Column(
+                    child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     BlocBuilder<PaymentsBloc, PaymentsState>(
-                      builder: (context, state) 
-                        => InkWell(
-                          onTap: (){
-                            final order = Order(
-                              clientId: userBloc.state.user!.uid,
-                              address: userBloc.state.addressName!,
-                              total: cartBloc.state.total,
-                              paymentType: paymentBloc.state.typePaymentMethod,
-                              status: 'PENDING',
-                              date: DateTime.now(),
-                              details: cartBloc.product.map((p) => OrderDetail(
-                                productId: p.id,
-                                productName: p.name,
-                                price: p.price,
-                                quantity: p.quantity,
-                              )).toList(),
-                            );
-                            orderBloc.add(OnAddNewOrderEvent(order));
+                        builder: (context, state) => InkWell(
+                              onTap: () {
+                                final order = Order(
+                                  clientId: userBloc.state.user!.uid,
+                                  address: userBloc.state.addressName!,
+                                  total: cartBloc.state.total,
+                                  paymentType:
+                                      paymentBloc.state.typePaymentMethod,
+                                  status: 'PENDING',
+                                  date: DateTime.now(),
+                                  details: cartBloc.product
+                                      .map((p) => OrderDetail(
+                                            productId: p.id,
+                                            productName: p.name,
+                                            price: p.price,
+                                            quantity: p.quantity,
+                                          ))
+                                      .toList(),
+                                );
+                                orderBloc.add(OnAddNewOrderEvent(order));
 
-                            // if( state.typePaymentMethod == 'CREDIT CARD' ){
+                                // if( state.typePaymentMethod == 'CREDIT CARD' ){
 
-                            //   modalPaymentWithNewCard(ctx: context, amount: cartBloc.state.total.toString());
+                                //   modalPaymentWithNewCard(ctx: context, amount: cartBloc.state.total.toString());
 
-                            // }
-                            
-                          },
-                          child: Container(
-                            height: 55,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: state.colorPayment,
-                              borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(state.iconPayment, color: Colors.white),
-                                const SizedBox(width: 10.0),
-                                TextCustom(text: state.typePaymentMethod, color: Colors.white)                              
-                              ],
-                            ),
-                          ),
-                        )
-                    )
+                                // }
+                              },
+                              child: Container(
+                                height: 55,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    color: state.colorPayment,
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(state.iconPayment,
+                                        color: Colors.white),
+                                    const SizedBox(width: 10.0),
+                                    TextCustom(
+                                        text: state.typePaymentMethod,
+                                        color: Colors.white)
+                                  ],
+                                ),
+                              ),
+                            ))
                   ],
                 ))
               ],
@@ -144,7 +150,6 @@ class CheckOutScreen extends StatelessWidget {
 }
 
 class _DetailsTotal extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     final cardBloc = BlocProvider.of<CartBloc>(context);
@@ -153,9 +158,7 @@ class _DetailsTotal extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       height: 190,
       decoration: BoxDecoration(
-          color: Colors.white, 
-          borderRadius: BorderRadius.circular(8.0)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,7 +168,8 @@ class _DetailsTotal extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const TextCustom(text: 'Subtotal', color: Colors.grey),
-              TextCustom(text: '\$ ${cardBloc.state.total}0', color: Colors.grey),
+              TextCustom(
+                  text: '\$ ${cardBloc.state.total}0', color: Colors.grey),
             ],
           ),
           const SizedBox(height: 10.0),
@@ -189,7 +193,9 @@ class _DetailsTotal extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const TextCustom(text: 'Total', fontWeight: FontWeight.w500),
-              TextCustom(text: '\$ ${cardBloc.state.total}0', fontWeight: FontWeight.w500),
+              TextCustom(
+                  text: '\$ ${cardBloc.state.total}0',
+                  fontWeight: FontWeight.w500),
             ],
           ),
         ],
@@ -199,7 +205,6 @@ class _DetailsTotal extends StatelessWidget {
 }
 
 class _CheckoutPaymentMethods extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     final paymentBloc = BlocProvider.of<PaymentsBloc>(context);
@@ -209,24 +214,21 @@ class _CheckoutPaymentMethods extends StatelessWidget {
       height: 155,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          color: Colors.white, 
-          borderRadius: BorderRadius.circular(8.0)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TextCustom(text: 'Payment Methods', fontWeight: FontWeight.w500),
+              const TextCustom(
+                  text: 'Payment Methods', fontWeight: FontWeight.w500),
               BlocBuilder<PaymentsBloc, PaymentsState>(
                   builder: (_, state) => TextCustom(
                       text: state.typePaymentMethod,
-                      color: ColorsFrave.primaryColor,
+                      color: ColorsDukascango.primaryColor,
                       fontWeight: FontWeight.w500,
-                      fontSize: 16
-                  )
-              ),
+                      fontSize: 16)),
             ],
           ),
           const Divider(),
@@ -239,28 +241,25 @@ class _CheckoutPaymentMethods extends StatelessWidget {
               itemCount: TypePaymentMethod.listTypePayment.length,
               itemBuilder: (_, i) => InkWell(
                 onTap: () => paymentBloc.add(OnSelectTypePaymentMethodEvent(
-                    TypePaymentMethod.listTypePayment[i].typePayment, 
-                    TypePaymentMethod.listTypePayment[i].icon, 
-                    TypePaymentMethod.listTypePayment[i].color
-                  )
-                ),
+                    TypePaymentMethod.listTypePayment[i].typePayment,
+                    TypePaymentMethod.listTypePayment[i].icon,
+                    TypePaymentMethod.listTypePayment[i].color)),
                 child: BlocBuilder<PaymentsBloc, PaymentsState>(
                   builder: (_, state) => Container(
                     height: 80,
                     width: 80,
                     margin: const EdgeInsets.only(right: 10.0),
                     decoration: BoxDecoration(
-                        color: (TypePaymentMethod.listTypePayment[i].typePayment == state.typePaymentMethod)
-                            ? Color(0xffF7FAFC)
-                            : Colors.transparent,
+                        color:
+                            (TypePaymentMethod.listTypePayment[i].typePayment ==
+                                    state.typePaymentMethod)
+                                ? Color(0xffF7FAFC)
+                                : Colors.transparent,
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: Colors.grey[200]!)
-                    ),
-                    child: Icon(
-                      TypePaymentMethod.listTypePayment[i].icon,
-                      size: 40,
-                      color: TypePaymentMethod.listTypePayment[i].color
-                    ),
+                        border: Border.all(color: Colors.grey[200]!)),
+                    child: Icon(TypePaymentMethod.listTypePayment[i].icon,
+                        size: 40,
+                        color: TypePaymentMethod.listTypePayment[i].color),
                   ),
                 ),
               ),
@@ -273,7 +272,6 @@ class _CheckoutPaymentMethods extends StatelessWidget {
 }
 
 class _CheckoutAddress extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -281,22 +279,21 @@ class _CheckoutAddress extends StatelessWidget {
       height: 95,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          color: Colors.white, 
-          borderRadius: BorderRadius.circular(8.0)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TextCustom(text: 'Shipping Address', fontWeight: FontWeight.w500),
+              const TextCustom(
+                  text: 'Shipping Address', fontWeight: FontWeight.w500),
               InkWell(
                   onTap: () => Navigator.push(
-                      context, routeFrave(page: SelectAddressScreen())),
+                      context, routeDukascango(page: SelectAddressScreen())),
                   child: const TextCustom(
                       text: 'Change',
-                      color: ColorsFrave.primaryColor,
+                      color: ColorsDukascango.primaryColor,
                       fontSize: 17))
             ],
           ),
