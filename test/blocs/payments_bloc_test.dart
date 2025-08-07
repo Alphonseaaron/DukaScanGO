@@ -6,7 +6,12 @@ import 'package:dukascango/domain/services/wallet_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockPaymentGatewayManager extends Mock implements PaymentGatewayManager {}
+class MockPaymentGatewayManager extends Mock implements PaymentGatewayManager {
+  @override
+  Future<void> loadGateways() async {}
+  @override
+  List<PaymentGateway> get gateways => [];
+}
 class MockWalletService extends Mock implements WalletService {}
 
 void main() {
@@ -39,7 +44,7 @@ void main() {
       'emits [loading, success] when LoadPaymentGatewaysEvent is added',
       build: () {
         when(mockPaymentGatewayManager.loadGateways()).thenAnswer((_) async => {});
-        when(mockPaymentGatewayManager.getGatewayForCountry(any)).thenReturn(null);
+        when(mockPaymentGatewayManager.getGatewayForCountry('NG')).thenReturn(null);
         when(mockPaymentGatewayManager.gateways).thenReturn([gateway]);
         return paymentsBloc;
       },
@@ -57,7 +62,7 @@ void main() {
       build: () {
         // This test is more complex and would require mocking the gateway interface
         // and the processPayment method. For brevity, this is a simplified version.
-        when(mockPaymentGatewayManager.getGatewayImplementation(any)).thenReturn(null);
+        when(mockPaymentGatewayManager.getGatewayImplementation(gateway)).thenReturn(null);
         return paymentsBloc;
       },
       act: (bloc) {

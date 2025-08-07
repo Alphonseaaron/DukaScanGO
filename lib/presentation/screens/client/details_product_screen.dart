@@ -5,13 +5,14 @@ import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/product_cart.dart';
 import 'package:dukascango/domain/models/response/images_products_response.dart';
 import 'package:dukascango/domain/models/response/products_top_home_response.dart';
-import 'package:dukascango/domain/services/products_services.dart';
+import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
+import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class DetailsProductScreen extends StatefulWidget {
-  final Productsdb product;
+  final Product product;
 
   const DetailsProductScreen({required this.product});
 
@@ -24,8 +25,9 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
   List<ImageProductdb> imagesProducts = [];
 
   _getImageProducts() async {
-    imagesProducts =
-        await productServices.getImagesProducts(widget.product.id.toString());
+    final productServices = ProductsServices();
+    // imagesProducts =
+    //     await productServices.getImagesProducts(widget.product.id.toString());
     setState(() {
       isLoading = true;
     });
@@ -62,11 +64,11 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                                     bottomLeft: Radius.circular(40.0),
                                     bottomRight: Radius.circular(40.0))),
                             child: Hero(
-                              tag: widget.product.id,
+                              tag: widget.product.id!,
                               child: Container(
                                 height: 180,
                                 child: CarouselSlider.builder(
-                                  itemCount: imagesProducts.length,
+                                  itemCount: widget.product.images.length,
                                   options: CarouselOptions(
                                       viewportFraction: 1.0, autoPlay: true),
                                   itemBuilder: (context, i, realIndex) =>
@@ -74,7 +76,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                                     width: size.width,
                                     child: Image.network(
                                         'http://192.168.1.35:7070/' +
-                                            imagesProducts[i].picture),
+                                            widget.product.images[i]),
                                   ),
                                 ),
                               ),
@@ -158,7 +160,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextCustom(
-                  text: widget.product.nameProduct,
+                  text: widget.product.name,
                   fontSize: 30,
                   fontWeight: FontWeight.w500),
             ),
@@ -218,7 +220,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                             ),
                           ),
                         ),
-                        (widget.product.status == 1)
+                        (widget.product.status == 'Available')
                             ? Container(
                                 height: 50,
                                 width: 220,
@@ -236,11 +238,11 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                                       onPressed: () {
                                         final newProduct = ProductCart(
                                             uidProduct:
-                                                widget.product.id.toString(),
+                                                widget.product.id!,
                                             imageProduct:
-                                                widget.product.picture,
+                                                widget.product.images[0],
                                             nameProduct:
-                                                widget.product.nameProduct,
+                                                widget.product.name,
                                             price: widget.product.price,
                                             quantity: cartBloc.state.quantity);
                                         cartBloc.add(OnAddProductToCartEvent(

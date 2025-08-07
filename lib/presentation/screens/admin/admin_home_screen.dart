@@ -18,7 +18,6 @@ import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
 import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
-import 'package:dukascango/presentation/walkthrough/admin_walkthrough.dart';
 
 class AdminHomeScreen extends StatelessWidget {
 
@@ -49,7 +48,7 @@ class AdminHomeScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
-              Align(alignment: Alignment.center, child: ImagePickerDukascango()),
+              Align(alignment: Alignment.center, child: ImagePickerFrave()),
               const SizedBox(height: 10.0),
               Center(
                 child: BlocBuilder<UserBloc, UserState>(

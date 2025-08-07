@@ -112,12 +112,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _emailController.text,
                       _passwordController.text,
                       userBloc.state.pictureProfilePath,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
+                      _countryData['country'] ?? '',
+                      _countryData['countryCode'] ?? '',
+                      _countryData['dialingCode'] ?? '',
+                      _countryData['flag'] ?? '',
+                      _countryData['currency'] ?? {},
+                      _countryData['geo'] ?? {},
                     );
                   } else if (widget.role == 'Wholesaler') {
                     event = OnRegisterWholesalerEvent(
@@ -127,12 +127,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _emailController.text,
                       _passwordController.text,
                       userBloc.state.pictureProfilePath,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
+                      _countryData['country'] ?? '',
+                      _countryData['countryCode'] ?? '',
+                      _countryData['dialingCode'] ?? '',
+                      _countryData['flag'] ?? '',
+                      _countryData['currency'] ?? {},
+                      _countryData['geo'] ?? {},
                     );
                   } else {
                     event = OnRegisterDeliveryEvent(
@@ -142,12 +142,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _emailController.text,
                       _passwordController.text,
                       userBloc.state.pictureProfilePath,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
+                      _countryData['country'] ?? '',
+                      _countryData['countryCode'] ?? '',
+                      _countryData['dialingCode'] ?? '',
+                      _countryData['flag'] ?? '',
+                      _countryData['currency'] ?? {},
+                      _countryData['geo'] ?? {},
                     );
                   }
                   userBloc.add(event);
@@ -256,6 +256,7 @@ class _PictureRegistre extends StatelessWidget {
                 case PermissionStatus.restricted:
                 case PermissionStatus.limited:
                 case PermissionStatus.permanentlyDenied:
+                case PermissionStatus.provisional:
                   openAppSettings();
                   break;
               }
@@ -276,6 +277,7 @@ class _PictureRegistre extends StatelessWidget {
                 case PermissionStatus.restricted:
                 case PermissionStatus.limited:
                 case PermissionStatus.permanentlyDenied:
+                case PermissionStatus.provisional:
                   openAppSettings();
                   break;
               }

@@ -12,11 +12,15 @@ import 'package:dukascango/presentation/screens/client/details_product_screen.da
 import 'package:dukascango/presentation/screens/client/search_for_category_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
-import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
+import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
+import 'package:dukascango/domain/services/products_services.dart';
+import 'package:dukascango/domain/services/category_services.dart';
 
 class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final productServices = ProductsServices();
+    final categoryServices = CategoryServices();
     final authBloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
@@ -149,7 +153,7 @@ class ClientHomeScreen extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20.0),
                               decoration: BoxDecoration(
-                                  color: Color(0xff5469D4).withOpacity(.1),
+                                  color: Color(0xff5469D4).withAlpha(25),
                                   borderRadius: BorderRadius.circular(25.0)),
                               child: TextCustom(text: category[i].category),
                             ),

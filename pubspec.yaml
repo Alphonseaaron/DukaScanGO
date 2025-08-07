@@ -50,6 +50,7 @@ dev_dependencies:
   mockito: ^5.4.4
   build_runner: ^2.4.9
   bloc_test: ^9.1.7
+  fake_cloud_firestore: ^2.6.0
 
 flutter:
 

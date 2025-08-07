@@ -8,7 +8,8 @@ import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart
 import 'package:dukascango/presentation/screens/profile/change_password_screen.dart';
 import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart';
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
-import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
+import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
+import 'package:dukascango/presentation/components/image_picker.dart';
 
 class ProfileClientScreen extends StatelessWidget {
   @override
@@ -55,7 +56,7 @@ class ProfileClientScreen extends StatelessWidget {
               const SizedBox(height: 5.0),
               Center(
                   child: TextCustom(
-                      text: authBloc.state.user!.email,
+                      text: authBloc.state.user?.email ?? '',
                       fontSize: 20,
                       color: Colors.grey)),
               const SizedBox(height: 15.0),

@@ -10,10 +10,14 @@ import 'package:dukascango/domain/bloc/dashboard/dashboard_bloc.dart';
 import 'package:dukascango/domain/bloc/inventory/inventory_bloc.dart';
 import 'package:dukascango/domain/bloc/payments/payments_bloc.dart';
 import 'package:dukascango/domain/bloc/wallet/wallet_bloc.dart';
+import 'package:dukascango/domain/services/payment_gateway_manager.dart';
 import 'package:dukascango/domain/services/push_notification.dart';
+import 'package:dukascango/domain/services/wallet_service.dart';
 import 'package:dukascango/presentation/screens/intro/checking_login_screen.dart';
 
 PushNotification pushNotification = PushNotification();
+final PaymentGatewayManager paymentGatewayManager = PaymentGatewayManager();
+final WalletService walletService = WalletService();
 
 Future<void> _firebaseMessagingBackground(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -62,6 +66,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => MapdeliveryBloc()),
         BlocProvider(create: (context) => MapclientBloc()),
         BlocProvider(create: (context) => SelfScanBloc()),
+        BlocProvider(
+            create: (context) =>
+                WalletBloc(walletService: walletService)),
         BlocProvider(create: (context) => DashboardBloc()),
         BlocProvider(create: (context) => InventoryBloc()),
         BlocProvider(create: (context) => FinancialReportingBloc()),

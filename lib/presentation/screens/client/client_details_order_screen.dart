@@ -3,7 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/domain/models/response/order_details_response.dart';
 import 'package:dukascango/domain/models/response/orders_client_response.dart';
-import 'package:dukascango/domain/services/orders_services.dart';
+import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/screens/client/client_map_scrren.dart';
@@ -24,6 +24,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
       case PermissionStatus.restricted:
       case PermissionStatus.limited:
       case PermissionStatus.permanentlyDenied:
+      case PermissionStatus.provisional:
         openAppSettings();
         break;
     }

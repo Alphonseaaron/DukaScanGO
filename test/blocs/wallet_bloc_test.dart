@@ -32,6 +32,7 @@ void main() {
       currency: 'USD',
       commissionPercent: 0.0,
       holdBalance: 10.0,
+      createdAt: Timestamp.now(),
     );
 
     final ledgerEntries = [
@@ -50,8 +51,8 @@ void main() {
     blocTest<WalletBloc, WalletState>(
       'emits [WalletLoading, WalletLoaded] when LoadWalletDetailsEvent is added and service returns data',
       build: () {
-        when(mockWalletService.getWallet(any)).thenAnswer((_) async => wallet);
-        when(mockWalletService.getLedgerEntries(any)).thenAnswer((_) async => ledgerEntries);
+        when(mockWalletService.getWallet('wallet1')).thenAnswer((_) async => wallet);
+        when(mockWalletService.getLedgerEntries('wallet1')).thenAnswer((_) async => ledgerEntries);
         return walletBloc;
       },
       act: (bloc) => bloc.add(LoadWalletDetailsEvent('wallet1')),
@@ -64,7 +65,7 @@ void main() {
     blocTest<WalletBloc, WalletState>(
       'emits [WalletLoading, WalletFailure] when LoadWalletDetailsEvent is added and service throws an exception',
       build: () {
-        when(mockWalletService.getWallet(any)).thenThrow(Exception('Failed to load'));
+        when(mockWalletService.getWallet('wallet1')).thenThrow(Exception('Failed to load'));
         return walletBloc;
       },
       act: (bloc) => bloc.add(LoadWalletDetailsEvent('wallet1')),
@@ -77,7 +78,7 @@ void main() {
      blocTest<WalletBloc, WalletState>(
       'emits [WalletLoading, WalletFailure] when wallet is not found',
       build: () {
-        when(mockWalletService.getWallet(any)).thenAnswer((_) async => null);
+        when(mockWalletService.getWallet('wallet1')).thenAnswer((_) async => null);
         return walletBloc;
       },
       act: (bloc) => bloc.add(LoadWalletDetailsEvent('wallet1')),

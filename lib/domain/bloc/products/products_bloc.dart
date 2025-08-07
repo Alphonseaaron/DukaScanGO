@@ -19,6 +19,20 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<OnSelectMultipleImagesEvent>(_onSelectMultipleImages);
     on<OnUnSelectMultipleImagesEvent>(_onUnSelectMultipleImages);
     on<OnAdjustStockEvent>(_onAdjustStock);
+    on<OnSearchProductEvent>(_onSearchProduct);
+  }
+
+  Future<void> _onSearchProduct(
+      OnSearchProductEvent event, Emitter<ProductsState> emit) async {
+    if (event.search.isEmpty) {
+      emit(state.copyWith(searchedProducts: []));
+      return;
+    }
+    final products = state.products
+        .where((p) =>
+            p.name.toLowerCase().contains(event.search.toLowerCase()))
+        .toList();
+    emit(state.copyWith(searchedProducts: products));
   }
 
   Future<void> _onLoadProducts(

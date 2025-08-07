@@ -39,3 +39,9 @@ class OnAdjustStockEvent extends ProductsEvent {
 
   OnAdjustStockEvent(this.product, this.newStock, this.reason);
 }
+
+class OnSearchProductEvent extends ProductsEvent {
+  final String search;
+
+  OnSearchProductEvent(this.search);
+}

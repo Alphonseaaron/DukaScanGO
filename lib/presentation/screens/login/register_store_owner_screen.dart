@@ -108,12 +108,12 @@ class _RegisterStoreOwnerScreenState extends State<RegisterStoreOwnerScreen> {
                     _emailController.text,
                     _passwordController.text,
                     userBloc.state.pictureProfilePath,
-                    _countryData['country'],
-                    _countryData['countryCode'],
-                    _countryData['dialingCode'],
-                    _countryData['flag'],
-                    _countryData['currency'],
-                    _countryData['geo'],
+                    _countryData['country'] ?? '',
+                    _countryData['countryCode'] ?? '',
+                    _countryData['dialingCode'] ?? '',
+                    _countryData['flag'] ?? '',
+                    _countryData['currency'] ?? {},
+                    _countryData['geo'] ?? {},
                   ));
                 }
               },
@@ -220,6 +220,7 @@ class _PictureRegistre extends StatelessWidget {
                 case PermissionStatus.restricted:
                 case PermissionStatus.limited:
                 case PermissionStatus.permanentlyDenied:
+                case PermissionStatus.provisional:
                   openAppSettings();
                   break;
               }
@@ -240,6 +241,7 @@ class _PictureRegistre extends StatelessWidget {
                 case PermissionStatus.restricted:
                 case PermissionStatus.limited:
                 case PermissionStatus.permanentlyDenied:
+                case PermissionStatus.provisional:
                   openAppSettings();
                   break;
               }

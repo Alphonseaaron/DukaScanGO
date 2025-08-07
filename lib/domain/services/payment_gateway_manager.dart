@@ -29,7 +29,7 @@ class PaymentGatewayManager {
     return _getGatewayImplementation(gatewayModel);
   }
 
-  PaymentGatewayInterface? _getGatewayImplementation(PaymentGateway gateway) {
+  PaymentGatewayInterface? getGatewayImplementation(PaymentGateway gateway) {
     switch (gateway.name.toLowerCase()) {
       case 'flutterwave':
         return FlutterwaveGateway(gateway);

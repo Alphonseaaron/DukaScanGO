@@ -1,4 +1,5 @@
 import 'package:dukascango/domain/bloc/wallet/wallet_bloc.dart';
+import 'package:dukascango/domain/models/wallet_ledger_entry_model.dart';
 import 'package:dukascango/domain/services/wallet_service.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
