@@ -98,7 +98,7 @@ class _InfoCardClient extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
-                color: Colors.grey.withOpacity(.5),
+                color: Colors.grey.withAlpha(127),
                 blurRadius: 7,
                 spreadRadius: 5)
           ]),

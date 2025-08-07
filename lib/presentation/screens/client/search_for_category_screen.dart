@@ -4,7 +4,6 @@ import 'package:dukascango/domain/models/response/products_top_home_response.dar
 import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/StaggeredDualView.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/domain/services/products_services.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
@@ -18,6 +17,8 @@ class SearchForCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productServices = ProductsServices();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

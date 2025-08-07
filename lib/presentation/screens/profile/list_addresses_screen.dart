@@ -39,6 +39,7 @@ class _ListAddressesScreenState extends State<ListAddressesScreen>
       }
     }
   }
+final userServices = UserServices();
 
   void accessLocation(PermissionStatus status) {
     switch (status) {
@@ -51,6 +52,7 @@ class _ListAddressesScreenState extends State<ListAddressesScreen>
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
       case PermissionStatus.permanentlyDenied:
+      case PermissionStatus.provisional:
         openAppSettings();
     }
   }

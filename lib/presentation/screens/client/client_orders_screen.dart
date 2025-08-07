@@ -10,6 +10,8 @@ import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 class ClientOrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final ordersServices = OrdersServices();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

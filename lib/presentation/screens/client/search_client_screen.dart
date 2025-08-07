@@ -6,6 +6,10 @@ import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
+import 'package:dukascango/domain/services/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
+import 'package:dukascango/domain/bloc/products/products_bloc.dart';
 
 class SearchClientScreen extends StatefulWidget {
   @override
@@ -61,8 +65,6 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                         controller: _searchController,
                         onChanged: (value) {
                           productBloc.add(OnSearchProductEvent(value));
-                          if (value.length != 0)
-                            productServices.searchProductsForName(value);
                         },
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -78,17 +80,10 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
               const SizedBox(height: 20.0),
               BlocBuilder<ProductsBloc, ProductsState>(
                 builder: (_, state) {
-                  if (state.searchProduct == null ||
-                      state.searchProduct!.isEmpty) {
+                  if (state.searchedProducts.isEmpty) {
                     return _HistorySearch();
                   }
-                  if (state.products.isEmpty) {
-                    return ListTile(
-                      title: TextCustom(
-                          text: 'Without results for ${state.searchProduct}'),
-                    );
-                  }
-                  return _ListProductSearch(listProduct: state.products);
+                  return _ListProductSearch(listProduct: state.searchedProducts);
                 },
               )
             ],

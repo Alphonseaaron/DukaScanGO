@@ -9,20 +9,20 @@ class OrdersServices {
   }
 
   Future<List<order_model.Order>> getOrdersByStatus(String status) async {
-    final QuerySnapshot snapshot = await _firestore
+    final firestore.QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('status', isEqualTo: status)
         .get();
     return snapshot.docs
-        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => order_model.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
-  Future<Order?> getOrderById(String id) async {
-    final DocumentSnapshot doc =
+  Future<order_model.Order?> getOrderById(String id) async {
+    final firestore.DocumentSnapshot doc =
         await _firestore.collection('orders').doc(id).get();
     if (doc.exists) {
-      return Order.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+      return order_model.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id);
     }
     return null;
   }
@@ -31,18 +31,18 @@ class OrdersServices {
     await _firestore.collection('orders').doc(id).update({'status': status});
   }
 
-  Future<List<Order>> getOrdersByClient(String uid) async {
-    final QuerySnapshot snapshot = await _firestore
+  Future<List<order_model.Order>> getOrdersByClient(String uid) async {
+    final firestore.QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('clientId', isEqualTo: uid)
         .get();
     return snapshot.docs
-        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => order_model.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
   Future<double> getSalesTotal() async {
-    final QuerySnapshot snapshot = await _firestore
+    final firestore.QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('status', isEqualTo: 'completed')
         .get();
@@ -53,24 +53,24 @@ class OrdersServices {
     return total;
   }
 
-  Future<List<Order>> getOrdersByPaymentType(String paymentType) async {
-    final QuerySnapshot snapshot = await _firestore
+  Future<List<order_model.Order>> getOrdersByPaymentType(String paymentType) async {
+    final firestore.QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('paymentType', isEqualTo: paymentType)
         .get();
     return snapshot.docs
-        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => order_model.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
-  Future<List<Order>> getOrdersByDateRange(DateTime start, DateTime end) async {
-    final QuerySnapshot snapshot = await _firestore
+  Future<List<order_model.Order>> getOrdersByDateRange(DateTime start, DateTime end) async {
+    final firestore.QuerySnapshot snapshot = await _firestore
         .collection('orders')
         .where('date', isGreaterThanOrEqualTo: start)
         .where('date', isLessThanOrEqualTo: end)
         .get();
     return snapshot.docs
-        .map((doc) => Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => order_model.Order.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 }

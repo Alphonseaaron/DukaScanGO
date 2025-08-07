@@ -8,7 +8,6 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
 import 'package:dukascango/presentation/components/phone_number_field.dart';
-import 'package:dukascango/presentation/helpers/validators.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class AddNewDeliveryScreen extends StatefulWidget {
@@ -102,12 +101,12 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
                       _emailController.text,
                       _passwordController.text,
                       userBloc.state.pictureProfilePath,
-                      _countryData['country'],
-                      _countryData['countryCode'],
-                      _countryData['dialingCode'],
-                      _countryData['flag'],
-                      _countryData['currency'],
-                      _countryData['geo'],
+                      _countryData['country'] ?? '',
+                      _countryData['countryCode'] ?? '',
+                      _countryData['dialingCode'] ?? '',
+                      _countryData['flag'] ?? '',
+                      _countryData['currency'] ?? {},
+                      _countryData['geo'] ?? {},
                     ));
                   }
                 },
@@ -208,7 +207,7 @@ class _PictureRegistre extends StatelessWidget {
 
             Navigator.pop(context);
             final XFile? photoPath = await _picker.pickImage(source: ImageSource.camera);
-            userBloc.add( OnSelectPictureEvent(photoPath!.path));
+            if( photoPath != null ) userBloc.add( OnSelectPictureEvent(photoPath.path));
 
           }
         ),

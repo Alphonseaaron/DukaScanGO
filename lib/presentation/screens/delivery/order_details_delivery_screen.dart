@@ -49,6 +49,7 @@ class _OrdersDetailsDeliveryScreenState
       case PermissionStatus.restricted:
       case PermissionStatus.limited:
       case PermissionStatus.permanentlyDenied:
+      case PermissionStatus.provisional:
         openAppSettings();
         break;
     }
