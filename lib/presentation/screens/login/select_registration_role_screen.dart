@@ -33,8 +33,8 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
               _BtnRol(
                 svg: 'Assets/svg/restaurante.svg',
                 text: 'Store Owner',
-                color1: ColorsDukascango.primaryColor.withOpacity(.2),
-                color2: Colors.greenAccent.withOpacity(.1),
+                color1: ColorsDukascango.primaryColor.withAlpha(51),
+                color2: Colors.greenAccent.withAlpha(26),
                 onPressed: () => Navigator.push(
                     context,
                     routeDukascango(
@@ -45,8 +45,8 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
               _BtnRol(
                 svg: 'Assets/svg/bussiness-man.svg',
                 text: 'Wholesaler',
-                color1: const Color(0xffFE6488).withOpacity(.2),
-                color2: Colors.amber.withOpacity(.1),
+                color1: const Color(0xffFE6488).withAlpha(51),
+                color2: Colors.amber.withAlpha(26),
                 onPressed: () => Navigator.push(
                     context,
                     routeDukascango(
@@ -57,8 +57,8 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
               _BtnRol(
                 svg: 'Assets/svg/delivery-bike.svg',
                 text: 'Delivery',
-                color1: const Color(0xff8956FF).withOpacity(.2),
-                color2: Colors.purpleAccent.withOpacity(.1),
+                color1: const Color(0xff8956FF).withAlpha(51),
+                color2: Colors.purpleAccent.withAlpha(26),
                 onPressed: () => Navigator.push(
                     context,
                     routeDukascango(
