@@ -10,6 +10,7 @@ import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 class SelectAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userServices = UserServices();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -28,7 +29,7 @@ class SelectAddressScreen extends StatelessWidget {
               TextCustom(
                   text: 'Back',
                   fontSize: 16,
-                  color: ColorsDukascango.primaryColor)
+                  color: ColorsD_ukascango.primaryColor)
             ],
           ),
           onPressed: () => Navigator.pop(context),
@@ -37,7 +38,7 @@ class SelectAddressScreen extends StatelessWidget {
       body: FutureBuilder<List<ListAddress>>(
           future: userServices.getAddresses(BlocProvider.of<AuthBloc>(context).state.user!.uid),
           builder: (context, snapshot) => (!snapshot.hasData)
-              ? const ShimmerDukascango()
+              ? const ShimmerD_ukascango()
               : _ListAddresses(listAddress: snapshot.data!)),
     );
   }
@@ -67,7 +68,7 @@ class _ListAddresses extends StatelessWidget {
               child: ListTile(
                 leading: BlocBuilder<UserBloc, UserState>(
                     builder: (_, state) =>
-                        (state.uidAddress == listAddress[i].id)
+                        (state.uidAddress == listAddress[i].id.toString())
                             ? Icon(Icons.radio_button_checked_rounded,
                                 color: ColorsDukascango.primaryColor)
                             : Icon(Icons.radio_button_off_rounded)),
@@ -79,7 +80,7 @@ class _ListAddresses extends StatelessWidget {
                     text: listAddress[i].reference,
                     fontSize: 16,
                     color: ColorsDukascango.secundaryColor),
-                onTap: () => userBloc.add(OnSelectAddressButtonEvent(
+                onTap: () => userBloc.add(SelectAddressButtonEvent(
                     listAddress[i].id, listAddress[i].reference)),
               ),
             ),
@@ -96,7 +97,7 @@ class _WithoutListAddress extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset('Assets/my-location.svg', height: 400),
+          SvgPicture.asset('assets/my-location.svg', height: 400),
           const TextCustom(
               text: 'Without Address',
               fontSize: 25,

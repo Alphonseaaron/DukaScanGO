@@ -9,6 +9,7 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/select_addreess_screen.dart';
 import 'package:dukascango/presentation/screens/client/self_scan/exit_receipt_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class CheckOutScreen extends StatelessWidget {
   final bool isSelfScan;
@@ -31,13 +32,13 @@ class CheckOutScreen extends StatelessWidget {
           Navigator.pop(context);
           if (isSelfScan) {
             Navigator.pushAndRemoveUntil(context,
-                routeDukascango(page: ExitReceiptScreen()), (route) => false);
+                navigatorPageFadeInFrave(context, ExitReceiptScreen()), (route) => false);
           } else {
             modalSuccess(context, 'order received', () {
-              cartBloc.add(OnClearCartEvent());
-              paymentBloc.add(OnClearTypePaymentMethodEvent());
+              cartBloc.add(ClearCartEvent());
+              paymentBloc.add(ClearTypePaymentMethodEvent());
               Navigator.pushAndRemoveUntil(context,
-                  routeDukascango(page: ClientHomeScreen()), (route) => false);
+                  navigatorPageFadeInFrave(context, ClientHomeScreen()), (route) => false);
             });
           }
         }
@@ -102,7 +103,7 @@ class CheckOutScreen extends StatelessWidget {
                                       paymentBloc.state.typePaymentMethod,
                                   status: 'PENDING',
                                   date: DateTime.now(),
-                                  details: cartBloc.product
+                                  details: cartBloc.state.products!
                                       .map((p) => OrderDetail(
                                             productId: p.uidProduct,
                                             productName: p.nameProduct,
@@ -111,7 +112,7 @@ class CheckOutScreen extends StatelessWidget {
                                           ))
                                       .toList(),
                                 );
-                                orderBloc.add(OnAddNewOrderEvent(order));
+                                orderBloc.add(AddNewOrderEvent(order));
 
                                 // if( state.typePaymentMethod == 'CREDIT CARD' ){
 
@@ -240,7 +241,7 @@ class _CheckoutPaymentMethods extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: TypePaymentMethod.listTypePayment.length,
               itemBuilder: (_, i) => InkWell(
-                onTap: () => paymentBloc.add(OnSelectTypePaymentMethodEvent(
+                onTap: () => paymentBloc.add(SelectTypePaymentMethodEvent(
                     TypePaymentMethod.listTypePayment[i].typePayment,
                     TypePaymentMethod.listTypePayment[i].icon,
                     TypePaymentMethod.listTypePayment[i].color)),
@@ -290,7 +291,7 @@ class _CheckoutAddress extends StatelessWidget {
                   text: 'Shipping Address', fontWeight: FontWeight.w500),
               InkWell(
                   onTap: () => Navigator.push(
-                      context, routeDukascango(page: SelectAddressScreen())),
+                      context, navigatorPageFadeInFrave(context, SelectAddressScreen())),
                   child: const TextCustom(
                       text: 'Change',
                       color: ColorsDukascango.primaryColor,
@@ -301,8 +302,8 @@ class _CheckoutAddress extends StatelessWidget {
           const SizedBox(height: 5.0),
           BlocBuilder<UserBloc, UserState>(
               builder: (_, state) => TextCustom(
-                  text: (state.addressName != '')
-                      ? state.addressName
+                  text: (state.addressName != null && state.addressName != '')
+                      ? state.addressName!
                       : 'Select Address',
                   fontSize: 17,
                   maxLine: 1))

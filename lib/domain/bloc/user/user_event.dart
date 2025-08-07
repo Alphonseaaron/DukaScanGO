@@ -47,8 +47,8 @@ class OnChangeImageProfileEvent extends UserEvent {
 }
 
 class OnEditUserEvent extends UserEvent {
-  final String name;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
   final String country;
   final String countryCode;
@@ -57,7 +57,7 @@ class OnEditUserEvent extends UserEvent {
   final Map<String, dynamic> currency;
   final Map<String, dynamic> geo;
 
-  OnEditUserEvent(this.name, this.lastname, this.phone, this.country,
+  OnEditUserEvent(this.firstName, this.lastName, this.phone, this.country,
       this.countryCode, this.dialingCode, this.flag, this.currency, this.geo);
 }
 
@@ -69,8 +69,8 @@ class OnChangePasswordEvent extends UserEvent {
 }
 
 class OnRegisterDeliveryEvent extends UserEvent {
-  final String name;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
   final String email;
   final String password;
@@ -83,8 +83,8 @@ class OnRegisterDeliveryEvent extends UserEvent {
   final Map<String, dynamic> geo;
 
   OnRegisterDeliveryEvent(
-      this.name,
-      this.lastname,
+      this.firstName,
+      this.lastName,
       this.phone,
       this.email,
       this.password,
@@ -98,8 +98,8 @@ class OnRegisterDeliveryEvent extends UserEvent {
 }
 
 class OnRegisterStoreOwnerEvent extends UserEvent {
-  final String name;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
   final String email;
   final String password;
@@ -112,8 +112,8 @@ class OnRegisterStoreOwnerEvent extends UserEvent {
   final Map<String, dynamic> geo;
 
   OnRegisterStoreOwnerEvent(
-      this.name,
-      this.lastname,
+      this.firstName,
+      this.lastName,
       this.phone,
       this.email,
       this.password,
@@ -127,8 +127,8 @@ class OnRegisterStoreOwnerEvent extends UserEvent {
 }
 
 class OnRegisterWholesalerEvent extends UserEvent {
-  final String name;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
   final String email;
   final String password;
@@ -141,8 +141,8 @@ class OnRegisterWholesalerEvent extends UserEvent {
   final Map<String, dynamic> geo;
 
   OnRegisterWholesalerEvent(
-      this.name,
-      this.lastname,
+      this.firstName,
+      this.lastName,
       this.phone,
       this.email,
       this.password,
@@ -156,8 +156,8 @@ class OnRegisterWholesalerEvent extends UserEvent {
 }
 
 class OnRegisterClientEvent extends UserEvent {
-  final String name;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
   final String email;
   final String password;
@@ -170,8 +170,8 @@ class OnRegisterClientEvent extends UserEvent {
   final Map<String, dynamic> geo;
 
   OnRegisterClientEvent(
-      this.name,
-      this.lastname,
+      this.firstName,
+      this.lastName,
       this.phone,
       this.email,
       this.password,

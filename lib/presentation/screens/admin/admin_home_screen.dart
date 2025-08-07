@@ -48,7 +48,7 @@ class AdminHomeScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             children: [
-              Align(alignment: Alignment.center, child: ImagePickerFrave()),
+              Align(alignment: Alignment.center, child: const ImagePickerFrave()),
               const SizedBox(height: 10.0),
               Center(
                 child: BlocBuilder<UserBloc, UserState>(
@@ -72,27 +72,27 @@ class AdminHomeScreen extends StatelessWidget {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Account', color: Colors.grey),
               const SizedBox(height: 10.0),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Profile setting',
                 icon: Icons.person,
                 colorIcon: 0xff01C58C,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: EditProfileScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Change Password',
                 icon: Icons.lock_rounded,
                 colorIcon: 0xff1B83F5,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: ChangePasswordScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Change Role',
                 icon: Icons.swap_horiz_rounded,
                 colorIcon: 0xffE62755,
                 onPressed: () => Navigator.pushAndRemoveUntil(context, routeDukascango(page: SelectRoleScreen()), (route) => false),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Dark mode',
                 icon: Icons.dark_mode_rounded,
                 colorIcon: 0xff051E2F,
@@ -100,70 +100,70 @@ class AdminHomeScreen extends StatelessWidget {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Dukascango', color: Colors.grey),
               const SizedBox(height: 10.0),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Dashboard',
                 icon: Icons.dashboard_rounded,
                 colorIcon: 0xff0C6CF2,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: DashboardScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Categories',
                 icon: Icons.category_rounded,
                 colorIcon: 0xff5E65CD,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: CategoriesAdminScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Products',
                 icon: Icons.add,
                 colorIcon: 0xff355773,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: ListProductsScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Bulk Upload',
                 icon: Icons.upload_file_rounded,
                 colorIcon: 0xff8E44AD,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: BulkUploadScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Restocking Requests',
                 icon: Icons.inventory_rounded,
                 colorIcon: 0xffF1C40F,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: RestockingRequestsScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Financial Reporting',
                 icon: Icons.assessment_rounded,
                 colorIcon: 0xff1ABC9C,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: FinancialReportingScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Staff Management',
                 icon: Icons.people_alt_rounded,
                 colorIcon: 0xff3498DB,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: StaffManagementScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Delivery',
                 icon: Icons.delivery_dining_rounded,
                 colorIcon: 0xff469CD7,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: ListDeliverysScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Orders',
                 icon: Icons.checklist_rounded,
                 colorIcon: 0xffFFA136,
                 onPressed: () => Navigator.push(
                     context, routeDukascango(page: OrdersAdminScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Self-Scan Orders',
                 icon: Icons.qr_code_scanner_rounded,
                 colorIcon: 0xff2BDD99,
@@ -173,22 +173,22 @@ class AdminHomeScreen extends StatelessWidget {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Personal', color: Colors.grey),
               const SizedBox(height: 10.0),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Privacy & Policy',
                 icon: Icons.policy_rounded,
                 colorIcon: 0xff6dbd63,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Security',
                 icon: Icons.lock_outline_rounded,
                 colorIcon: 0xff1F252C,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Term & Conditions',
                 icon: Icons.description_outlined,
                 colorIcon: 0xff458bff,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Help',
                 icon: Icons.help_outline,
                 colorIcon: 0xff4772e6,

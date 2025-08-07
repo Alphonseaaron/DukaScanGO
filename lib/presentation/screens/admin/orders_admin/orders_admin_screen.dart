@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/order.dart';
 import 'package:dukascango/domain/models/pay_type.dart';
@@ -9,6 +8,7 @@ import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/helpers/helpers.dart';
 import 'package:dukascango/presentation/screens/admin/orders_admin/order_details_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class OrdersAdminScreen extends StatefulWidget {
   @override
@@ -24,10 +24,10 @@ class _OrdersAdminScreenState extends State<OrdersAdminScreen>
     super.initState();
     _tabController = TabController(length: payType.length, vsync: this);
     BlocProvider.of<OrdersBloc>(context)
-        .add(OnGetOrdersByStatusEvent(payType[0]));
+        .add(GetOrdersByStatusEvent(payType[0]));
     _tabController.addListener(() {
       BlocProvider.of<OrdersBloc>(context)
-          .add(OnGetOrdersByStatusEvent(payType[_tabController.index]));
+          .add(GetOrdersByStatusEvent(payType[_tabController.index]));
     });
   }
 
@@ -124,7 +124,7 @@ class _CardOrders extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: InkWell(
         onTap: () => Navigator.push(
-            context, routeDukascango(page: OrderDetailsScreen(order: order))),
+            context, navigatorPageFadeInFrave(context, OrderDetailsScreen(order: order))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(

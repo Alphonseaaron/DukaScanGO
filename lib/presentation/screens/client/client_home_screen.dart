@@ -15,11 +15,14 @@ import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
 import 'package:dukascango/domain/services/products_services.dart';
 import 'package:dukascango/domain/services/category_services.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
+import 'package:dukascango/domain/models/product.dart';
 
 class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryServices = CategoryServices();
+    final productServices = ProductsServices();
     final authBloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
@@ -55,7 +58,7 @@ class ClientHomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () => Navigator.pushReplacement(
-                      context, routeDukascango(page: CartClientScreen())),
+                      context, navigatorPageFadeInFrave(context, CartClientScreen())),
                   child: Stack(
                     children: [
                       const Icon(Icons.shopping_bag_outlined, size: 30),
@@ -108,11 +111,11 @@ class ClientHomeScreen extends StatelessWidget {
                     const TextCustom(text: 'Address'),
                     InkWell(
                       onTap: () => Navigator.push(context,
-                          routeDukascango(page: ListAddressesScreen())),
+                          navigatorPageFadeInFrave(context, ListAddressesScreen())),
                       child: BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) => TextCustom(
-                                text: (state.addressName != '')
-                                    ? state.addressName
+                                text: (state.addressName != null && state.addressName != '')
+                                    ? state.addressName!
                                     : 'without direction',
                                 color: ColorsDukascango.primaryColor,
                                 fontSize: 17,
@@ -142,8 +145,9 @@ class ClientHomeScreen extends StatelessWidget {
                             highlightColor: Colors.transparent,
                             onTap: () => Navigator.push(
                                 context,
-                                routeDukascango(
-                                    page: SearchForCategoryScreen(
+                                navigatorPageFadeInFrave(
+                                    context,
+                                    SearchForCategoryScreen(
                                         idCategory: category[i].id,
                                         category: category[i].category))),
                             child: Container(
@@ -176,7 +180,7 @@ class ClientHomeScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20.0),
-            _ListProducts(),
+            _ListProducts(productServices: productServices),
             const SizedBox(height: 20.0),
           ],
         ),
@@ -187,6 +191,10 @@ class ClientHomeScreen extends StatelessWidget {
 }
 
 class _ListProducts extends StatelessWidget {
+  final ProductsServices productServices;
+
+  const _ListProducts({required this.productServices});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Product>>(
@@ -223,7 +231,7 @@ class _ListProducts extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (_) =>
-                                DetailsProductScreen(product: listProduct[i]))),
+                                DetailsProductScreen(product: listProduct![i]))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

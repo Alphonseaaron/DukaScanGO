@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/presentation/components/components.dart';
-import 'package:dukascango/presentation/components/animation_route.dart';
 import 'package:dukascango/presentation/screens/client/cart_client_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 import 'package:dukascango/presentation/components/custom_camera_scanner.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class ProductScanScreen extends StatefulWidget {
   @override
@@ -54,7 +54,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
           children: [
             CustomCameraScanner(
               onBarcodeDetected: (barcode) {
-                selfScanBloc.add(OnProductScannedEvent(barcode));
+                selfScanBloc.add(ProductScannedEvent(barcode));
               },
             ),
             _buildUIOverlay(context),
@@ -68,7 +68,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
     return Column(
       children: [
         // Placeholder for store logo
-        Image.asset('Assets/Logo/logo-black.png', height: 50),
+        Image.asset('assets/Logo/logo-black.png', height: 50),
         const Spacer(),
         _buildUpsellBanner(context),
         // Manual Entry Button
@@ -92,7 +92,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
             key: const Key('upsell_banner'),
             onDismissed: (_) {
               BlocProvider.of<SelfScanBloc>(context)
-                  .add(OnDismissUpsellBannerEvent());
+                  .add(DismissUpsellBannerEvent());
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -102,7 +102,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withAlpha(51),
+                    color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 1,
                     blurRadius: 5,
                   ),
@@ -139,8 +139,8 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                     onPressed: () {
                       Navigator.push(
                           context,
-                          routeDukascango(
-                              page: CartClientScreen(isSelfScan: true)));
+                          navigatorPageFadeInFrave(context,
+                              CartClientScreen(isSelfScan: true)));
                     },
                   ),
                 ],
@@ -177,7 +177,7 @@ class _ProductScanScreenState extends State<ProductScanScreen> {
                 onPressed: () {
                   if (_barcodeController.text.isNotEmpty) {
                     selfScanBloc
-                        .add(OnProductScannedEvent(_barcodeController.text));
+                        .add(ProductScannedEvent(_barcodeController.text));
                     _barcodeController.clear();
                     Navigator.pop(context);
                   }

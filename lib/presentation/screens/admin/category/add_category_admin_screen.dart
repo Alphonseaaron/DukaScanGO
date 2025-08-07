@@ -80,7 +80,7 @@ class _AddCategoryAdminScreenState extends State<AddCategoryAdminScreen> {
             TextButton(
                 onPressed: () {
                   if (_keyForm.currentState!.validate()) {
-                    productBloc.add(OnAddNewCategoryEvent(
+                    productBloc.add(AddNewCategoryEvent(
                         _nameCategoryController.text,
                         _categoryDescriptionController.text));
                   }

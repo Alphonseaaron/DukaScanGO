@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dukascango/data/env/environment.dart';
 import 'package:dukascango/domain/bloc/blocs.dart';
 import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/client/details_product_screen.dart';
-import 'package:dukascango/domain/services/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
 import 'package:dukascango/domain/bloc/products/products_bloc.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class SearchClientScreen extends StatefulWidget {
   @override
@@ -47,7 +44,7 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                 children: [
                   InkWell(
                     onTap: () => Navigator.pushReplacement(
-                        context, routeDukascango(page: ClientHomeScreen())),
+                        context, navigatorPageFadeInFrave(context, ClientHomeScreen())),
                     child: Container(
                       height: 44,
                       child: Icon(Icons.arrow_back_ios_new_rounded),
@@ -64,7 +61,7 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                       child: TextFormField(
                         controller: _searchController,
                         onChanged: (value) {
-                          productBloc.add(OnSearchProductEvent(value));
+                          productBloc.add(SearchProductEvent(value));
                         },
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -90,7 +87,7 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationFrave(1),
+      bottomNavigationBar: BottomNavigationDukascango(1),
     );
   }
 }
@@ -109,8 +106,8 @@ class _ListProductSearch extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.push(
                     context,
-                    routeDukascango(
-                        page: DetailsProductScreen(product: listProduct[i]))),
+                    navigatorPageFadeInFrave(context,
+                        DetailsProductScreen(product: listProduct[i]))),
                 child: Container(
                   height: 90,
                   width: MediaQuery.of(context).size.width,

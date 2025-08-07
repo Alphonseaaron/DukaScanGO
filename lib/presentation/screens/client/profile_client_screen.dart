@@ -10,7 +10,8 @@ import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
 import 'package:dukascango/presentation/components/image_picker.dart';
-import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
+import 'package:dukascango/presentation/walkthrough/client_walkthrough_screen.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class ProfileClientScreen extends StatelessWidget {
   @override
@@ -27,7 +28,7 @@ class ProfileClientScreen extends StatelessWidget {
               context,
               'Picture Change Successfully',
               () => Navigator.pushReplacement(
-                  context, routeDukascango(page: ProfileClientScreen())));
+                  context, navigatorPageFadeInFrave(context, ProfileClientScreen())));
           Navigator.pop(context);
         } else if (state is FailureAuthState) {
           Navigator.pop(context);
@@ -68,30 +69,30 @@ class ProfileClientScreen extends StatelessWidget {
                 icon: Icons.person,
                 colorIcon: 0xff01C58C,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: EditProfileScreen())),
+                    context, navigatorPageFadeInFrave(context, EditProfileScreen())),
               ),
               ItemAccount(
                 text: 'Change Password',
                 icon: Icons.lock_rounded,
                 colorIcon: 0xff1B83F5,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: ChangePasswordScreen())),
+                    context, navigatorPageFadeInFrave(context, ChangePasswordScreen())),
               ),
               ItemAccount(
                 text: 'Add addresses',
                 icon: Icons.my_location_rounded,
                 colorIcon: 0xffFB5019,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: ListAddressesScreen())),
+                    context, navigatorPageFadeInFrave(context, ListAddressesScreen())),
               ),
               ItemAccount(
                 text: 'Orders',
                 icon: Icons.shopping_bag_outlined,
                 colorIcon: 0xffFBAD49,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: ClientOrdersScreen())),
+                    context, navigatorPageFadeInFrave(context, ClientOrdersScreen())),
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Dark mode',
                 icon: Icons.dark_mode_rounded,
                 colorIcon: 0xff051E2F,
@@ -99,22 +100,22 @@ class ProfileClientScreen extends StatelessWidget {
               const SizedBox(height: 15.0),
               const TextCustom(text: 'Personal', color: Colors.grey),
               const SizedBox(height: 10.0),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Privacy & Policy',
                 icon: Icons.policy_rounded,
                 colorIcon: 0xff6dbd63,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Security',
                 icon: Icons.lock_outline_rounded,
                 colorIcon: 0xff1F252C,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Term & Conditions',
                 icon: Icons.description_outlined,
                 colorIcon: 0xff458bff,
               ),
-              ItemAccount(
+              const ItemAccount(
                 text: 'Help',
                 icon: Icons.help_outline,
                 colorIcon: 0xff4772e6,
@@ -124,7 +125,7 @@ class ProfileClientScreen extends StatelessWidget {
                 icon: Icons.support,
                 colorIcon: 0xff4772e6,
                 onPressed: () => Navigator.push(
-                    context, routeDukascango(page: ClientWalkthroughScreen())),
+                    context, navigatorPageFadeInFrave(context, ClientWalkthroughScreen())),
               ),
               const Divider(),
               ItemAccount(
@@ -135,14 +136,14 @@ class ProfileClientScreen extends StatelessWidget {
                   authBloc.add(LogOutEvent());
                   Navigator.pushAndRemoveUntil(
                       context,
-                      routeDukascango(page: CheckingLoginScreen()),
+                      navigatorPageFadeInFrave(context, CheckingLoginScreen()),
                       (route) => false);
                 },
               ),
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationFrave(3),
+        bottomNavigationBar: BottomNavigationDukascango(3),
       ),
     );
   }

@@ -14,7 +14,7 @@ class _StaffManagementScreenState extends State<StaffManagementScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<UserBloc>(context).add(OnGetAllUsersEvent());
+    BlocProvider.of<UserBloc>(context).add(GetAllUsersEvent());
   }
 
   @override
@@ -104,7 +104,7 @@ class _ListStaff extends StatelessWidget {
             onChanged: (value) {
               if (value != null) {
                 BlocProvider.of<UserBloc>(context)
-                    .add(OnUpdateUserRoleEvent(user, value));
+                    .add(UpdateUserRoleEvent(user, value));
                 Navigator.pop(context);
               }
             },

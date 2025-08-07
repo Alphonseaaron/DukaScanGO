@@ -8,6 +8,7 @@ import 'package:dukascango/presentation/screens/client/client_home_screen.dart';
 import 'package:dukascango/presentation/screens/delivery/delivery_home_screen.dart';
 import 'package:dukascango/presentation/screens/wholesaler/wholesaler_home_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class SelectRoleScreen extends StatelessWidget {
   @override
@@ -52,42 +53,42 @@ class SelectRoleScreen extends StatelessWidget {
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Store Owner',
-                      color1: ColorsDukascango.primaryColor.withAlpha((255 * .2).round()),
-                      color2: Colors.greenAccent.withAlpha((255 * .1).round()),
+                      color1: ColorsDukascango.primaryColor.withOpacity(0.2),
+                      color2: Colors.greenAccent.withOpacity(0.1),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
-                          routeDukascango(page: AdminHomeScreen()),
+                          navigatorPageFadeInFrave(context, AdminHomeScreen()),
                           (route) => false),
                     ),
                   if (authState.rolId == '1')
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Wholesaler',
-                      color1: ColorsDukascango.primaryColor.withAlpha((255 * .2).round()),
-                      color2: Colors.greenAccent.withAlpha((255 * .1).round()),
+                      color1: ColorsDukascango.primaryColor.withOpacity(0.2),
+                      color2: Colors.greenAccent.withOpacity(0.1),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
-                          routeDukascango(page: WholesalerHomeScreen()),
+                          navigatorPageFadeInFrave(context, WholesalerHomeScreen()),
                           (route) => false),
                     ),
                   if (authState.rolId == '1' || authState.rolId == '3')
                     _BtnRol(
                       svg: 'Assets/svg/bussiness-man.svg',
                       text: 'Client',
-                      color1: const Color(0xffFE6488).withAlpha((255 * .2).round()),
-                      color2: Colors.amber.withAlpha((255 * .1).round()),
+                      color1: const Color(0xffFE6488).withOpacity(0.2),
+                      color2: Colors.amber.withOpacity(0.1),
                       onPressed: () => Navigator.pushReplacement(
-                          context, routeDukascango(page: ClientHomeScreen())),
+                          context, navigatorPageFadeInFrave(context, ClientHomeScreen())),
                     ),
                   if (authState.rolId == '1' || authState.rolId == '3')
                     _BtnRol(
                       svg: 'Assets/svg/delivery-bike.svg',
                       text: 'Delivery',
-                      color1: const Color(0xff8956FF).withAlpha((255 * .2).round()),
-                      color2: Colors.purpleAccent.withAlpha((255 * .1).round()),
+                      color1: const Color(0xff8956FF).withOpacity(0.2),
+                      color2: Colors.purpleAccent.withOpacity(0.1),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
-                          routeDukascango(page: DeliveryHomeScreen()),
+                          navigatorPageFadeInFrave(context, DeliveryHomeScreen()),
                           (route) => false),
                     ),
                 ],

@@ -55,7 +55,7 @@ void modalSelectionCategory(BuildContext ctx) {
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, i) => InkWell(
                                 onTap: () => productBloc.add(
-                                    OnSelectCategoryEvent(
+                                    SelectCategoryEvent(
                                         category[i].id, category[i].category)),
                                 child: Container(
                                   height: 40,
@@ -84,7 +84,7 @@ void modalSelectionCategory(BuildContext ctx) {
                                       ),
                                       BlocBuilder<ProductsBloc, ProductsState>(
                                         builder: (context, state) =>
-                                            state.idCategory == category[i].id
+                                            state.idCategory == category[i].id.toString()
                                                 ? Icon(Icons.check)
                                                 : Container(),
                                       )

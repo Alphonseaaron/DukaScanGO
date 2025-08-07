@@ -26,10 +26,10 @@ class PaymentGatewayManager {
       orElse: () => _gateways.first, // Fallback to the first gateway as default
     );
 
-    return getGatewayImplementation(gatewayModel);
+    return _getGatewayImplementation(gatewayModel);
   }
 
-  PaymentGatewayInterface? getGatewayImplementation(PaymentGateway gateway) {
+  PaymentGatewayInterface? _getGatewayImplementation(PaymentGateway gateway) {
     switch (gateway.name.toLowerCase()) {
       case 'flutterwave':
         return FlutterwaveGateway(gateway);

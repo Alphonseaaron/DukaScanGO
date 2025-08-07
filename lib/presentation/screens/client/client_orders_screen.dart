@@ -6,6 +6,9 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/screens/client/client_details_order_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dukascango/domain/bloc/blocs.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class ClientOrdersScreen extends StatelessWidget {
   @override
@@ -67,8 +70,8 @@ class _ListOrdersClient extends StatelessWidget {
             itemBuilder: (context, i) => GestureDetector(
               onTap: () => Navigator.push(
                   context,
-                  routeDukascango(
-                      page: ClientDetailsOrderScreen(
+                  navigatorPageFadeInFrave(context,
+                      ClientDetailsOrderScreen(
                           orderClient: listOrders[i]))),
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20.0),
@@ -106,7 +109,7 @@ class _ListOrdersClient extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.w500),
                         TextCustom(
-                            text: '\$ ${listOrders[i].amount}0', fontSize: 16)
+                            text: '\$ ${listOrders[i].total}0', fontSize: 16)
                       ],
                     ),
                     const SizedBox(height: 10.0),
@@ -119,7 +122,7 @@ class _ListOrdersClient extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                         TextCustom(
                             text: DateCustom.getDateOrder(
-                                listOrders[i].currentDate.toString()),
+                                listOrders[i].date.toString()),
                             fontSize: 15)
                       ],
                     ),
@@ -128,6 +131,6 @@ class _ListOrdersClient extends StatelessWidget {
               ),
             ),
           )
-        : SvgPicture.asset('Assets/empty-cart.svg');
+        : SvgPicture.asset('assets/empty-cart.svg');
   }
 }

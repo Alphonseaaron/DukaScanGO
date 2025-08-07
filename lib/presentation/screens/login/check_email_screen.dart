@@ -5,6 +5,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/login/login_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class CheckEmailScreen extends StatelessWidget {
   @override
@@ -26,7 +27,7 @@ class CheckEmailScreen extends StatelessWidget {
                       height: 110,
                       width: 110,
                       decoration: BoxDecoration(
-                          color: ColorsDukascango.primaryColor.withAlpha((255 * .1).round()),
+                          color: ColorsDukascango.primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20.0)),
                       child: const Icon(FontAwesomeIcons.envelopeOpenText,
                           size: 60, color: ColorsDukascango.primaryColor),
@@ -64,7 +65,7 @@ class CheckEmailScreen extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 70.0),
                       child: InkWell(
                           onTap: () => Navigator.pushReplacement(
-                              context, routeDukascango(page: LoginScreen())),
+                              context, navigatorPageFadeInFrave(context, LoginScreen())),
                           child: const TextCustom(
                               text: 'Skip, I\'ll confirm later'))),
                   const SizedBox(height: 20.0),

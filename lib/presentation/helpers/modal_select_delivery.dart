@@ -64,7 +64,7 @@ void modalSelectDelivery(BuildContext context, String idOrder) {
                 fontWeight: FontWeight.w500,
                 onPressed: () {
                   if (state.idDelivery != '0') {
-                    orderBloc.add(OnUpdateStatusOrderEvent(idOrder, 'DISPATCHED'));
+                    orderBloc.add(UpdateStatusOrderToDispatchedEvent(idOrder, state.idDelivery, state.notificationToken));
                     Navigator.pop(context);
                   }
                 },
