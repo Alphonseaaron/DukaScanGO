@@ -104,8 +104,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(LoadingUserState());
       final updatedUser = state.user!.copyWith(
-        firstName: event.name,
-        lastName: event.lastname,
+        firstName: event.firstName,
+        lastName: event.lastName,
         phone: event.phone,
         country: event.country,
         countryCode: event.countryCode,
@@ -144,8 +144,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        firstName: event.name,
-        lastName: event.lastname,
+        firstName: event.firstName,
+        lastName: event.lastName,
         email: event.email,
         phone: event.phone,
         rolId: '2', // Assuming '2' is for clients
@@ -159,8 +159,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await _userServices.addUser(user);
       final wholesaler = Wholesaler(
         uid: userCredential.user!.uid,
-        businessName: event.name,
-        contactPerson: event.lastname,
+        businessName: event.firstName,
+        contactPerson: event.lastName,
         deliveryAreas: [],
         paymentDetails: '',
       );
@@ -181,8 +181,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        firstName: event.name,
-        lastName: event.lastname,
+        firstName: event.firstName,
+        lastName: event.lastName,
         email: event.email,
         phone: event.phone,
         rolId: '3', // Assuming '3' is for delivery
@@ -210,8 +210,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        firstName: event.name,
-        lastName: event.lastname,
+        firstName: event.firstName,
+        lastName: event.lastName,
         email: event.email,
         phone: event.phone,
         rolId: '4', // Assuming '4' is for wholesaler
@@ -239,8 +239,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        firstName: event.name,
-        lastName: event.lastname,
+        firstName: event.firstName,
+        lastName: event.lastName,
         email: event.email,
         phone: event.phone,
         rolId: '1', // Assuming '1' is for store owner

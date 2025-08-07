@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/screens/login/register_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class SelectRegistrationRoleScreen extends StatelessWidget {
   @override
@@ -33,36 +34,36 @@ class SelectRegistrationRoleScreen extends StatelessWidget {
               _BtnRol(
                 svg: 'Assets/svg/restaurante.svg',
                 text: 'Store Owner',
-                color1: ColorsDukascango.primaryColor.withAlpha(51),
-                color2: Colors.greenAccent.withAlpha(26),
+                color1: ColorsDukascango.primaryColor.withOpacity(0.2),
+                color2: Colors.greenAccent.withOpacity(0.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeDukascango(
-                        page: RegisterScreen(
+                    navigatorPageFadeInFrave(context,
+                        RegisterScreen(
                       role: 'Store Owner',
                     ))),
               ),
               _BtnRol(
                 svg: 'Assets/svg/bussiness-man.svg',
                 text: 'Wholesaler',
-                color1: const Color(0xffFE6488).withAlpha(51),
-                color2: Colors.amber.withAlpha(26),
+                color1: const Color(0xffFE6488).withOpacity(0.2),
+                color2: Colors.amber.withOpacity(0.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeDukascango(
-                        page: RegisterScreen(
+                    navigatorPageFadeInFrave(context,
+                        RegisterScreen(
                       role: 'Wholesaler',
                     ))),
               ),
               _BtnRol(
                 svg: 'Assets/svg/delivery-bike.svg',
                 text: 'Delivery',
-                color1: const Color(0xff8956FF).withAlpha(51),
-                color2: Colors.purpleAccent.withAlpha(26),
+                color1: const Color(0xff8956FF).withOpacity(0.2),
+                color2: Colors.purpleAccent.withOpacity(0.1),
                 onPressed: () => Navigator.push(
                     context,
-                    routeDukascango(
-                        page: RegisterScreen(
+                    navigatorPageFadeInFrave(context,
+                        RegisterScreen(
                       role: 'Delivery',
                     ))),
               ),

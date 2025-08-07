@@ -62,7 +62,7 @@ void modalActiveOrInactiveProduct(BuildContext context, int status,
               text: (status == 1) ? 'SOLD OUT' : 'IN STOCK',
               color: (status == 1) ? Colors.red : Colors.green,
               onPressed: () {
-                productBloc.add(OnUpdateStatusProductEvent(
+                productBloc.add(UpdateStatusProductEvent(
                     idProduct.toString(), (status == 1) ? '0' : '1'));
                 Navigator.pop(context);
               },

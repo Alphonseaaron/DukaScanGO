@@ -7,17 +7,19 @@ import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
 import 'package:dukascango/presentation/screens/client/client_map_scrren.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class ClientDetailsOrderScreen extends StatelessWidget {
   final order_model.Order orderClient;
+  final OrdersServices ordersServices = OrdersServices();
 
-  const ClientDetailsOrderScreen({required this.orderClient});
+  ClientDetailsOrderScreen({required this.orderClient});
 
   void accessGps(PermissionStatus status, BuildContext context) {
     switch (status) {
       case PermissionStatus.granted:
         Navigator.pushReplacement(context,
-            routeDukascango(page: ClientMapScreen(orderClient: orderClient)));
+            navigatorPageFadeInFrave(context, ClientMapScreen(orderClient: orderClient)));
         break;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
@@ -216,7 +218,7 @@ class _ListProductsDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextCustom(
-                    text: listProductDetails[i].nameProduct,
+                    text: listProductDetails[i].productName,
                     fontWeight: FontWeight.w500),
                 const SizedBox(height: 5.0),
                 TextCustom(

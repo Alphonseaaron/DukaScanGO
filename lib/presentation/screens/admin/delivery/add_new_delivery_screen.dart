@@ -94,7 +94,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
             TextButton(
                 onPressed: () {
                   if (_keyForm.currentState!.validate()) {
-                    userBloc.add(OnRegisterDeliveryEvent(
+                    userBloc.add(RegisterDeliveryEvent(
                       _nameController.text,
                       _lastnameController.text,
                       _fullPhoneNumber,
@@ -234,7 +234,7 @@ class _PictureRegistre extends StatelessWidget {
                             )
                           ),
                         )
-                      : Container(),
+                      : const SizedBox(),
             ),
            
       ),

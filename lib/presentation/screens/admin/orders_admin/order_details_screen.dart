@@ -153,7 +153,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             setState(() {
                               _currentStatus = value;
                             });
-                            ordersBloc.add(OnUpdateStatusOrderEvent(
+                            ordersBloc.add(UpdateStatusOrderEvent(
                                 widget.order.id!, value));
                           }
                         },

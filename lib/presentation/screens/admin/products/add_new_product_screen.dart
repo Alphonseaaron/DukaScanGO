@@ -10,6 +10,7 @@ import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/presentation/screens/admin/admin_home_screen.dart';
 import 'package:dukascango/presentation/screens/admin/products/admin_scan_barcode_screen.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
+import 'package:dukascango/presentation/helpers/navigator_route_fade_in.dart';
 
 class AddNewProductScreen extends StatefulWidget {
   @override
@@ -72,7 +73,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               context,
               'Product added Successfully',
               () => Navigator.pushReplacement(
-                  context, routeDukascango(page: AdminHomeScreen())));
+                  context, navigatorPageFadeInFrave(context, AdminHomeScreen())));
         }
         if (state is FailureProductsState) {
           Navigator.pop(context);
@@ -95,8 +96,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 fontSize: 17),
             onPressed: () {
               Navigator.pop(context);
-              productBloc.add(OnUnSelectCategoryEvent());
-              productBloc.add(OnUnSelectMultipleImagesEvent());
+              productBloc.add(UnselectCategoryEvent());
+              productBloc.add(UnselectMultipleImagesEvent());
             },
           ),
           elevation: 0,
@@ -126,7 +127,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                       images: [],
                       category: 'default', // TODO: Add category selection
                     );
-                    productBloc.add(OnAddNewProductEvent(
+                    productBloc.add(AddNewProductEvent(
                       product,
                       productBloc.state.images!,
                     ));
@@ -221,7 +222,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 text: 'Scan Barcode',
                 onPressed: () async {
                   final barcode = await Navigator.push<String>(
-                      context, routeDukascango(page: AdminScanBarcodeScreen()));
+                      context, navigatorPageFadeInFrave(context, AdminScanBarcodeScreen()));
                   if (barcode != null) {
                     _barcodeController.text = barcode;
                   }
@@ -235,7 +236,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   final ImagePicker _picker = ImagePicker();
                   final List<XFile>? images = await _picker.pickMultiImage();
                   if (images != null)
-                    productBloc.add(OnSelectMultipleImagesEvent(images));
+                    productBloc.add(SelectMultipleImagesEvent(images));
                 },
                 child: Container(
                   height: 150,
