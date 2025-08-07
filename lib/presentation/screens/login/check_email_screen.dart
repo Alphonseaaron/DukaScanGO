@@ -26,7 +26,7 @@ class CheckEmailScreen extends StatelessWidget {
                       height: 110,
                       width: 110,
                       decoration: BoxDecoration(
-                          color: ColorsDukascango.primaryColor.withOpacity(.1),
+                          color: ColorsDukascango.primaryColor.withAlpha((255 * .1).round()),
                           borderRadius: BorderRadius.circular(20.0)),
                       child: const Icon(FontAwesomeIcons.envelopeOpenText,
                           size: 60, color: ColorsDukascango.primaryColor),

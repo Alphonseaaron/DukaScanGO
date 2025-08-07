@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dukascango/data/env/environment.dart';
-import 'package:dukascango/domain/models/response/order_details_response.dart';
-import 'package:dukascango/domain/models/response/orders_client_response.dart';
+import 'package:dukascango/domain/models/order.dart' as order_model;
 import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
@@ -10,7 +9,7 @@ import 'package:dukascango/presentation/screens/client/client_map_scrren.dart';
 import 'package:dukascango/presentation/themes/colors_dukascango.dart';
 
 class ClientDetailsOrderScreen extends StatelessWidget {
-  final OrdersClient orderClient;
+  final order_model.Order orderClient;
 
   const ClientDetailsOrderScreen({required this.orderClient});
 
@@ -36,7 +35,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: TextCustom(
-            text: 'ORDER # ${orderClient.id}',
+            text: 'ORDER # ${orderClient.id ?? ''}',
             fontSize: 17,
             fontWeight: FontWeight.w500),
         backgroundColor: Colors.white,
@@ -62,7 +61,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
             alignment: Alignment.center,
             margin: const EdgeInsets.only(right: 10.0),
             child: TextCustom(
-              text: orderClient.status,
+              text: orderClient.status ?? '',
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: (orderClient.status == 'DELIVERED'
@@ -76,9 +75,9 @@ class ClientDetailsOrderScreen extends StatelessWidget {
         children: [
           Expanded(
               flex: 2,
-              child: FutureBuilder<List<DetailsOrder>>(
+              child: FutureBuilder<order_model.Order?>(
                   future:
-                      ordersServices.gerOrderDetailsById('${orderClient.id}'),
+                      ordersServices.getOrderById('${orderClient.id}'),
                   builder: (context, snapshot) => (!snapshot.hasData)
                       ? Column(
                           children: const [
@@ -90,7 +89,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                           ],
                         )
                       : _ListProductsDetails(
-                          listProductDetails: snapshot.data!))),
+                          listProductDetails: snapshot.data!.details))),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
@@ -104,7 +103,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: ColorsDukascango.primaryColor),
                     TextCustom(
-                        text: '\$ ${orderClient.amount}0',
+                        text: '\$ ${orderClient.total.toStringAsFixed(2)}',
                         fontWeight: FontWeight.w500),
                   ],
                 ),
@@ -125,15 +124,15 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage((orderClient
-                                              .imageDelivery !=
-                                          '')
-                                      ? '${Environment.endpointBase}${orderClient.imageDelivery}'
+                                              .delivery?.image !=
+                                          null)
+                                      ? '${Environment.endpointBase}${orderClient.delivery!.image}'
                                       : '${Environment.endpointBase}without-image.png'))),
                         ),
                         const SizedBox(width: 10.0),
                         TextCustom(
-                            text: (orderClient.deliveryId != 0)
-                                ? orderClient.delivery
+                            text: (orderClient.delivery != null)
+                                ? orderClient.delivery!.firstName
                                 : 'Not assigned',
                             fontSize: 17),
                       ],
@@ -151,7 +150,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                         fontSize: 17),
                     TextCustom(
                         text: DateCustom.getDateOrder(
-                            orderClient.currentDate.toString()),
+                            orderClient.date.toString()),
                         fontSize: 16),
                   ],
                 ),
@@ -165,7 +164,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
                         color: ColorsDukascango.primaryColor,
                         fontSize: 16),
                     TextCustom(
-                        text: orderClient.reference, fontSize: 16, maxLine: 1),
+                        text: orderClient.address, fontSize: 16, maxLine: 1),
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -190,7 +189,7 @@ class ClientDetailsOrderScreen extends StatelessWidget {
 }
 
 class _ListProductsDetails extends StatelessWidget {
-  final List<DetailsOrder> listProductDetails;
+  final List<order_model.OrderDetail> listProductDetails;
 
   const _ListProductsDetails({required this.listProductDetails});
 

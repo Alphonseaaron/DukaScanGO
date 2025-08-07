@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dukascango/domain/models/response/orders_client_response.dart';
+import 'package:dukascango/domain/models/order.dart' as order_model;
 import 'package:dukascango/domain/services/services.dart';
 import 'package:dukascango/presentation/components/components.dart';
 import 'package:dukascango/presentation/helpers/date_custom.dart';
@@ -35,8 +35,8 @@ class ClientOrdersScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<List<OrdersClient>>(
-          future: ordersServices.getListOrdersForClient(),
+      body: FutureBuilder<List<order_model.Order>>(
+          future: ordersServices.getOrdersByClient(BlocProvider.of<AuthBloc>(context).state.user!.uid),
           builder: (context, snapshot) => (!snapshot.hasData)
               ? Column(
                   children: const [
@@ -53,7 +53,7 @@ class ClientOrdersScreen extends StatelessWidget {
 }
 
 class _ListOrdersClient extends StatelessWidget {
-  final List<OrdersClient> listOrders;
+  final List<order_model.Order> listOrders;
 
   const _ListOrdersClient({required this.listOrders});
 

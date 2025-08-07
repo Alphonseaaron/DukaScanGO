@@ -35,7 +35,7 @@ class SelectAddressScreen extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<List<ListAddress>>(
-          future: userServices.getAddresses(),
+          future: userServices.getAddresses(BlocProvider.of<AuthBloc>(context).state.user!.uid),
           builder: (context, snapshot) => (!snapshot.hasData)
               ? const ShimmerDukascango()
               : _ListAddresses(listAddress: snapshot.data!)),

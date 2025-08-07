@@ -6,20 +6,28 @@ class UserState {
   final List<User> users;
   final String? pictureProfilePath;
   final bool? isUpdated;
+  final String? addressName;
+  final String? uidAddress;
 
   const UserState(
-      {this.user, this.users = const [], this.pictureProfilePath, this.isUpdated});
+      {this.user, this.users = const [], this.pictureProfilePath, this.isUpdated, this.addressName, this.uidAddress});
 
   UserState copyWith(
           {User? user,
           List<User>? users,
           String? pictureProfilePath,
-          bool? isUpdated}) =>
+          bool? isUpdated,
+          String? addressName,
+          String? uidAddress,
+          }) =>
       UserState(
           user: user ?? this.user,
           users: users ?? this.users,
           pictureProfilePath: pictureProfilePath ?? this.pictureProfilePath,
-          isUpdated: isUpdated ?? this.isUpdated);
+          isUpdated: isUpdated ?? this.isUpdated,
+          addressName: addressName ?? this.addressName,
+          uidAddress: uidAddress ?? this.uidAddress,
+      );
 }
 
 class LoadingUserState extends UserState {}

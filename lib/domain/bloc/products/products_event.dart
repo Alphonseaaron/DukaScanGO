@@ -45,3 +45,26 @@ class OnSearchProductEvent extends ProductsEvent {
 
   OnSearchProductEvent(this.search);
 }
+
+class OnUpdateStatusProductEvent extends ProductsEvent {
+  final String id;
+  final String status;
+
+  OnUpdateStatusProductEvent(this.id, this.status);
+}
+
+class OnSelectCategoryEvent extends ProductsEvent {
+  final String id;
+  final String name;
+
+  OnSelectCategoryEvent(this.id, this.name);
+}
+
+class OnAddNewCategoryEvent extends ProductsEvent {
+  final String name;
+  final String description;
+
+  OnAddNewCategoryEvent(this.name, this.description);
+}
+
+class OnUnSelectCategoryEvent extends ProductsEvent {}

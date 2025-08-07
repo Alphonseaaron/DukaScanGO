@@ -30,6 +30,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<OnRegisterDeliveryEvent>(_onRegisterDelivery);
     on<OnGetAllUsersEvent>(_onGetAllUsers);
     on<OnUpdateUserRoleEvent>(_onUpdateUserRole);
+    on<OnSelectAddressEvent>(_onSelectAddress);
+    on<OnSelectAddressButtonEvent>(_onSelectAddressButton);
+  }
+
+  Future<void> _onSelectAddress(
+      OnSelectAddressEvent event, Emitter<UserState> emit) async {
+    emit(state.copyWith(addressName: event.address, uidAddress: event.uidAddress));
+  }
+
+  Future<void> _onSelectAddressButton(
+      OnSelectAddressButtonEvent event, Emitter<UserState> emit) async {
+    emit(state.copyWith(addressName: event.address, uidAddress: event.uidAddress));
   }
 
   Future<void> _onGetAllUsers(
@@ -92,8 +104,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(LoadingUserState());
       final updatedUser = state.user!.copyWith(
-        name: event.name,
-        lastname: event.lastname,
+        firstName: event.name,
+        lastName: event.lastname,
         phone: event.phone,
         country: event.country,
         countryCode: event.countryCode,
@@ -132,8 +144,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        name: event.name,
-        lastname: event.lastname,
+        firstName: event.name,
+        lastName: event.lastname,
         email: event.email,
         phone: event.phone,
         rolId: '2', // Assuming '2' is for clients
@@ -169,8 +181,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        name: event.name,
-        lastname: event.lastname,
+        firstName: event.name,
+        lastName: event.lastname,
         email: event.email,
         phone: event.phone,
         rolId: '3', // Assuming '3' is for delivery
@@ -198,8 +210,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        name: event.name,
-        lastname: event.lastname,
+        firstName: event.name,
+        lastName: event.lastname,
         email: event.email,
         phone: event.phone,
         rolId: '4', // Assuming '4' is for wholesaler
@@ -227,8 +239,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
       final user = User(
         uid: userCredential.user!.uid,
-        name: event.name,
-        lastname: event.lastname,
+        firstName: event.name,
+        lastName: event.lastname,
         email: event.email,
         phone: event.phone,
         rolId: '1', // Assuming '1' is for store owner

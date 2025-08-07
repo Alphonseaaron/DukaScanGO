@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Route routeDukascango({required Widget page, Curve curved = Curves.easeInOut}) {
-  return PageRouteBuilder(
+Route<T> routeDukascango<T extends Object?>({required Widget page, Curve curved = Curves.easeInOut}) {
+  return PageRouteBuilder<T>(
     transitionDuration: Duration(milliseconds: 450),
     pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) =>

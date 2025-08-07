@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dukascango/domain/models/product.dart';
 import 'package:dukascango/domain/services/products_services.dart';
+import 'package:dukascango/domain/services/category_services.dart';
 
 part 'products_event.dart';
 part 'products_state.dart';
@@ -20,6 +21,44 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<OnUnSelectMultipleImagesEvent>(_onUnSelectMultipleImages);
     on<OnAdjustStockEvent>(_onAdjustStock);
     on<OnSearchProductEvent>(_onSearchProduct);
+    on<OnUpdateStatusProductEvent>(_onUpdateStatusProduct);
+    on<OnSelectCategoryEvent>(_onSelectCategory);
+    on<OnAddNewCategoryEvent>(_onAddNewCategory);
+    on<OnUnSelectCategoryEvent>(_onUnSelectCategory);
+  }
+
+  Future<void> _onSelectCategory(
+      OnSelectCategoryEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(idCategory: event.id, nameCategory: event.name));
+  }
+
+  Future<void> _onAddNewCategory(
+      OnAddNewCategoryEvent event, Emitter<ProductsState> emit) async {
+    try {
+      emit(LoadingProductsState());
+      await categoryServices.addNewCategory(event.name, event.description);
+      emit(SuccessProductsState());
+    } catch (e) {
+      emit(FailureProductsState(e.toString()));
+    }
+  }
+
+  Future<void> _onUnSelectCategory(
+      OnUnSelectCategoryEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(idCategory: '', nameCategory: ''));
+  }
+
+  Future<void> _onUpdateStatusProduct(
+      OnUpdateStatusProductEvent event, Emitter<ProductsState> emit) async {
+    try {
+      emit(LoadingProductsState());
+      await _productsServices.updateProductStatus(event.id, event.status);
+      final products = await _productsServices.getProducts();
+      emit(SuccessProductsState());
+      emit(state.copyWith(products: products));
+    } catch (e) {
+      emit(FailureProductsState(e.toString()));
+    }
   }
 
   Future<void> _onSearchProduct(

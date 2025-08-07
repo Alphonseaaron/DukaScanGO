@@ -52,8 +52,8 @@ class SelectRoleScreen extends StatelessWidget {
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Store Owner',
-                      color1: ColorsDukascango.primaryColor.withOpacity(.2),
-                      color2: Colors.greenAccent.withOpacity(.1),
+                      color1: ColorsDukascango.primaryColor.withAlpha((255 * .2).round()),
+                      color2: Colors.greenAccent.withAlpha((255 * .1).round()),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
                           routeDukascango(page: AdminHomeScreen()),
@@ -63,8 +63,8 @@ class SelectRoleScreen extends StatelessWidget {
                     _BtnRol(
                       svg: 'Assets/svg/restaurante.svg',
                       text: 'Wholesaler',
-                      color1: ColorsDukascango.primaryColor.withOpacity(.2),
-                      color2: Colors.greenAccent.withOpacity(.1),
+                      color1: ColorsDukascango.primaryColor.withAlpha((255 * .2).round()),
+                      color2: Colors.greenAccent.withAlpha((255 * .1).round()),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
                           routeDukascango(page: WholesalerHomeScreen()),
@@ -74,8 +74,8 @@ class SelectRoleScreen extends StatelessWidget {
                     _BtnRol(
                       svg: 'Assets/svg/bussiness-man.svg',
                       text: 'Client',
-                      color1: const Color(0xffFE6488).withOpacity(.2),
-                      color2: Colors.amber.withOpacity(.1),
+                      color1: const Color(0xffFE6488).withAlpha((255 * .2).round()),
+                      color2: Colors.amber.withAlpha((255 * .1).round()),
                       onPressed: () => Navigator.pushReplacement(
                           context, routeDukascango(page: ClientHomeScreen())),
                     ),
@@ -83,8 +83,8 @@ class SelectRoleScreen extends StatelessWidget {
                     _BtnRol(
                       svg: 'Assets/svg/delivery-bike.svg',
                       text: 'Delivery',
-                      color1: const Color(0xff8956FF).withOpacity(.2),
-                      color2: Colors.purpleAccent.withOpacity(.1),
+                      color1: const Color(0xff8956FF).withAlpha((255 * .2).round()),
+                      color2: Colors.purpleAccent.withAlpha((255 * .1).round()),
                       onPressed: () => Navigator.pushAndRemoveUntil(
                           context,
                           routeDukascango(page: DeliveryHomeScreen()),
