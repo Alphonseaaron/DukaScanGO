@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:dukascango/domain/models/user.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dukascango/domain/models/response/addresses_response.dart';
 
 class UserServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -56,4 +57,14 @@ class UserServices {
     }
     return null;
   }
+
+  Future<List<ListAddress>> getAddresses(String uid) async {
+    final QuerySnapshot snapshot =
+        await _firestore.collection('users').doc(uid).collection('addresses').get();
+    return snapshot.docs
+        .map((doc) => ListAddress.fromMap(doc.data() as Map<String, dynamic>))
+        .toList();
+  }
 }
+
+final userServices = UserServices();

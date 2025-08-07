@@ -66,7 +66,7 @@ class _ListStaff extends StatelessWidget {
             leading: CircleAvatar(
               backgroundImage: NetworkImage(user.image ?? ''),
             ),
-            title: TextCustom(text: '${user.name} ${user.lastname}'),
+            title: TextCustom(text: '${user.firstName} ${user.lastName}'),
             subtitle: TextCustom(text: user.rolId),
             trailing: PopupMenuButton<String>(
               onSelected: (value) {

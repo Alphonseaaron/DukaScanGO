@@ -18,6 +18,20 @@ class OnUpdateUserRoleEvent extends UserEvent {
   OnUpdateUserRoleEvent(this.user, this.role);
 }
 
+class OnSelectAddressEvent extends UserEvent {
+  final String address;
+  final String uidAddress;
+
+  OnSelectAddressEvent(this.address, this.uidAddress);
+}
+
+class OnSelectAddressButtonEvent extends UserEvent {
+  final String address;
+  final String uidAddress;
+
+  OnSelectAddressButtonEvent(this.address, this.uidAddress);
+}
+
 class OnSelectPictureEvent extends UserEvent {
   final String pictureProfilePath;
 

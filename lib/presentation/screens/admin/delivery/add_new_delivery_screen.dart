@@ -100,7 +100,7 @@ class _AddNewDeliveryScreenState extends State<AddNewDeliveryScreen> {
                       _fullPhoneNumber,
                       _emailController.text,
                       _passwordController.text,
-                      userBloc.state.pictureProfilePath,
+                      userBloc.state.pictureProfilePath ?? '',
                       _countryData['country'] ?? '',
                       _countryData['countryCode'] ?? '',
                       _countryData['dialingCode'] ?? '',
@@ -222,17 +222,19 @@ class _PictureRegistre extends StatelessWidget {
                         TextCustom(text: 'Picture', color: Colors.black45 )
                      ],
                    ) 
-                   : Container(
-                      height: 100,  
-                      width: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: FileImage(File(state.pictureProfilePath))
+                   : (state.pictureProfilePath != null)
+                      ? Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: FileImage(File(state.pictureProfilePath!))
+                            )
+                          ),
                         )
-                      ),
-                     ),
+                      : Container(),
             ),
            
       ),

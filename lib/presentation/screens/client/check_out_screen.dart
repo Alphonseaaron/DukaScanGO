@@ -104,8 +104,8 @@ class CheckOutScreen extends StatelessWidget {
                                   date: DateTime.now(),
                                   details: cartBloc.product
                                       .map((p) => OrderDetail(
-                                            productId: p.id,
-                                            productName: p.name,
+                                            productId: p.uidProduct,
+                                            productName: p.nameProduct,
                                             price: p.price,
                                             quantity: p.quantity,
                                           ))

@@ -1,3 +1,5 @@
+import 'package:dukascango/domain/models/response/products_top_home_response.dart';
+
 class Product {
   final String? id;
   final String name;
@@ -93,6 +95,18 @@ class Product {
       supplier: map['supplier'],
       taxRate: map['taxRate'],
       lowStockThreshold: map['lowStockThreshold'],
+    );
+  }
+
+  factory Product.fromProductsdb(Productsdb productsdb) {
+    return Product(
+      id: productsdb.id.toString(),
+      name: productsdb.nameProduct,
+      description: productsdb.description,
+      price: productsdb.price,
+      images: [productsdb.picture],
+      category: productsdb.category,
+      status: productsdb.status.toString(),
     );
   }
 }

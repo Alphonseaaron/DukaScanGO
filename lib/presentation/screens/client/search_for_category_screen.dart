@@ -34,9 +34,9 @@ class SearchForCategoryScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: FutureBuilder<List<Productsdb>>(
+        child: FutureBuilder<List<Product>>(
             future: productServices
-                .searchPorductsForCategory(idCategory.toString()),
+                .getProductsByCategory(idCategory.toString()),
             builder: (context, snapshot) => (!snapshot.hasData)
                 ? const ShimmerDukascango()
                 : ListProducts(listProduct: snapshot.data!)),
@@ -46,7 +46,7 @@ class SearchForCategoryScreen extends StatelessWidget {
 }
 
 class ListProducts extends StatelessWidget {
-  final List<Productsdb> listProduct;
+  final List<Product> listProduct;
 
   const ListProducts({Key? key, required this.listProduct}) : super(key: key);
 
@@ -74,14 +74,14 @@ class ListProducts extends StatelessWidget {
                       children: [
                         Container(
                           child: Hero(
-                              tag: listProduct[i].id,
+                              tag: listProduct[i].id!,
                               child: Image.network(
                                   'http://192.168.1.35:7070/' +
-                                      listProduct[i].picture,
+                                      listProduct[i].images[0],
                                   height: 150)),
                         ),
                         TextCustom(
-                            text: listProduct[i].nameProduct,
+                            text: listProduct[i].name,
                             textOverflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.w500,
                             color: ColorsDukascango.primaryColor,

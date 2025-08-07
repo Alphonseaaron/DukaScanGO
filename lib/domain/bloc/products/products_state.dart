@@ -6,12 +6,16 @@ class ProductsState {
   final List<Product> searchedProducts;
   final List<XFile>? images;
   final String? searchProduct;
+  final String? idCategory;
+  final String? nameCategory;
 
   const ProductsState({
     this.products = const [],
     this.searchedProducts = const [],
     this.images,
     this.searchProduct,
+    this.idCategory,
+    this.nameCategory,
   });
 
   ProductsState copyWith({
@@ -19,12 +23,16 @@ class ProductsState {
     List<Product>? searchedProducts,
     List<XFile>? images,
     String? searchProduct,
+    String? idCategory,
+    String? nameCategory,
   }) =>
       ProductsState(
         products: products ?? this.products,
         searchedProducts: searchedProducts ?? this.searchedProducts,
         images: images ?? this.images,
         searchProduct: searchProduct ?? this.searchProduct,
+        idCategory: idCategory ?? this.idCategory,
+        nameCategory: nameCategory ?? this.nameCategory,
       );
 }
 

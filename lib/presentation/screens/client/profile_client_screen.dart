@@ -10,6 +10,7 @@ import 'package:dukascango/presentation/screens/profile/edit_Prodile_screen.dart
 import 'package:dukascango/presentation/screens/profile/list_addresses_screen.dart';
 import 'package:dukascango/presentation/components/bottom_navigation_dukascango.dart';
 import 'package:dukascango/presentation/components/image_picker.dart';
+import 'package:dukascango/presentation/walkthrough/client_walkthrough.dart';
 
 class ProfileClientScreen extends StatelessWidget {
   @override
@@ -48,9 +49,9 @@ class ProfileClientScreen extends StatelessWidget {
               const SizedBox(height: 20.0),
               Center(
                   child: TextCustom(
-                      text: authBloc.state.user!.firstName +
+                      text: (authBloc.state.user?.firstName ?? '') +
                           ' ' +
-                          authBloc.state.user!.lastName,
+                          (authBloc.state.user?.lastName ?? ''),
                       fontSize: 25,
                       fontWeight: FontWeight.w500)),
               const SizedBox(height: 5.0),

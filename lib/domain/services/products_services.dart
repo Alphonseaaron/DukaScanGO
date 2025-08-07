@@ -45,6 +45,10 @@ class ProductsServices {
     await _firestore.collection('products').doc(id).delete();
   }
 
+  Future<void> updateProductStatus(String id, String status) async {
+    await _firestore.collection('products').doc(id).update({'status': status});
+  }
+
   Future<Product?> getProductByBarcode(String barcode) async {
     final QuerySnapshot snapshot = await _firestore
         .collection('products')
@@ -130,4 +134,16 @@ class ProductsServices {
 
     await writeBatch.commit();
   }
+
+  Future<List<Product>> getProductsByCategory(String categoryId) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection('products')
+        .where('category', isEqualTo: categoryId)
+        .get();
+    return snapshot.docs
+        .map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+  }
 }
+
+final productServices = ProductsServices();

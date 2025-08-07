@@ -19,7 +19,6 @@ import 'package:dukascango/domain/services/category_services.dart';
 class ClientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productServices = ProductsServices();
     final categoryServices = CategoryServices();
     final authBloc = BlocProvider.of<AuthBloc>(context);
 
@@ -44,12 +43,12 @@ class ClientHomeScreen extends StatelessWidget {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  '${Environment.endpointBase}${authBloc.state.user!.image}'))),
+                                  '${Environment.endpointBase}${authBloc.state.user?.image ?? ''}'))),
                     ),
                     const SizedBox(width: 8.0),
                     TextCustom(
                         text: DateCustom.getDateFrave() +
-                            ', ${authBloc.state.user!.firstName}',
+                            ', ${authBloc.state.user?.firstName ?? ''}',
                         fontSize: 17,
                         color: ColorsDukascango.secundaryColor),
                   ],
@@ -182,7 +181,7 @@ class ClientHomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationFrave(0),
+      bottomNavigationBar: BottomNavigationDukascango(0),
     );
   }
 }
@@ -190,10 +189,10 @@ class ClientHomeScreen extends StatelessWidget {
 class _ListProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Productsdb>>(
-      future: productServices.getProductsTopHome(),
+    return FutureBuilder<List<Product>>(
+      future: productServices.getProducts(),
       builder: (_, snapshot) {
-        final List<Productsdb>? listProduct = snapshot.data;
+        final List<Product>? listProduct = snapshot.data;
 
         return !snapshot.hasData
             ? Column(
@@ -230,14 +229,14 @@ class _ListProducts extends StatelessWidget {
                       children: [
                         Container(
                           child: Hero(
-                              tag: listProduct![i].id,
+                              tag: listProduct![i].id!,
                               child: Image.network(
                                   'http://192.168.1.35:7070/' +
-                                      listProduct[i].picture,
+                                      listProduct[i].images[0],
                                   height: 150)),
                         ),
                         TextCustom(
-                            text: listProduct[i].nameProduct,
+                            text: listProduct[i].name,
                             textOverflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.w500,
                             color: ColorsDukascango.primaryColor,
